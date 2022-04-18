@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 
-namespace EExpansions.EntityFrameworkCore;
+namespace EExpansions.EntityFrameworkCore.ValueGeneration;
 
 internal class FalseValueGenerator : ValueGenerator<bool>
 {

@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace EExpansions.EntityFrameworkCore;
+﻿namespace EExpansions.EntityFrameworkCore;
 
 /// <summary>
 /// The wrapper class of <see cref="DbContext"/> to activate

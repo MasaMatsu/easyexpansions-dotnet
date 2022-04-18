@@ -1,4 +1,6 @@
-﻿namespace EExpansions.EntityFrameworkCore;
+﻿using EExpansions.EntityFrameworkCore.ValueGeneration;
+
+namespace EExpansions.EntityFrameworkCore;
 
 internal static class InternalDbContext
 {
