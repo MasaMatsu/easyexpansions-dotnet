@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace EExpansions.Core;
+namespace EExpansions;
 
 public static class CustomAttributeProviderExtensions
 {

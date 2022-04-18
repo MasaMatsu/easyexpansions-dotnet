@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EExpansions.Core;
+namespace EExpansions;
 
 public static class EnumExtensions
 {

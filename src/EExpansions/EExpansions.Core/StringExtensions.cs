@@ -1,4 +1,4 @@
-﻿namespace EExpansions.Core;
+﻿namespace EExpansions;
 
 public static class StringExtensions
 {
