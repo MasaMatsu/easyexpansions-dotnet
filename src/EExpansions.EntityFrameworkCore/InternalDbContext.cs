@@ -1,4 +1,7 @@
-﻿using EExpansions.EntityFrameworkCore.ValueGeneration;
+﻿using System.Runtime.CompilerServices;
+using EExpansions.EntityFrameworkCore.ValueGeneration;
+
+[assembly: InternalsVisibleTo("EExpansions.AspNetCore.Identity")]
 
 namespace EExpansions.EntityFrameworkCore;
 

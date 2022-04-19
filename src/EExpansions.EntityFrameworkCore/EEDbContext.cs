@@ -10,15 +10,11 @@ public abstract class EEDbContext : DbContext
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EEDbContext" /> class.
-    /// The <see cref="DbContext.OnConfiguring(DbContextOptionsBuilder)" />
-    /// method will be called to configure the database (and other options) to be used for this context.
     /// </summary>
     public EEDbContext() : base() { }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EEDbContext" /> class using the specified options.
-    /// The <see cref="DbContext.OnConfiguring(DbContextOptionsBuilder)" />
-    /// method will still be called to allow further configuration of the options.
     /// </summary>
     /// <param name="options">The options for this context.</param>
     public EEDbContext(DbContextOptions options) : base(options) { }
@@ -163,7 +159,6 @@ public abstract class EEDbContext<TKey> : EEDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        InternalDbContext.OnModelCreating(modelBuilder);
         InternalDbContext.OnModelCreating<TKey>(modelBuilder);
     }
 
