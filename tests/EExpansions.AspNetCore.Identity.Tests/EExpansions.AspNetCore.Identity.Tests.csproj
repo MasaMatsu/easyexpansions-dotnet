@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -20,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EExpansions.AspNetCore.Identity\EExpansions.AspNetCore.Identity.csproj" />
+    <ProjectReference Include="..\..\src\EExpansions.Core\EExpansions.Core.csproj" />
+  </ItemGroup>
 </Project>
