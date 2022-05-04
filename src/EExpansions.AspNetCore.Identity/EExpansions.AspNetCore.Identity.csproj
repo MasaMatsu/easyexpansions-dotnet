@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="EExpansions.EntityFrameworkCore" />
+    <Using Include="Microsoft.AspNetCore.Identity" />
+    <Using Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+    <Using Include="Microsoft.EntityFrameworkCore" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EExpansions.EntityFrameworkCore\EExpansions.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+  </ItemGroup>
+</Project>

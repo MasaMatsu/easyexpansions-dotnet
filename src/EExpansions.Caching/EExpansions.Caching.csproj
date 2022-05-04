@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="EExpansions.EntityFrameworkCore" />
+    <Using Include="Microsoft.EntityFrameworkCore" />
+    <Using Include="Microsoft.Extensions.Caching.Distributed" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EExpansions.Core\EExpansions.Core.csproj" />
+    <ProjectReference Include="..\EExpansions.EntityFrameworkCore\EExpansions.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
+  </ItemGroup>
+</Project>
