@@ -4,10 +4,11 @@
 /// The service that provides caching logic of efcore.
 /// </summary>
 /// <typeparam name="TContext">The type of context.</typeparam>
-public class EntityCache<TContext> : IEntityCache
+public class EntityCache<TContext, TKeyContainer> : IEntityCache
     where TContext : DbContext
+    where TKeyContainer : IDistributedCache
 {
-    private IDistributedCache KeyContainer { get; }
+    private TKeyContainer KeyContainer { get; }
 
     private IEntityCacheValueContainer ValueContainer { get; }
 
@@ -18,38 +19,28 @@ public class EntityCache<TContext> : IEntityCache
     private SemaphoreSlim SemaphoreSlim { get; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="EntityCache{TContext}" /> class.
+    /// Initializes a new instance of the <see cref="EntityCache{TContext, TKeyContainer}" /> class.
     /// </summary>
-    /// <param name="keyContainer">The container to cache key.</param>
-    /// <param name="valueContainer">The container to cache entity.</param>
-    /// <param name="factory">The factory to create instance of <see cref="DbContext"/>.</param>
-    /// <param name="options">The options for this cache.</param>
+    /// <param name="serviceProvider"><see cref="IServiceProvider"/> to get services.</param>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="keyContainer"/>,
-    /// <paramref name="valueContainer"/>,
-    /// <paramref name="factory"/>
-    /// or <paramref name="options"/> are <see langword="null" />.
+    /// <paramref name="serviceProvider"/> is <see langword="null" />.
     /// </exception>
     /// <exception cref="InvalidOperationException">
     /// The key prefix may not be empty.
     /// </exception>
-    public EntityCache(
-        IDistributedCache keyContainer,
-        IEntityCacheValueContainer valueContainer,
-        IDbContextFactory<TContext> factory,
-        EntityCacheOptions options
-    )
+    public EntityCache(IServiceProvider serviceProvider)
     {
-        _ = keyContainer ?? throw new ArgumentNullException(nameof(keyContainer));
-        _ = valueContainer ?? throw new ArgumentNullException(nameof(valueContainer));
-        _ = factory ?? throw new ArgumentNullException(nameof(factory));
-        _ = options ?? throw new ArgumentNullException(nameof(options));
+        _ = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
-        KeyContainer = keyContainer;
-        ValueContainer = valueContainer;
-        ContextFactory = factory;
-        Options = options;
+        KeyContainer =
+            serviceProvider
+            .GetServices<IDistributedCache>()
+            .OfType<TKeyContainer>()
+            .First();
+        ValueContainer = serviceProvider.GetRequiredService<IEntityCacheValueContainer>();
+        ContextFactory = serviceProvider.GetRequiredService<IDbContextFactory<TContext>>();
 
+        Options = serviceProvider.GetRequiredService<IOptions<EntityCacheOptions>>().Value;
         if (Options.KeyPrefix.IsNullOrEmpty())
         {
             throw new InvalidOperationException("The key prefix may not be empty.");

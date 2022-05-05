@@ -9,6 +9,7 @@
     <Using Include="Microsoft.EntityFrameworkCore" />
     <Using Include="Microsoft.Extensions.Caching.Distributed" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
+    <Using Include="Microsoft.Extensions.Options" />
     <Using Include="System.Text" />
     <Using Include="System.Text.Json" />
   </ItemGroup>
