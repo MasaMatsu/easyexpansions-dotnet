@@ -8,6 +8,8 @@
     <Using Include="EExpansions.EntityFrameworkCore" />
     <Using Include="Microsoft.EntityFrameworkCore" />
     <Using Include="Microsoft.Extensions.Caching.Distributed" />
+    <Using Include="System.Text" />
+    <Using Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EExpansions.Core\EExpansions.Core.csproj" />
