@@ -87,10 +87,11 @@ public interface IEntityCacheValueContainer
     /// <param name="entityType">The type of the entity.</param>
     /// <param name="key">A string key the requested value.</param>
     /// <param name="value">The entity to set in the cache.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// </returns>
-    Task SetAsync(Type entityType, string key, object value);
+    Task SetAsync(Type entityType, string key, object value, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes the entity with the given key.
