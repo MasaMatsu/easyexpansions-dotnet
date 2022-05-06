@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EExpansions.Caching\EExpansions.AspNetCore.Caching.csproj" />
+    <ProjectReference Include="..\EExpansions.AspNetCore.Identity\EExpansions.AspNetCore.Identity.csproj" />
+    <ProjectReference Include="..\EExpansions.AspNetCore.Session\EExpansions.AspNetCore.Session.csproj" />
+  </ItemGroup>
+</Project>
