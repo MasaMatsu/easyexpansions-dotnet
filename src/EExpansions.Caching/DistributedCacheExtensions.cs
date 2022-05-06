@@ -1,4 +1,4 @@
-﻿namespace EExpansions.Caching;
+﻿namespace EExpansions.AspNetCore.Caching;
 
 public static class DistributedCacheExtensions
 {

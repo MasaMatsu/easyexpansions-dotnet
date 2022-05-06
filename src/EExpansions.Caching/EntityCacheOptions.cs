@@ -1,4 +1,4 @@
-﻿namespace EExpansions.Caching;
+﻿namespace EExpansions.AspNetCore.Caching;
 
 /// <summary>
 /// The options to be used by a <see cref="EntityCache{TContext}" />.

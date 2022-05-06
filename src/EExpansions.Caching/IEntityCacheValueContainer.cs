@@ -1,4 +1,4 @@
-﻿namespace EExpansions.Caching;
+﻿namespace EExpansions.AspNetCore.Caching;
 
 /// <summary>
 /// The service to provides value container for <see cref="IEntityCache"/>

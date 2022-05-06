@@ -1,4 +1,4 @@
-﻿namespace EExpansions.Caching;
+﻿namespace EExpansions.AspNetCore.Caching;
 
 /// <summary>
 /// The service that provides caching logic of efcore.
