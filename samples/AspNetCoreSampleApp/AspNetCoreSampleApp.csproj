@@ -13,4 +13,16 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EExpansions.AspNetCore\EExpansions.AspNetCore.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\EExpansions.Core\EExpansions.Core.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\EExpansions.EntityFrameworkCore\EExpansions.EntityFrameworkCore.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+
 </Project>
