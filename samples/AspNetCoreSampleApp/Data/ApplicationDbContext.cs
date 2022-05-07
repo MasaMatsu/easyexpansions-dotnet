@@ -18,6 +18,6 @@ public class ApplicationDbContext : EEIdentityDbContext<User>
     protected override string? GetUserId()
     {
         var claim = HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
-        return Convert.ChangeType(claim, typeof(string)) as string;
+        return claim?.Value;
     }
 }
