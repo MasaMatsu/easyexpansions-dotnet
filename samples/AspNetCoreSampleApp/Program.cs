@@ -1,14 +1,37 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using AspNetCoreSampleApp.Data;
 using AspNetCoreSampleApp.Data.Models;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using EExpansions.AspNetCore.Caching;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+{
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DbConnection")
+    );
+});
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
+});
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddEntityCache<ApplicationDbContext, RedisCache, DistributedEntityCacheValueContainer<MemoryDistributedCache>>(options =>
+{
+    options.KeyPrefix = "AspNetCoreSampleApp";
+    options.DistributedCacheEntryOptions =
+        new DistributedCacheEntryOptions()
+        .SetAbsoluteExpiration(TimeSpan.FromHours(24))
+        .SetSlidingExpiration(TimeSpan.FromHours(6));
+    options.SemaphoreTimeout = TimeSpan.FromMinutes(5);
+});
+
+builder.Services.AddSession<RedisCache>();
 
 builder.Services.AddHttpContextAccessor();
 
@@ -34,6 +57,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();
