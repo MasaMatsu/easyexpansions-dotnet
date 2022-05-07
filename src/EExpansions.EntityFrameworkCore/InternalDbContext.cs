@@ -105,7 +105,7 @@ internal static class InternalDbContext
         entity.CreatedAt = now;
     }
 
-    public static void OnCreating<TKey>(IEntityCreationRecordable<TKey> entity, TKey id)
+    public static void OnCreating<TKey>(IEntityCreationRecordable<TKey> entity, TKey? id)
         where TKey : IEquatable<TKey>
     {
         entity.CreatedBy = id;
@@ -116,7 +116,7 @@ internal static class InternalDbContext
         entity.UpdatedAt = now;
     }
 
-    public static void OnUpdating<TKey>(IEntityUpdationRecordable<TKey> entity, TKey id)
+    public static void OnUpdating<TKey>(IEntityUpdationRecordable<TKey> entity, TKey? id)
         where TKey : IEquatable<TKey>
     {
         entity.UpdatedBy = id;
@@ -127,7 +127,7 @@ internal static class InternalDbContext
         entity.DeletedAt = now;
     }
 
-    public static void OnDeleting<TKey>(IEntitySoftDeletionRecordable<TKey> entity, TKey id)
+    public static void OnDeleting<TKey>(IEntitySoftDeletionRecordable<TKey> entity, TKey? id)
         where TKey : IEquatable<TKey>
     {
         entity.DeletedBy = id;
@@ -212,12 +212,12 @@ internal static class InternalDbContext
 
     public static void OnSaveChanges<TContext, TKey>(
         TContext context,
-        Action<IEntityCreationRecordable, DateTimeOffset, TKey> onCreating,
-        Action<IEntityUpdationRecordable, DateTimeOffset, TKey> onUpdating,
-        Action<IEntitySoftDeletionRecordable, DateTimeOffset, TKey> onDeleting,
+        Action<IEntityCreationRecordable, DateTimeOffset, TKey?> onCreating,
+        Action<IEntityUpdationRecordable, DateTimeOffset, TKey?> onUpdating,
+        Action<IEntitySoftDeletionRecordable, DateTimeOffset, TKey?> onDeleting,
         Action<IEntitySoftDeletionRecordable> onRestoring,
         DateTimeOffset now,
-        TKey userId
+        TKey? userId
     )
         where TContext : DbContext
         where TKey : IEquatable<TKey>

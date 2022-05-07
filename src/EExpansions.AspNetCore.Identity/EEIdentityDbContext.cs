@@ -125,7 +125,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     /// <param name="entity">The entity to configure.</param>
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     /// <param name="id">The user id.</param>
-    protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now, TKey id)
+    protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now, TKey? id)
     {
         InternalDbContext.OnCreating(entity, now);
 
@@ -141,7 +141,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     /// <param name="entity">The entity to configure.</param>
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     /// <param name="id">The user id.</param>
-    protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now, TKey id)
+    protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now, TKey? id)
     {
         InternalDbContext.OnUpdating(entity, now);
 
@@ -157,7 +157,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     /// <param name="entity">The entity to configure.</param>
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     /// <param name="id">The user id.</param>
-    protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now, TKey id)
+    protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now, TKey? id)
     {
         InternalDbContext.OnDeleting(entity, now);
 
@@ -185,7 +185,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     /// Returns the id of the editing user.
     /// </summary>
     /// <returns>The id of the editing user.</returns>
-    protected abstract TKey GetUserId();
+    protected abstract TKey? GetUserId();
 
     #region PrimitiveSaveChanges
 
