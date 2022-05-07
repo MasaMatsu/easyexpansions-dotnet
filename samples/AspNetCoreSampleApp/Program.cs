@@ -7,7 +7,7 @@ using EExpansions.AspNetCore.Caching;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DbConnection")
@@ -15,11 +15,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
 });
-builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddEntityCache<ApplicationDbContext, RedisCache, DistributedEntityCacheValueContainer<MemoryDistributedCache>>(options =>
 {
