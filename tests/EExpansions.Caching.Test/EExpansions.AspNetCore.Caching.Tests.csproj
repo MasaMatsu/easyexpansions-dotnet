@@ -19,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EExpansions.Caching\EExpansions.AspNetCore.Caching.csproj" />
+    <ProjectReference Include="..\..\src\EExpansions.Core\EExpansions.Core.csproj" />
+  </ItemGroup>
 </Project>
