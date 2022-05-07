@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using AspNetCoreSampleApp.Data.Models;
 using System.Security.Claims;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AspNetCoreSampleApp.Data;
 
@@ -14,6 +15,8 @@ public class ApplicationDbContext : EEIdentityDbContext<User>
     {
         HttpContextAccessor = httpContextAccessor;
     }
+
+    public virtual DbSet<TodoItem> TodoItems { get; set; } = null!;
 
     protected override string? GetUserId()
     {
