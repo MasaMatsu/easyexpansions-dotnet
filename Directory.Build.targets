@@ -2,6 +2,7 @@
   <ItemGroup>
     <PackageReference Update="coverlet.collector" Version="3.1.2" />
     <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />
+    <PackageReference Update="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="6.0.4" />
     <PackageReference Update="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
