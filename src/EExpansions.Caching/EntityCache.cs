@@ -40,7 +40,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
         ValueContainer = serviceProvider.GetRequiredService<IEntityCacheValueContainer>();
         ContextFactory = serviceProvider.GetRequiredService<IDbContextFactory<TContext>>();
 
-        Options = serviceProvider.GetRequiredService<IOptions<EntityCacheOptions>>().Value;
+        Options = serviceProvider.GetRequiredService<EntityCacheOptions>().Value;
         if (Options.KeyPrefix.IsNullOrEmpty())
         {
             throw new InvalidOperationException("The key prefix may not be empty.");

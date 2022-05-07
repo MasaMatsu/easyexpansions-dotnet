@@ -3,7 +3,7 @@
 /// <summary>
 /// The options to be used by a <see cref="EntityCache{TContext}" />.
 /// </summary>
-public class EntityCacheOptions
+public class EntityCacheOptions : IOptions<EntityCacheOptions>
 {
     /// <summary>
     /// The prefix literal of cache key.
@@ -22,4 +22,7 @@ public class EntityCacheOptions
     /// A <see cref="TimeSpan"/> that called from <see cref="SemaphoreSlim.Wait(TimeSpan)"/>
     /// </summary>
     public TimeSpan SemaphoreTimeout { get; set; } = Timeout.InfiniteTimeSpan;
+
+    /// <inheritdoc />
+    public EntityCacheOptions Value => this;
 }
