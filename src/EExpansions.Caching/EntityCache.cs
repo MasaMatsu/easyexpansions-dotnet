@@ -40,7 +40,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
         ValueContainer = serviceProvider.GetRequiredService<IEntityCacheValueContainer>();
         ContextFactory = serviceProvider.GetRequiredService<IDbContextFactory<TContext>>();
 
-        Options = serviceProvider.GetRequiredService<EntityCacheOptions>().Value;
+        Options = serviceProvider.GetRequiredService<IOptions<EntityCacheOptions>>().Value;
         if (Options.KeyPrefix.IsNullOrEmpty())
         {
             throw new InvalidOperationException("The key prefix may not be empty.");
@@ -50,63 +50,55 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
     }
 
     /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="keyValues"/> is <see langword="null" />.
-    /// </exception>
-    public TEntity? Get<TEntity>(params object?[]? keyValues) where TEntity : class
-    {
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
-        return GetOrCreateCachedEntity<TEntity>(keyValues);
-    }
+    public TEntity? Get<TEntity>(params object?[]? keyValues) where TEntity : class =>
+        keyValues is null || keyValues.Any(v => v is null)
+        ? null
+        : GetOrCreateCachedEntity<TEntity>(keyValues);
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="entityType"/> or <paramref name="keyValues"/> are <see langword="null" />.
+    /// <paramref name="entityType"/> is <see langword="null" />.
     /// </exception>
     public object? Get(Type entityType, params object?[]? keyValues)
     {
         _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
-        return GetOrCreateCachedEntity(entityType, keyValues);
+        return
+            keyValues is null || keyValues.Any(v => v is null)
+            ? null
+            : GetOrCreateCachedEntity(entityType, keyValues);
     }
 
     /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="keyValues"/> is <see langword="null" />.
-    /// </exception>
-    public Task<TEntity?> GetAsync<TEntity>(params object?[]? keyValues) where TEntity : class
-    {
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
-        return GetOrCreateCachedEntityAsync<TEntity>(keyValues, default);
-    }
+    public Task<TEntity?> GetAsync<TEntity>(params object?[]? keyValues) where TEntity : class =>
+        keyValues is null || keyValues.Any(v => v is null)
+        ? Task.FromResult<TEntity?>(null)
+        : GetOrCreateCachedEntityAsync<TEntity>(keyValues, default);
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="entityType"/> or <paramref name="keyValues"/> are <see langword="null" />.
+    /// <paramref name="entityType"/> is <see langword="null" />.
     /// </exception>
     public Task<object?> GetAsync(Type entityType, params object?[]? keyValues)
     {
         _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
-        return GetOrCreateCachedEntityAsync(entityType, keyValues, default);
+        return
+            keyValues is null || keyValues.Any(v => v is null)
+            ? Task.FromResult<object?>(null)
+            : GetOrCreateCachedEntityAsync(entityType, keyValues, default);
     }
 
     /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="keyValues"/> is <see langword="null" />.
-    /// </exception>
     public Task<TEntity?> GetAsync<TEntity>(
         object?[]? keyValues,
         CancellationToken cancellationToken
-    ) where TEntity : class
-    {
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
-        return GetOrCreateCachedEntityAsync<TEntity>(keyValues, cancellationToken);
-    }
+    ) where TEntity : class =>
+        keyValues is null || keyValues.Any(v => v is null)
+        ? Task.FromResult<TEntity?>(null)
+        : GetOrCreateCachedEntityAsync<TEntity>(keyValues, cancellationToken);
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="entityType"/> or <paramref name="keyValues"/> are <see langword="null" />.
+    /// <paramref name="entityType"/> is <see langword="null" />.
     /// </exception>
     public Task<object?> GetAsync(
         Type entityType,
@@ -115,17 +107,19 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
     )
     {
         _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
-        return GetOrCreateCachedEntityAsync(entityType, keyValues, cancellationToken);
+        return
+            keyValues is null || keyValues.Any(v => v is null)
+            ? Task.FromResult<object?>(null)
+            : GetOrCreateCachedEntityAsync(entityType, keyValues, cancellationToken);
     }
 
     /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="keyValues"/> is <see langword="null" />.
-    /// </exception>
     public void Expire<TEntity>(params object?[]? keyValues) where TEntity : class
     {
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
+        if (keyValues is null || keyValues.Any(v => v is null))
+        {
+            return;
+        }
         SemaphoreSlim.ExecuteInLock(() =>
         {
             var keyCacheKey = GenKeyCacheKey(typeof(TEntity), keyValues);
@@ -137,12 +131,15 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="keyValues"/> is <see langword="null" />.
+    /// <paramref name="entityType"/> is <see langword="null" />.
     /// </exception>
     public void Expire(Type entityType, params object?[]? keyValues)
     {
         _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
+        if (keyValues is null || keyValues.Any(v => v is null))
+        {
+            return;
+        }
         SemaphoreSlim.ExecuteInLock(() =>
         {
             var keyCacheKey = GenKeyCacheKey(entityType, keyValues);
@@ -153,29 +150,26 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
     }
 
     /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="keyValues"/> is <see langword="null" />.
-    /// </exception>
     public Task ExpireAsync<TEntity>(params object?[]? keyValues) where TEntity : class =>
         ExpireAsync<TEntity>(keyValues, cancellationToken: default);
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="entityType"/> or <paramref name="keyValues"/> are <see langword="null" />.
+    /// <paramref name="entityType"/> is <see langword="null" />.
     /// </exception>
     public Task ExpireAsync(Type entityType, params object?[]? keyValues) =>
         ExpireAsync(entityType, keyValues, cancellationToken: default);
 
     /// <inheritdoc/>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="keyValues"/> is <see langword="null" />.
-    /// </exception>
     public async Task ExpireAsync<TEntity>(
         object?[]? keyValues,
         CancellationToken cancellationToken
     ) where TEntity : class
     {
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
+        if (keyValues is null || keyValues.Any(v => v is null))
+        {
+            return;
+        }
         await SemaphoreSlim.ExecuteInLockAsync(async () =>
         {
             var keyCacheKey = GenKeyCacheKey(typeof(TEntity), keyValues);
@@ -187,7 +181,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
 
     /// <inheritdoc/>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="entityType"/> or <paramref name="keyValues"/> are <see langword="null" />.
+    /// <paramref name="entityType"/> is <see langword="null" />.
     /// </exception>
     public async Task ExpireAsync(
         Type entityType,
@@ -196,7 +190,10 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
     )
     {
         _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-        _ = keyValues ?? throw new ArgumentNullException(nameof(keyValues));
+        if (keyValues is null || keyValues.Any(v => v is null))
+        {
+            return;
+        }
         await SemaphoreSlim.ExecuteInLockAsync(async () =>
         {
             var keyCacheKey = GenKeyCacheKey(entityType, keyValues);
@@ -208,10 +205,10 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
 
     #region Key generation logics
 
-    private string GetPrimaryKeyValueString(object?[]? keyValues) =>
-        $"{{{string.Join(",", keyValues ?? Enumerable.Empty<object?>())}}}";
+    private string GetPrimaryKeyValueString(object?[] keyValues) =>
+        $"{{{string.Join(",", keyValues)}}}";
 
-    private string GenKeyCacheKey(Type entityType, object?[]? keyValues) =>
+    private string GenKeyCacheKey(Type entityType, object?[] keyValues) =>
         $"{Options.KeyPrefix}:{entityType.Name}:pk:{GetPrimaryKeyValueString(keyValues)}";
 
     private string GenValueCacheKey(string keyCacheKey) =>
@@ -272,7 +269,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
 
     #region Get or create entity in cache
 
-    private TEntity? GetOrCreateCachedEntity<TEntity>(object?[]? keyValues) where TEntity : class
+    private TEntity? GetOrCreateCachedEntity<TEntity>(object?[] keyValues) where TEntity : class
     {
         var keyCacheKey = GenKeyCacheKey(typeof(TEntity), keyValues);
 
@@ -286,8 +283,10 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
                 if (cachedEntity is null)
                 {
                     var entity = ContextFactory.Execute(context =>
-                        context.Find<TEntity>(keyValues)
-                    );
+                    {
+                        context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                        return context.Find<TEntity>(keyValues);
+                    });
                     if (entity is not null)
                     {
                         var valueCacheKey = GenValueCacheKey(keyCacheKey);
@@ -306,7 +305,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
         return cachedEntity;
     }
 
-    private object? GetOrCreateCachedEntity(Type entityType, object?[]? keyValues)
+    private object? GetOrCreateCachedEntity(Type entityType, object?[] keyValues)
     {
         var keyCacheKey = GenKeyCacheKey(entityType, keyValues);
 
@@ -320,8 +319,10 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
                 if (cachedEntity is null)
                 {
                     var entity = ContextFactory.Execute(context =>
-                        context.Find(entityType, keyValues)
-                    );
+                    {
+                        context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                        return context.Find(entityType, keyValues);
+                    });
                     if (entity is not null)
                     {
                         var valueCacheKey = GenValueCacheKey(keyCacheKey);
@@ -341,7 +342,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
     }
 
     private async Task<TEntity?> GetOrCreateCachedEntityAsync<TEntity>(
-        object?[]? keyValues,
+        object?[] keyValues,
         CancellationToken cancellationToken
     ) where TEntity : class
     {
@@ -357,7 +358,11 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
                 if (cachedEntity is null)
                 {
                     var entity = await ContextFactory.ExecuteAsync(
-                        async context => await context.FindAsync<TEntity>(keyValues, cancellationToken),
+                        context =>
+                        {
+                            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                            return context.FindAsync<TEntity>(keyValues, cancellationToken).AsTask();
+                        },
                         cancellationToken
                     );
                     if (entity is not null)
@@ -381,7 +386,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
 
     private async Task<object?> GetOrCreateCachedEntityAsync(
         Type entityType,
-        object?[]? keyValues,
+        object?[] keyValues,
         CancellationToken cancellationToken
     )
     {
@@ -397,7 +402,11 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
                 if (cachedEntity is null)
                 {
                     var entity = await ContextFactory.ExecuteAsync(
-                        async context => await context.FindAsync(entityType, keyValues, cancellationToken),
+                        context =>
+                        {
+                            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                            return context.FindAsync(entityType, keyValues, cancellationToken).AsTask();
+                        },
                         cancellationToken
                     );
                     if (entity is not null)
