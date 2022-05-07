@@ -31,7 +31,7 @@ internal static class InternalDbContext
             .IsRequired(true)
             .HasValueGenerator<FalseValueGenerator>();
 
-            b.Property<bool>(
+            b.Property<DateTimeOffset?>(
                 nameof(IEntitySoftDeletionRecordable.DeletedAt)
             )
             .IsRequired(false);
@@ -42,19 +42,19 @@ internal static class InternalDbContext
         where TKey : IEquatable<TKey>
     {
         modelBuilder.Entities<IEntityCreationRecordable<TKey>>(b =>
-            b.Property<TKey>(
+            b.Property<TKey?>(
                 nameof(IEntityCreationRecordable<TKey>.CreatedBy)
             )
             .IsRequired(false)
         );
         modelBuilder.Entities<IEntityUpdationRecordable<TKey>>(b =>
-            b.Property<TKey>(
+            b.Property<TKey?>(
                 nameof(IEntityUpdationRecordable<TKey>.UpdatedBy)
             )
             .IsRequired(false)
         );
         modelBuilder.Entities<IEntitySoftDeletionRecordable<TKey>>(b =>
-            b.Property<TKey>(
+            b.Property<TKey?>(
                 nameof(IEntitySoftDeletionRecordable<TKey>.DeletedBy)
             )
             .IsRequired(false)
