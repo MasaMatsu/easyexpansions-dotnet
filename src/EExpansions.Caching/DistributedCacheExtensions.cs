@@ -11,12 +11,13 @@ public static class DistributedCacheExtensions
     /// <param name="key">The key to store the data in.</param>
     /// <returns>The value from the stored cache key.</returns>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="cache"/> is <see langword="null" />.
+    /// <paramref name="cache"/> or <paramref name="key"/> are <see langword="null" />.
     /// </exception>
     public static TValue? Get<TValue>(this IDistributedCache cache, string key)
         where TValue : class
     {
         _ = cache ?? throw new ArgumentNullException(nameof(cache));
+        _ = key ?? throw new ArgumentNullException(nameof(key));
 
         var json = cache.GetString(key);
         if (json.IsNullOrEmpty())
@@ -36,12 +37,13 @@ public static class DistributedCacheExtensions
     /// <param name="key">The key to store the data in.</param>
     /// <returns>The value from the stored cache key.</returns>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="cache"/> or <paramref name="valueType"/> are <see langword="null" />.
+    /// <paramref name="cache"/>, <paramref name="valueType"/> or <paramref name="key"/> are <see langword="null" />.
     /// </exception>
     public static object? Get(this IDistributedCache cache, Type valueType, string key)
     {
         _ = cache ?? throw new ArgumentNullException(nameof(cache));
         _ = valueType ?? throw new ArgumentNullException(nameof(valueType));
+        _ = key ?? throw new ArgumentNullException(nameof(key));
 
         var json = cache.GetString(key);
         if (json.IsNullOrEmpty())
@@ -65,7 +67,7 @@ public static class DistributedCacheExtensions
     /// The task result contains the value from the stored cache key.
     /// </returns>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="cache"/> is <see langword="null" />.
+    /// <paramref name="cache"/> or <paramref name="key"/> are <see langword="null" />.
     /// </exception>
     public static async Task<TValue?> GetAsync<TValue>(
         this IDistributedCache cache,
@@ -74,6 +76,7 @@ public static class DistributedCacheExtensions
     ) where TValue : class
     {
         _ = cache ?? throw new ArgumentNullException(nameof(cache));
+        _ = key ?? throw new ArgumentNullException(nameof(key));
 
         var json = await cache.GetStringAsync(key, cancellationToken);
         if (json.IsNullOrEmpty())
@@ -98,7 +101,7 @@ public static class DistributedCacheExtensions
     /// The task result contains the value from the stored cache key.
     /// </returns>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="cache"/> or <paramref name="valueType"/> are <see langword="null" />.
+    /// <paramref name="cache"/>, <paramref name="valueType"/> or <paramref name="key"/> are <see langword="null" />.
     /// </exception>
     public static async Task<object?> GetAsync(
         this IDistributedCache cache,
@@ -109,6 +112,7 @@ public static class DistributedCacheExtensions
     {
         _ = cache ?? throw new ArgumentNullException(nameof(cache));
         _ = valueType ?? throw new ArgumentNullException(nameof(valueType));
+        _ = key ?? throw new ArgumentNullException(nameof(key));
 
         var json = await cache.GetStringAsync(key, cancellationToken);
         if (json.IsNullOrEmpty())
@@ -130,7 +134,7 @@ public static class DistributedCacheExtensions
     /// <param name="value">The data to store in the cache.</param>
     /// <param name="options">The cache options for the entry.</param>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="cache"/> is <see langword="null" />.
+    /// <paramref name="cache"/> or <paramref name="key"/> are <see langword="null" />.
     /// </exception>
     public static void Set<TValue>(
         this IDistributedCache cache,
@@ -140,12 +144,14 @@ public static class DistributedCacheExtensions
     ) where TValue : class
     {
         _ = cache ?? throw new ArgumentNullException(nameof(cache));
+        _ = key ?? throw new ArgumentNullException(nameof(key));
 
         var json = JsonSerializer.Serialize(value);
         if (options is null)
         {
             cache.SetString(key, json);
         }
+        else
         {
             cache.SetString(key, json, options);
         }
@@ -161,7 +167,7 @@ public static class DistributedCacheExtensions
     /// <param name="value">The data to store in the cache.</param>
     /// <param name="options">The cache options for the entry.</param>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="cache"/> or <paramref name="valueType"/> are <see langword="null" />.
+    /// <paramref name="cache"/>, <paramref name="valueType"/> or <paramref name="key"/> are <see langword="null" />.
     /// </exception>
     public static void Set(
         this IDistributedCache cache,
@@ -173,12 +179,14 @@ public static class DistributedCacheExtensions
     {
         _ = cache ?? throw new ArgumentNullException(nameof(cache));
         _ = valueType ?? throw new ArgumentNullException(nameof(valueType));
+        _ = key ?? throw new ArgumentNullException(nameof(key));
 
         var json = JsonSerializer.Serialize(value, valueType);
         if (options is null)
         {
             cache.SetString(key, json);
         }
+        else
         {
             cache.SetString(key, json, options);
         }
@@ -198,7 +206,7 @@ public static class DistributedCacheExtensions
     /// A task that represents the asynchronous operation.
     /// </returns>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="cache"/> is <see langword="null" />.
+    /// <paramref name="cache"/> or <paramref name="key"/> are <see langword="null" />.
     /// </exception>
     public static async Task SetAsync<TValue>(
         this IDistributedCache cache,
@@ -209,6 +217,7 @@ public static class DistributedCacheExtensions
     ) where TValue : class
     {
         _ = cache ?? throw new ArgumentNullException(nameof(cache));
+        _ = key ?? throw new ArgumentNullException(nameof(key));
 
         await using var stream = new MemoryStream();
         await JsonSerializer.SerializeAsync(stream, value, cancellationToken: cancellationToken);
@@ -218,6 +227,7 @@ public static class DistributedCacheExtensions
         {
             await cache.SetStringAsync(key, json, cancellationToken);
         }
+        else
         {
             await cache.SetStringAsync(key, json, options, cancellationToken);
         }
@@ -237,7 +247,7 @@ public static class DistributedCacheExtensions
     /// A task that represents the asynchronous operation.
     /// </returns>
     /// <exception cref="ArgumentNullException">
-    /// <paramref name="cache"/> or <paramref name="valueType"/> are <see langword="null" />.
+    /// <paramref name="cache"/>, <paramref name="valueType"/> or <paramref name="key"/> are <see langword="null" />.
     /// </exception>
     public static async Task SetAsync(
         this IDistributedCache cache,
@@ -250,6 +260,7 @@ public static class DistributedCacheExtensions
     {
         _ = cache ?? throw new ArgumentNullException(nameof(cache));
         _ = valueType ?? throw new ArgumentNullException(nameof(valueType));
+        _ = key ?? throw new ArgumentNullException(nameof(key));
 
         await using var stream = new MemoryStream();
         await JsonSerializer.SerializeAsync(stream, value, cancellationToken: cancellationToken);
@@ -259,6 +270,7 @@ public static class DistributedCacheExtensions
         {
             await cache.SetStringAsync(key, json, cancellationToken);
         }
+        else
         {
             await cache.SetStringAsync(key, json, options, cancellationToken);
         }

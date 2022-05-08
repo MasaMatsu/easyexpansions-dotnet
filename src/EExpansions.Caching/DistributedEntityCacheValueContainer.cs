@@ -30,12 +30,8 @@ public class DistributedEntityCacheValueContainer<TDistributedCache> : IEntityCa
         Cache.Get<TEntity>(key);
 
     /// <inheritdoc/>
-    public object? Get(Type entityType, string key)
-    {
-        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-
-        return Cache.Get(entityType, key);
-    }
+    public object? Get(Type entityType, string key) =>
+        Cache.Get(entityType, key);
 
     /// <inheritdoc/>
     public Task<TEntity?> GetAsync<TEntity>(
@@ -49,23 +45,15 @@ public class DistributedEntityCacheValueContainer<TDistributedCache> : IEntityCa
         Type entityType,
         string key,
         CancellationToken cancellationToken = default
-    )
-    {
-        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-
-        return Cache.GetAsync(entityType, key, cancellationToken);
-    }
+    ) =>
+        Cache.GetAsync(entityType, key, cancellationToken);
 
     /// <inheritdoc/>
     public void Set<TEntity>(string key, TEntity value) where TEntity : class =>
         Cache.Set(key, value);
 
-    public void Set(Type entityType, string key, object value)
-    {
-        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-
+    public void Set(Type entityType, string key, object value) =>
         Cache.Set(entityType, key, value);
-    }
 
     /// <inheritdoc/>
     public Task SetAsync<TEntity>(
@@ -81,12 +69,8 @@ public class DistributedEntityCacheValueContainer<TDistributedCache> : IEntityCa
         string key,
         object value,
         CancellationToken cancellationToken = default
-    )
-    {
-        _ = entityType ?? throw new ArgumentNullException(nameof(entityType));
-
-        return Cache.SetAsync(entityType, key, value, cancellationToken: cancellationToken);
-    }
+    ) =>
+        Cache.SetAsync(entityType, key, value, cancellationToken: cancellationToken);
 
     /// <inheritdoc/>
     public void Remove(string key) => Cache.Remove(key);

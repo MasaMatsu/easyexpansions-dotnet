@@ -1,0 +1,22 @@
+﻿@page
+@model AspNetCoreSampleApp.Pages.FetchDataModel
+@{
+    ViewData["Title"] = "FetchData";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Creator</th>
+            <th>CreatedAt</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Item?.Title</td>
+            <td>@Model.Item?.Creator?.Email</td>
+            <td>@Model.Item?.CreatedAt</td>
+        </tr>
+    </tbody>
+</table>
