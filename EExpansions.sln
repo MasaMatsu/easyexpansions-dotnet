@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore.Iden
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore.Caching", "src\EExpansions.AspNetCore.Caching\EExpansions.AspNetCore.Caching.csproj", "{51885662-79A6-4C99-A314-8B54C315BA50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore.Caching.Tests", "tests\EExpansions.Caching.Test\EExpansions.AspNetCore.Caching.Tests.csproj", "{A8BDFFF7-78F5-4F31-91F6-AA257575292D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore.Caching.Tests", "tests\EExpansions.AspNetCore.Caching.Test\EExpansions.AspNetCore.Caching.Tests.csproj", "{A8BDFFF7-78F5-4F31-91F6-AA257575292D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.Core", "src\EExpansions.Core\EExpansions.Core.csproj", "{C61C80CA-BE02-4581-9702-8E0F3236F0BF}"
 EndProject
