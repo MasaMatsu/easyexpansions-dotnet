@@ -1,0 +1,37 @@
+name: .NET
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.x'
+          source-url: https://nuget.pkg.github.com/MasaMatsu/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: dotnet build --configuration Release --no-restore
+      - name: Create packages
+        run: |
+          dotnet pack --configuration Release ./src/EExpansions.Core/EExpansions.Core.csproj
+          dotnet pack --configuration Release ./src/EExpansions.EntityFrameworkCore/EExpansions.EntityFrameworkCore.csproj
+          dotnet pack --configuration Release ./src/EExpansions.AspNetCore.Identity/EExpansions.AspNetCore.Identity.csproj
+          dotnet pack --configuration Release ./src/EExpansions.AspNetCore.Caching/EExpansions.AspNetCore.Caching.csproj
+          dotnet pack --configuration Release ./src/EExpansions.AspNetCore.Session/EExpansions.AspNetCore.Session.csproj
+          dotnet pack --configuration Release ./src/EExpansions.AspNetCore/EExpansions.AspNetCore.csproj
+      - name: Publish the package to GPR
+        run: |
+          dotnet nuget push ./src/EExpansions.Core/bin/Release/*.nupkg
+          dotnet nuget push ./src/EExpansions.EntityFrameworkCore/bin/Release/*.nupkg
+          dotnet nuget push ./src/EExpansions.AspNetCore.Identity/bin/Release/*.nupkg
+          dotnet nuget push ./src/EExpansions.AspNetCore.Caching/bin/Release/*.nupkg
+          dotnet nuget push ./src/EExpansions.AspNetCore.Session/bin/Release/*.nupkg
+          dotnet nuget push ./src/EExpansions.AspNetCore/bin/Release/*.nupkg

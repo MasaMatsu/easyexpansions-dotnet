@@ -3,6 +3,14 @@
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <LangVersion>10</LangVersion>
+    <RootNamespace>EExpansions</RootNamespace>
+    <Authors>MasaMatsu</Authors>
+    <Copyright>Copyright (c) MasaMatsu 2022</Copyright>
+    <PackageProjectUrl>https://github.com/MasaMatsu/easyexpansions-dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MasaMatsu/easyexpansions-dotnet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
  
 </Project>

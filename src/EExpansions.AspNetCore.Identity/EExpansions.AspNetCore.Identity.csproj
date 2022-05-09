@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>EExpansions.AspNetCore.Identity</AssemblyName>
+    <PackageVersion>6.0.0-alpha</PackageVersion>
+    <PackageTags>aspnetcore;identity;entityframeworkcore</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
