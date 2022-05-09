@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>EExpansions.EntityFrameworkCore</AssemblyName>
+    <PackageVersion>6.0.0-alpha</PackageVersion>
+    <PackageTags>entityframeworkcore</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
