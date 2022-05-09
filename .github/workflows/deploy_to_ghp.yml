@@ -12,13 +12,17 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-dotnet@v2
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.x'
           source-url: https://nuget.pkg.github.com/MasaMatsu/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: dotnet build --configuration Release --no-restore
+      - name: Build solution
+        run: |
+          dotnet restore
+          dotnet build --configuration Release --no-restore
       - name: Create packages
         run: |
           dotnet pack --configuration Release ./src/EExpansions.Core/EExpansions.Core.csproj
