@@ -1,9 +1,21 @@
 ﻿<Project>
  
   <PropertyGroup>
+    <DefaultNetCoreTargetFramework>net6.0</DefaultNetCoreTargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>10</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Version">
+    <MajorVersion>6</MajorVersion>
+    <MinorVersion>0</MinorVersion>
+    <PatchVersion>0</PatchVersion>
+    <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+  </PropertyGroup>
+
+  <PropertyGroup Label="ForPack">
     <RootNamespace>EExpansions</RootNamespace>
     <Authors>MasaMatsu</Authors>
     <Copyright>Copyright (c) MasaMatsu 2022</Copyright>
