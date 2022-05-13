@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
-    <AssemblyName>EExpansions.AspNetCore</AssemblyName>
+    <AssemblyName>EExpansions.AspNetCore.All</AssemblyName>
     <PackageTags>aspnetcore</PackageTags>
     <Description>The bundle package for EExpansions.AspNetCore.*.</Description>
   </PropertyGroup>

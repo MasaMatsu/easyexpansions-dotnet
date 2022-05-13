@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EExpansions.AspNetCore\EExpansions.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\src\EExpansions.AspNetCore.All\EExpansions.AspNetCore.All.csproj" />
     <ProjectReference Include="..\..\src\EExpansions.Core\EExpansions.Core.csproj" />
   </ItemGroup>
 </Project>
