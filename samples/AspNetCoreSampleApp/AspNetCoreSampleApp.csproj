@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
     <UserSecretsId>aspnet-AspNetCoreSampleApp-7B69A324-BFF2-4C9A-AD8A-BB2C49F03A37</UserSecretsId>
   </PropertyGroup>
 
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EExpansions.AspNetCore\EExpansions.AspNetCore.csproj">
+    <ProjectReference Include="..\..\src\EExpansions.AspNetCore.All\EExpansions.AspNetCore.All.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
     <ProjectReference Include="..\..\src\EExpansions.Core\EExpansions.Core.csproj">

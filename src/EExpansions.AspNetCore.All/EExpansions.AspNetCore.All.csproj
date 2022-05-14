@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>EExpansions.AspNetCore</AssemblyName>
-    <PackageVersion>6.0.0-alpha</PackageVersion>
+    <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
+    <AssemblyName>EExpansions.AspNetCore.All</AssemblyName>
     <PackageTags>aspnetcore</PackageTags>
     <Description>The bundle package for EExpansions.AspNetCore.*.</Description>
   </PropertyGroup>

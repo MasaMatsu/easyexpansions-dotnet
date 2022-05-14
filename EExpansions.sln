@@ -32,9 +32,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.EntityFramework
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore.Session", "src\EExpansions.AspNetCore.Session\EExpansions.AspNetCore.Session.csproj", "{2186201F-4A0F-4DF2-BB2C-FC982123BCD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore", "src\EExpansions.AspNetCore\EExpansions.AspNetCore.csproj", "{C19DFC56-29DD-4D1A-814F-B48E4988150C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore.All", "src\EExpansions.AspNetCore.All\EExpansions.AspNetCore.All.csproj", "{C19DFC56-29DD-4D1A-814F-B48E4988150C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore.Tests", "tests\EExpansions.AspNetCore.Tests\EExpansions.AspNetCore.Tests.csproj", "{4FA5C6D0-5F7A-4BE7-AB25-AEEF44F026E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore.All.Tests", "tests\EExpansions.AspNetCore.All.Tests\EExpansions.AspNetCore.All.Tests.csproj", "{4FA5C6D0-5F7A-4BE7-AB25-AEEF44F026E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EExpansions.AspNetCore.Session.Tests", "tests\EExpansions.AspNetCore.Session.Tests\EExpansions.AspNetCore.Session.Tests.csproj", "{0F9EE894-CFE6-4E3D-A93E-5C3BD9022A7C}"
 EndProject
