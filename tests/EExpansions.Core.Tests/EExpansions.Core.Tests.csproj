@@ -24,5 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\EExpansions.Core\EExpansions.Core.csproj" />
+    <ProjectReference Include="..\EExpansions.TestHelper\EExpansions.TestHelper.csproj" />
   </ItemGroup>
 </Project>
