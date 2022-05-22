@@ -3,17 +3,17 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreSampleApp.Data.Models;
 
-public class User : IdentityUser, IEntityCreationRecordable<string, User>, IEntityUpdationRecordable<string, User>, IEntitySoftDeletionRecordable<string, User>
+public class User : IdentityUser<Guid>, IEntityCreationRecordable<Guid, User>, IEntityUpdationRecordable<Guid, User>, IEntitySoftDeletionRecordable<Guid, User>
 {
-    public string? CreatedBy { get; set; }
+    public Guid? CreatedBy { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public User? Creator { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public Guid? UpdatedBy { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
     public User? Updater { get; set; }
     
-    public string? DeletedBy { get; set; }
+    public Guid? DeletedBy { get; set; }
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }
     public User? Deleter { get; set; }

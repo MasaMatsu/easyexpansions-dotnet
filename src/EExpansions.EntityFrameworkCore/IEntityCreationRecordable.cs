@@ -16,7 +16,7 @@ public interface IEntityCreationRecordable
 /// </summary>
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 public interface IEntityCreationRecordable<TKey> : IEntityCreationRecordable
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     /// <summary>
     /// The user ID of the creator.
@@ -30,7 +30,7 @@ public interface IEntityCreationRecordable<TKey> : IEntityCreationRecordable
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 /// <typeparam name="TUser">The type of the user entity.</typeparam>
 public interface IEntityCreationRecordable<TKey, TUser> : IEntityCreationRecordable<TKey>
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
     where TUser : class
 {
     /// <summary>

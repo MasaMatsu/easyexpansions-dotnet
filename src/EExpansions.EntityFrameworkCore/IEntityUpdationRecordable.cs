@@ -16,7 +16,7 @@ public interface IEntityUpdationRecordable
 /// </summary>
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 public interface IEntityUpdationRecordable<TKey> : IEntityUpdationRecordable
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     /// <summary>
     /// The user ID of the updater.
@@ -30,7 +30,7 @@ public interface IEntityUpdationRecordable<TKey> : IEntityUpdationRecordable
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 /// <typeparam name="TUser">The type of the user entity.</typeparam>
 public interface IEntityUpdationRecordable<TKey, TUser> : IEntityUpdationRecordable<TKey>
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
     where TUser : class
 {
     /// <summary>
