@@ -138,7 +138,7 @@ public abstract class EEDbContext : DbContext
 /// </summary>
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 public abstract class EEDbContext<TKey> : EEDbContext
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EEDbContext{TKey}" /> class.
@@ -278,7 +278,7 @@ public abstract class EEDbContext<TKey> : EEDbContext
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 /// <typeparam name="TUser">The type of the user entity.</typeparam>
 public abstract class EEDbContext<TKey, TUser> : EEDbContext<TKey>
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
     where TUser : class
 {
     /// <summary>

@@ -21,7 +21,7 @@ public interface IEntitySoftDeletionRecordable
 /// </summary>
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 public interface IEntitySoftDeletionRecordable<TKey> : IEntitySoftDeletionRecordable
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     /// <summary>
     /// The user ID of the deleter.
@@ -34,7 +34,7 @@ public interface IEntitySoftDeletionRecordable<TKey> : IEntitySoftDeletionRecord
 /// </summary>
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 public interface IEntitySoftDeletionRecordable<TKey, TUser> : IEntitySoftDeletionRecordable<TKey>
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
     where TUser : class
 {
     /// <summary>
@@ -58,7 +58,7 @@ public interface IEntitySoftDeletionRecordableIgnoringHardDeletion : IEntitySoft
 /// </summary>
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 public interface IEntitySoftDeletionRecordableIgnoringHardDeletion<TKey> : IEntitySoftDeletionRecordable<TKey>, IEntitySoftDeletionRecordableIgnoringHardDeletion
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 { }
 
 /// <summary>
@@ -68,6 +68,6 @@ public interface IEntitySoftDeletionRecordableIgnoringHardDeletion<TKey> : IEnti
 /// </summary>
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
 public interface IEntitySoftDeletionRecordableIgnoringHardDeletion<TKey, TUser> : IEntitySoftDeletionRecordable<TKey, TUser>, IEntitySoftDeletionRecordableIgnoringHardDeletion
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
     where TUser : class
 { }

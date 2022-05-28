@@ -453,6 +453,7 @@ public static class EnumerableExtensions
     /// The condition is tested by asynchronously <paramref name="predicate"/>.
     /// </summary>
     /// <param name="source">An <see cref="IEnumerable{T}" /> to return elements from.</param>
+    /// <param name="synchronously">If it is <see langword="true"/>, predicates are processed one at a time synchronously.</param>
     /// <param name="predicate">An asynchronously function to test each element for a condition.</param>
     /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
     /// <exception cref="ArgumentNullException">
@@ -464,6 +465,7 @@ public static class EnumerableExtensions
     /// </returns>
     public static async Task<IEnumerable<TSource>> SkipWhileAsync<TSource>(
         this IEnumerable<TSource> source,
+        bool synchronously,
         Func<TSource, Task<bool>> predicate
     )
     {
@@ -471,7 +473,7 @@ public static class EnumerableExtensions
         _ = predicate ?? throw new ArgumentNullException(nameof(predicate));
 
         return
-            (await GetAllResultAsync(source, true, (s, _) => predicate(s)))
+            (await GetAllResultAsync(source, synchronously, (s, _) => predicate(s)))
             .SkipWhile(r => r.isTarget)
             .Select(r => r.source);
     }
@@ -482,6 +484,7 @@ public static class EnumerableExtensions
     /// The element's index is used in the logic of the predicate function.
     /// </summary>
     /// <param name="source">An <see cref="IEnumerable{T}" /> to return elements from.</param>
+    /// <param name="synchronously">If it is <see langword="true"/>, predicates are processed one at a time synchronously.</param>
     /// <param name="predicate">An asynchronously function to test each source element for a condition; the second parameter of the function represents the index of the source element.</param>
     /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
     /// <exception cref="ArgumentNullException">
@@ -493,6 +496,7 @@ public static class EnumerableExtensions
     /// </returns>
     public static async Task<IEnumerable<TSource>> SkipWhileAsync<TSource>(
         this IEnumerable<TSource> source,
+        bool synchronously,
         Func<TSource, int, Task<bool>> predicate
     )
     {
@@ -500,7 +504,7 @@ public static class EnumerableExtensions
         _ = predicate ?? throw new ArgumentNullException(nameof(predicate));
 
         return
-            (await GetAllResultAsync(source, true, predicate))
+            (await GetAllResultAsync(source, synchronously, predicate))
             .SkipWhile(r => r.isTarget)
             .Select(r => r.source);
     }
@@ -510,6 +514,7 @@ public static class EnumerableExtensions
     /// The condition is tested by asynchronously <paramref name="predicate"/>.
     /// </summary>
     /// <param name="source">A sequence to return elements from.</param>
+    /// <param name="synchronously">If it is <see langword="true"/>, predicates are processed one at a time synchronously.</param>
     /// <param name="predicate">An asynchronously function to test each element for a condition.</param>
     /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
     /// <exception cref="ArgumentNullException">
@@ -521,6 +526,7 @@ public static class EnumerableExtensions
     /// </returns>
     public static async Task<IEnumerable<TSource>> TakeWhileAsync<TSource>(
         this IEnumerable<TSource> source,
+        bool synchronously,
         Func<TSource, Task<bool>> predicate
     )
     {
@@ -528,7 +534,7 @@ public static class EnumerableExtensions
         _ = predicate ?? throw new ArgumentNullException(nameof(predicate));
 
         return
-            (await GetAllResultAsync(source, true, (s, _) => predicate(s)))
+            (await GetAllResultAsync(source, synchronously, (s, _) => predicate(s)))
             .TakeWhile(r => r.isTarget)
             .Select(r => r.source);
     }
@@ -538,6 +544,7 @@ public static class EnumerableExtensions
     /// The condition is tested by asynchronously <paramref name="predicate"/>.
     /// </summary>
     /// <param name="source">The sequence to return elements from.</param>
+    /// <param name="synchronously">If it is <see langword="true"/>, predicates are processed one at a time synchronously.</param>
     /// <param name="predicate">An asynchronously function to test each source element for a condition; the second parameter of the function represents the index of the source element.</param>
     /// <typeparam name="TSource">The type of the elements of <paramref name="source" />.</typeparam>
     /// <exception cref="ArgumentNullException">
@@ -549,6 +556,7 @@ public static class EnumerableExtensions
     /// </returns>
     public static async Task<IEnumerable<TSource>> TakeWhileAsync<TSource>(
         this IEnumerable<TSource> source,
+        bool synchronously,
         Func<TSource, int, Task<bool>> predicate
     )
     {
@@ -556,7 +564,7 @@ public static class EnumerableExtensions
         _ = predicate ?? throw new ArgumentNullException(nameof(predicate));
 
         return
-            (await GetAllResultAsync(source, true, predicate))
+            (await GetAllResultAsync(source, synchronously, predicate))
             .TakeWhile(r => r.isTarget)
             .Select(r => r.source);
     }

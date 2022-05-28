@@ -39,7 +39,7 @@ internal static class InternalDbContext
     }
 
     public static void OnModelCreating<TKey>(ModelBuilder modelBuilder)
-        where TKey : IEquatable<TKey>
+        where TKey : struct, IEquatable<TKey>
     {
         modelBuilder.Entities<IEntityCreationRecordable<TKey>>(b =>
             b.Property<TKey?>(
@@ -62,7 +62,7 @@ internal static class InternalDbContext
     }
 
     public static void OnModelCreating<TKey, TUser>(ModelBuilder modelBuilder)
-        where TKey : IEquatable<TKey>
+        where TKey : struct, IEquatable<TKey>
         where TUser : class
     {
         modelBuilder.Entities<IEntityCreationRecordable<TKey, TUser>>(b =>
@@ -106,7 +106,7 @@ internal static class InternalDbContext
     }
 
     public static void OnCreating<TKey>(IEntityCreationRecordable<TKey> entity, TKey? id)
-        where TKey : IEquatable<TKey>
+        where TKey : struct, IEquatable<TKey>
     {
         entity.CreatedBy = id;
     }
@@ -117,7 +117,7 @@ internal static class InternalDbContext
     }
 
     public static void OnUpdating<TKey>(IEntityUpdationRecordable<TKey> entity, TKey? id)
-        where TKey : IEquatable<TKey>
+        where TKey : struct, IEquatable<TKey>
     {
         entity.UpdatedBy = id;
     }
@@ -128,7 +128,7 @@ internal static class InternalDbContext
     }
 
     public static void OnDeleting<TKey>(IEntitySoftDeletionRecordable<TKey> entity, TKey? id)
-        where TKey : IEquatable<TKey>
+        where TKey : struct, IEquatable<TKey>
     {
         entity.DeletedBy = id;
     }
@@ -139,7 +139,7 @@ internal static class InternalDbContext
     }
 
     public static void OnRestoring<TKey>(IEntitySoftDeletionRecordable<TKey> entity)
-        where TKey : IEquatable<TKey>
+        where TKey : struct, IEquatable<TKey>
     {
         entity.DeletedBy = default;
     }
@@ -220,7 +220,7 @@ internal static class InternalDbContext
         TKey? userId
     )
         where TContext : DbContext
-        where TKey : IEquatable<TKey>
+        where TKey : struct, IEquatable<TKey>
     {
         foreach (var entry in context.ChangeTracker.Entries())
         {

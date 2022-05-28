@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Using Include="Microsoft.EntityFrameworkCore" />
+    <Using Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,5 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\EExpansions.Core\EExpansions.Core.csproj" />
     <ProjectReference Include="..\..\src\EExpansions.EntityFrameworkCore\EExpansions.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\EExpansions.TestHelper\EExpansions.TestHelper.csproj" />
   </ItemGroup>
 </Project>

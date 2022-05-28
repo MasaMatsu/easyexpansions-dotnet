@@ -8,7 +8,7 @@
 /// and their derived interfaces.
 /// This class inherits <see cref="EEIdentityDbContext{TUser}"/>.
 /// </summary>
-public abstract class EEIdentityDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
+public abstract class EEIdentityDbContext : EEIdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EEIdentityDbContext" /> class.
@@ -20,6 +20,36 @@ public abstract class EEIdentityDbContext : IdentityDbContext<IdentityUser, Iden
     /// </summary>
     /// <param name="options">The options for this context.</param>
     public EEIdentityDbContext(DbContextOptions options) : base(options) { }
+
+    /// <inheritdoc/>
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<IdentityUser<Guid>>()
+            .Property(e => e.Id)
+            .HasConversion<string>()
+            .HasMaxLength(36)
+            .IsUnicode(false);
+        modelBuilder.Entities<IEntityCreationRecordable<Guid>>(builder =>
+            builder.Property<Guid?>(nameof(IEntityCreationRecordable<Guid>.CreatedBy))
+            .HasConversion<string>()
+            .HasMaxLength(36)
+            .IsUnicode(false)
+        );
+        modelBuilder.Entities<IEntityUpdationRecordable<Guid>>(builder =>
+            builder.Property<Guid?>(nameof(IEntityUpdationRecordable<Guid>.UpdatedBy))
+            .HasConversion<string>()
+            .HasMaxLength(36)
+            .IsUnicode(false)
+        );
+        modelBuilder.Entities<IEntitySoftDeletionRecordable<Guid>>(builder =>
+            builder.Property<Guid?>(nameof(IEntitySoftDeletionRecordable<Guid>.DeletedBy))
+            .HasConversion<string>()
+            .HasMaxLength(36)
+            .IsUnicode(false)
+        );
+    }
 }
 
 /// <summary>
@@ -31,8 +61,8 @@ public abstract class EEIdentityDbContext : IdentityDbContext<IdentityUser, Iden
 /// This class inherits <see cref="EEIdentityDbContext{TUser, TRole, TKey}"/>.
 /// </summary>
 /// <typeparam name="TUser">The type of the user objects.</typeparam>
-public abstract class EEIdentityDbContext<TUser> : EEIdentityDbContext<TUser, IdentityRole, string>
-    where TUser : IdentityUser
+public abstract class EEIdentityDbContext<TUser> : EEIdentityDbContext<TUser, IdentityRole<Guid>, Guid>
+    where TUser : IdentityUser<Guid>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EEIdentityDbContext{TUser}" /> class.
@@ -44,6 +74,36 @@ public abstract class EEIdentityDbContext<TUser> : EEIdentityDbContext<TUser, Id
     /// </summary>
     /// <param name="options">The options for this context.</param>
     public EEIdentityDbContext(DbContextOptions options) : base(options) { }
+
+    /// <inheritdoc/>
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<TUser>()
+            .Property(e => e.Id)
+            .HasConversion<string>()
+            .HasMaxLength(36)
+            .IsUnicode(false);
+        modelBuilder.Entities<IEntityCreationRecordable<Guid>>(builder =>
+            builder.Property<Guid?>(nameof(IEntityCreationRecordable<Guid>.CreatedBy))
+            .HasConversion<string>()
+            .HasMaxLength(36)
+            .IsUnicode(false)
+        );
+        modelBuilder.Entities<IEntityUpdationRecordable<Guid>>(builder =>
+            builder.Property<Guid?>(nameof(IEntityUpdationRecordable<Guid>.UpdatedBy))
+            .HasConversion<string>()
+            .HasMaxLength(36)
+            .IsUnicode(false)
+        );
+        modelBuilder.Entities<IEntitySoftDeletionRecordable<Guid>>(builder =>
+            builder.Property<Guid?>(nameof(IEntitySoftDeletionRecordable<Guid>.DeletedBy))
+            .HasConversion<string>()
+            .HasMaxLength(36)
+            .IsUnicode(false)
+        );
+    }
 }
 
 /// <summary>
@@ -60,7 +120,7 @@ public abstract class EEIdentityDbContext<TUser> : EEIdentityDbContext<TUser, Id
 public abstract class EEIdentityDbContext<TUser, TRole, TKey> : EEIdentityDbContext<TUser, TRole, TKey, IdentityUserClaim<TKey>, IdentityUserRole<TKey>, IdentityUserLogin<TKey>, IdentityRoleClaim<TKey>, IdentityUserToken<TKey>>
     where TUser : IdentityUser<TKey>
     where TRole : IdentityRole<TKey>
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EEIdentityDbContext{TUser, TRole, TKey}" /> class.
@@ -92,7 +152,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey> : EEIdentityDbCont
 public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
     where TUser : IdentityUser<TKey>
     where TRole : IdentityRole<TKey>
-    where TKey : IEquatable<TKey>
+    where TKey : struct, IEquatable<TKey>
     where TUserClaim : IdentityUserClaim<TKey>
     where TUserRole : IdentityUserRole<TKey>
     where TUserLogin : IdentityUserLogin<TKey>

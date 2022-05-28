@@ -3,7 +3,7 @@ using EExpansions.EntityFrameworkCore;
 
 namespace AspNetCoreSampleApp.Data.Models;
 
-public class TodoItem : IEntityCreationRecordable<string, User>, IEntityUpdationRecordable<string, User>, IEntitySoftDeletionRecordable<string, User>
+public class TodoItem : IEntityCreationRecordable<Guid, User>, IEntityUpdationRecordable<Guid, User>, IEntitySoftDeletionRecordable<Guid, User>
 {
     [Key]
     public int Id { get; set; }
@@ -13,15 +13,15 @@ public class TodoItem : IEntityCreationRecordable<string, User>, IEntityUpdation
     public string Title { get; set; } = string.Empty;
 
     public User? Creator { get; set; }
-    public string? CreatedBy { get; set; }
+    public Guid? CreatedBy { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
 
     public User? Updater { get; set; }
-    public string? UpdatedBy { get; set; }
+    public Guid? UpdatedBy { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
 
     public User? Deleter { get; set; }
-    public string? DeletedBy { get; set; }
+    public Guid? DeletedBy { get; set; }
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }
 }
