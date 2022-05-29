@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using AspNetCoreSampleApp.Data.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreSampleApp.Data;
 
-public class ApplicationDbContext : EEIdentityDbContext<User>
+public class ApplicationDbContext : EEIdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
     private IHttpContextAccessor HttpContextAccessor { get; }
 
