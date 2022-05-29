@@ -4,6 +4,8 @@ namespace EExpansions.EntityFrameworkCore;
 
 public sealed class TodoDbContext : EEDbContext<Guid, User>
 {
+    public static Guid? UserId = null;
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
@@ -15,18 +17,18 @@ public sealed class TodoDbContext : EEDbContext<Guid, User>
 
     protected override Guid? GetUserId()
     {
-        return Guid.NewGuid();
+        return UserId;
     }
 }
 
 public class User
 {
     [Key]
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
 }
 
-public class TodoItem : IEntityCreationRecordable<Guid, User>, IEntityUpdationRecordable<Guid, User>, IEntitySoftDeletionRecordable<Guid, User>
+public class TodoItem : IEntityUpsertionRecordable<Guid, User>, IEntitySoftDeletionRecordable<Guid, User>
 {
     [Key]
     public Guid Id { get; set; }
@@ -48,7 +50,14 @@ public class TodoDbContextFixture : TestHelper.DbContextFixture<TodoDbContext>
 {
     protected override void Initialize(TodoDbContext context)
     {
-        throw new NotImplementedException();
+        var user = new User
+        {
+            Id = Guid.NewGuid(),
+            Name = "TestUser",
+        };
+        TodoDbContext.UserId = user.Id;
+        context.Users.Add(user);
+        context.SaveChanges();
     }
 }
 
