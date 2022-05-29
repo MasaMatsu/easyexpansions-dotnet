@@ -31,7 +31,7 @@ internal static class InternalDbContext
                 nameof(IEntitySoftDeletionRecordable.IsDeleted)
             )
             .IsRequired(true)
-            .HasValueGenerator<FalseValueGenerator>();
+            .HasDefaultValue(false);
 
             b.Property<DateTimeOffset?>(
                 nameof(IEntitySoftDeletionRecordable.DeletedAt)
