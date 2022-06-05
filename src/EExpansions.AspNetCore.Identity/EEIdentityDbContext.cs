@@ -2,13 +2,13 @@
 
 /// <summary>
 /// The wrapper class of <see cref="IdentityDbContext"/> to activate
-/// <see cref="IEntitySoftDeletionRecordable{TKey, TUser}"/>,
-/// <see cref="IEntityUpdationRecordable{TKey, TUser}"/>,
-/// <see cref="IEntitySoftDeletionRecordable{TKey, TUser}"/>
+/// <see cref="IEntityCreationRecordableWithStringKey{TUser}"/>,
+/// <see cref="IEntityUpdationRecordableWithStringKey{TUser}"/>,
+/// <see cref="IEntitySoftDeletionRecordableWithStringKey{TUser}"/>
 /// and their derived interfaces.
 /// This class inherits <see cref="EEIdentityDbContext{TUser}"/>.
 /// </summary>
-public abstract class EEIdentityDbContext : EEIdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
+public abstract class EEIdentityDbContext : EEIdentityDbContext<IdentityUser>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EEIdentityDbContext" /> class.
@@ -20,49 +20,18 @@ public abstract class EEIdentityDbContext : EEIdentityDbContext<IdentityUser<Gui
     /// </summary>
     /// <param name="options">The options for this context.</param>
     public EEIdentityDbContext(DbContextOptions options) : base(options) { }
-
-    /// <inheritdoc/>
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<IdentityUser<Guid>>()
-            .Property(e => e.Id)
-            .HasConversion<string>()
-            .HasMaxLength(36)
-            .IsUnicode(false);
-        modelBuilder.Entities<IEntityCreationRecordable<Guid>>(builder =>
-            builder.Property<Guid?>(nameof(IEntityCreationRecordable<Guid>.CreatedBy))
-            .HasConversion<string>()
-            .HasMaxLength(36)
-            .IsUnicode(false)
-        );
-        modelBuilder.Entities<IEntityUpdationRecordable<Guid>>(builder =>
-            builder.Property<Guid?>(nameof(IEntityUpdationRecordable<Guid>.UpdatedBy))
-            .HasConversion<string>()
-            .HasMaxLength(36)
-            .IsUnicode(false)
-        );
-        modelBuilder.Entities<IEntitySoftDeletionRecordable<Guid>>(builder =>
-            builder.Property<Guid?>(nameof(IEntitySoftDeletionRecordable<Guid>.DeletedBy))
-            .HasConversion<string>()
-            .HasMaxLength(36)
-            .IsUnicode(false)
-        );
-    }
 }
 
 /// <summary>
 /// The wrapper class of <see cref="IdentityDbContext{TUser}"/> to activate
-/// <see cref="IEntitySoftDeletionRecordable{TKey, TUser}"/>,
-/// <see cref="IEntityUpdationRecordable{TKey, TUser}"/>,
-/// <see cref="IEntitySoftDeletionRecordable{TKey, TUser}"/>
+/// <see cref="IEntityCreationRecordableWithStringKey{TUser}"/>,
+/// <see cref="IEntityUpdationRecordableWithStringKey{TUser}"/>,
+/// <see cref="IEntitySoftDeletionRecordableWithStringKey{TUser}"/>
 /// and their derived interfaces.
-/// This class inherits <see cref="EEIdentityDbContext{TUser, TRole, TKey}"/>.
 /// </summary>
 /// <typeparam name="TUser">The type of the user objects.</typeparam>
-public abstract class EEIdentityDbContext<TUser> : EEIdentityDbContext<TUser, IdentityRole<Guid>, Guid>
-    where TUser : IdentityUser<Guid>
+public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>
+    where TUser : IdentityUser
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EEIdentityDbContext{TUser}" /> class.
@@ -79,30 +48,143 @@ public abstract class EEIdentityDbContext<TUser> : EEIdentityDbContext<TUser, Id
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        InternalDbContext.OnModelCreating(modelBuilder);
+        InternalDbContext.OnModelCreatingWithStringKey(modelBuilder);
+        InternalDbContext.OnModelCreatingWithStringKey<TUser>(modelBuilder);
+    }
 
-        modelBuilder.Entity<TUser>()
-            .Property(e => e.Id)
-            .HasConversion<string>()
-            .HasMaxLength(36)
-            .IsUnicode(false);
-        modelBuilder.Entities<IEntityCreationRecordable<Guid>>(builder =>
-            builder.Property<Guid?>(nameof(IEntityCreationRecordable<Guid>.CreatedBy))
-            .HasConversion<string>()
-            .HasMaxLength(36)
-            .IsUnicode(false)
-        );
-        modelBuilder.Entities<IEntityUpdationRecordable<Guid>>(builder =>
-            builder.Property<Guid?>(nameof(IEntityUpdationRecordable<Guid>.UpdatedBy))
-            .HasConversion<string>()
-            .HasMaxLength(36)
-            .IsUnicode(false)
-        );
-        modelBuilder.Entities<IEntitySoftDeletionRecordable<Guid>>(builder =>
-            builder.Property<Guid?>(nameof(IEntitySoftDeletionRecordable<Guid>.DeletedBy))
-            .HasConversion<string>()
-            .HasMaxLength(36)
-            .IsUnicode(false)
-        );
+    /// <summary>
+    /// Configures the entity on creation.
+    /// </summary>
+    /// <param name="entity">The entity to configure.</param>
+    /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
+    /// <param name="id">The user id.</param>
+    protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now, string? id)
+    {
+        InternalDbContext.OnCreating(entity, now);
+
+        if (entity is IEntityCreationRecordableWithStringKey creatable)
+        {
+            InternalDbContext.OnCreating(creatable, id);
+        }
+    }
+
+    /// <summary>
+    /// Configures the entity on updation.
+    /// </summary>
+    /// <param name="entity">The entity to configure.</param>
+    /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
+    /// <param name="id">The user id.</param>
+    protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now, string? id)
+    {
+        InternalDbContext.OnUpdating(entity, now);
+
+        if (entity is IEntityUpdationRecordableWithStringKey updatable)
+        {
+            InternalDbContext.OnUpdating(updatable, id);
+        }
+    }
+
+    /// <summary>
+    /// Configures the entity on deletion.
+    /// </summary>
+    /// <param name="entity">The entity to configure.</param>
+    /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
+    /// <param name="id">The user id.</param>
+    protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now, string? id)
+    {
+        InternalDbContext.OnDeleting(entity, now);
+
+        if (entity is IEntitySoftDeletionRecordableWithStringKey deletable)
+        {
+            InternalDbContext.OnDeleting(deletable, id);
+        }
+    }
+
+    /// <summary>
+    /// Configures the entity on restoring deleted entity.
+    /// </summary>
+    /// <param name="entity">The entity to configure.</param>
+    protected virtual void OnRestoring(IEntitySoftDeletionRecordable entity)
+    {
+        InternalDbContext.OnRestoring(entity);
+
+        if (entity is IEntitySoftDeletionRecordableWithStringKey deletable)
+        {
+            InternalDbContext.OnRestoring(deletable);
+        }
+    }
+
+    /// <summary>
+    /// Returns the id of the editing user.
+    /// </summary>
+    /// <returns>The id of the editing user.</returns>
+    protected abstract string? GetUserId();
+
+    #region PrimitiveSaveChanges
+
+    private protected int PrimitiveSaveChanges()
+    {
+        return base.SaveChanges();
+    }
+
+    private protected int PrimitiveSaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    private protected Task<int> PrimitiveSaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    private protected Task<int> PrimitiveSaveChangesAsync(
+        bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    #endregion
+
+    /// <inheritdoc cref="DbContext.SaveChanges"/>
+    public override int SaveChanges()
+    {
+        var now = DateTimeOffset.UtcNow;
+        var id = GetUserId();
+        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        return PrimitiveSaveChanges();
+    }
+
+    /// <inheritdoc cref="DbContext.SaveChanges(bool)"/>
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        var now = DateTimeOffset.UtcNow;
+        var id = GetUserId();
+        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        return PrimitiveSaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    /// <inheritdoc cref="DbContext.SaveChangesAsync(CancellationToken)"/>
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var now = DateTimeOffset.UtcNow;
+        var id = GetUserId();
+        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        return PrimitiveSaveChangesAsync(cancellationToken);
+    }
+
+    /// <inheritdoc cref="DbContext.SaveChangesAsync(bool, CancellationToken)"/>
+    public override Task<int> SaveChangesAsync(
+        bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var now = DateTimeOffset.UtcNow;
+        var id = GetUserId();
+        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        return PrimitiveSaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 }
 

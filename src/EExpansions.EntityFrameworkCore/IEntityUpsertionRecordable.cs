@@ -7,6 +7,8 @@
 public interface IEntityUpsertionRecordable : IEntityCreationRecordable, IEntityUpdationRecordable
 { }
 
+#region for struct
+
 /// <summary>
 /// The wrapper of <see cref="IEntityCreationRecordable{TKey}"/> and <see cref="IEntityUpdationRecordable{TKey}"/>.
 /// There are no additional definitions.
@@ -26,3 +28,25 @@ public interface IEntityUpsertionRecordable<TKey, TUser> : IEntityCreationRecord
     where TKey : struct, IEquatable<TKey>
     where TUser : class
 { }
+
+#endregion
+
+#region for string
+
+/// <summary>
+/// The wrapper of <see cref="IEntityCreationRecordableWithStringKey"/> and <see cref="IEntityCreationRecordableWithStringKey"/>.
+/// There are no additional definitions.
+/// </summary>
+public interface IEntityUpsertionRecordableWithStringKey : IEntityCreationRecordableWithStringKey, IEntityUpdationRecordableWithStringKey
+{ }
+
+/// <summary>
+/// The wrapper of <see cref="IEntityCreationRecordableWithStringKey{TUser}"/> and <see cref="IEntityCreationRecordableWithStringKey{TUser}"/>.
+/// There are no additional definitions.
+/// </summary>
+/// <typeparam name="TUser">The type of the user entity.</typeparam>
+public interface IEntityUpsertionRecordableWithStringKey<TUser> : IEntityCreationRecordableWithStringKey<TUser>, IEntityUpdationRecordableWithStringKey<TUser>
+    where TUser : class
+{ }
+
+#endregion

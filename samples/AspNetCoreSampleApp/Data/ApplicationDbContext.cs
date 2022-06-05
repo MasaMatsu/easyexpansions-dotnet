@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using AspNetCoreSampleApp.Data.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreSampleApp.Data;
 
@@ -17,12 +18,9 @@ public class ApplicationDbContext : EEIdentityDbContext<User>
 
     public virtual DbSet<TodoItem> TodoItems { get; set; } = null!;
 
-    protected override Guid? GetUserId()
+    protected override string? GetUserId()
     {
         var claim = HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
-        return
-            Guid.TryParse(claim?.Value, out var id)
-            ? id
-            : null;
+        return claim?.Value;
     }
 }

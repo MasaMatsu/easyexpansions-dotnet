@@ -7,6 +7,8 @@ namespace EExpansions.EntityFrameworkCore;
 
 internal static class InternalDbContext
 {
+    #region OnModelCreating
+
     public static void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entities<IEntityCreationRecordable>(b =>
@@ -29,7 +31,7 @@ internal static class InternalDbContext
                 nameof(IEntitySoftDeletionRecordable.IsDeleted)
             )
             .IsRequired(true)
-            .HasValueGenerator<FalseValueGenerator>();
+            .HasDefaultValue(false);
 
             b.Property<DateTimeOffset?>(
                 nameof(IEntitySoftDeletionRecordable.DeletedAt)
@@ -100,6 +102,68 @@ internal static class InternalDbContext
         );
     }
 
+    public static void OnModelCreatingWithStringKey(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entities<IEntityCreationRecordableWithStringKey>(b =>
+            b.Property<string?>(
+                nameof(IEntityCreationRecordableWithStringKey.CreatedBy)
+            )
+            .IsRequired(false)
+        );
+        modelBuilder.Entities<IEntityUpdationRecordableWithStringKey>(b =>
+            b.Property<string?>(
+                nameof(IEntityUpdationRecordableWithStringKey.UpdatedBy)
+            )
+            .IsRequired(false)
+        );
+        modelBuilder.Entities<IEntitySoftDeletionRecordableWithStringKey>(b =>
+            b.Property<string?>(
+                nameof(IEntitySoftDeletionRecordableWithStringKey.DeletedBy)
+            )
+            .IsRequired(false)
+        );
+    }
+
+    public static void OnModelCreatingWithStringKey<TUser>(ModelBuilder modelBuilder)
+        where TUser : class
+    {
+        modelBuilder.Entities<IEntityCreationRecordableWithStringKey<TUser>>(b =>
+            b.HasOne(typeof(TUser),
+                nameof(IEntityCreationRecordableWithStringKey<TUser>.Creator)
+            )
+            .WithMany()
+            .HasForeignKey(
+                nameof(IEntityCreationRecordableWithStringKey<TUser>.CreatedBy)
+            )
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+        );
+        modelBuilder.Entities<IEntityUpdationRecordableWithStringKey<TUser>>(b =>
+            b.HasOne(typeof(TUser),
+                nameof(IEntityUpdationRecordableWithStringKey<TUser>.Updater)
+            )
+            .WithMany()
+            .HasForeignKey(
+                nameof(IEntityUpdationRecordableWithStringKey<TUser>.UpdatedBy)
+            )
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+        );
+        modelBuilder.Entities<IEntitySoftDeletionRecordableWithStringKey<TUser>>(b =>
+            b.HasOne(typeof(TUser),
+                nameof(IEntitySoftDeletionRecordableWithStringKey<TUser>.Deleter)
+            )
+            .WithMany()
+            .HasForeignKey(
+                nameof(IEntitySoftDeletionRecordableWithStringKey<TUser>.DeletedBy)
+            )
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+        );
+    }
+
+    #endregion
+
     public static void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now)
     {
         entity.CreatedAt = now;
@@ -107,6 +171,11 @@ internal static class InternalDbContext
 
     public static void OnCreating<TKey>(IEntityCreationRecordable<TKey> entity, TKey? id)
         where TKey : struct, IEquatable<TKey>
+    {
+        entity.CreatedBy = id;
+    }
+
+    public static void OnCreating(IEntityCreationRecordableWithStringKey entity, string? id)
     {
         entity.CreatedBy = id;
     }
@@ -122,6 +191,11 @@ internal static class InternalDbContext
         entity.UpdatedBy = id;
     }
 
+    public static void OnUpdating(IEntityUpdationRecordableWithStringKey entity, string? id)
+    {
+        entity.UpdatedBy = id;
+    }
+
     public static void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now)
     {
         entity.DeletedAt = now;
@@ -129,6 +203,11 @@ internal static class InternalDbContext
 
     public static void OnDeleting<TKey>(IEntitySoftDeletionRecordable<TKey> entity, TKey? id)
         where TKey : struct, IEquatable<TKey>
+    {
+        entity.DeletedBy = id;
+    }
+
+    public static void OnDeleting(IEntitySoftDeletionRecordableWithStringKey entity, string? id)
     {
         entity.DeletedBy = id;
     }
@@ -142,6 +221,11 @@ internal static class InternalDbContext
         where TKey : struct, IEquatable<TKey>
     {
         entity.DeletedBy = default;
+    }
+
+    public static void OnRestoring(IEntitySoftDeletionRecordableWithStringKey entity)
+    {
+        entity.DeletedBy = null;
     }
 
     public static void OnSaveChanges<TContext>(
@@ -221,6 +305,73 @@ internal static class InternalDbContext
     )
         where TContext : DbContext
         where TKey : struct, IEquatable<TKey>
+    {
+        foreach (var entry in context.ChangeTracker.Entries())
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    {
+                        if (entry.Entity is IEntityCreationRecordable creatable)
+                        {
+                            onCreating(creatable, now, userId);
+                        }
+                        if (entry.Entity is IEntityUpdationRecordable updatable)
+                        {
+                            onUpdating(updatable, now, userId);
+                        }
+                    }
+                    break;
+                case EntityState.Modified:
+                    {
+                        if (entry.Entity is IEntityUpdationRecordable updatable)
+                        {
+                            onUpdating(updatable, now, userId);
+                        }
+                        if (entry.Entity is IEntitySoftDeletionRecordable deletable)
+                        {
+                            var isModified =
+                                entry.Property(
+                                    nameof(IEntitySoftDeletionRecordable.IsDeleted)
+                                )
+                                .IsModified;
+                            if (deletable.IsDeleted && isModified)
+                            {
+                                onDeleting(deletable, now, userId);
+                            }
+                            else if (!deletable.IsDeleted && isModified)
+                            {
+                                onRestoring(deletable);
+                            }
+                        }
+                    }
+                    break;
+                case EntityState.Deleted:
+                    {
+                        if (entry.Entity is IEntitySoftDeletionRecordableIgnoringHardDeletion deletable)
+                        {
+                            entry.State = EntityState.Modified;
+                            deletable.IsDeleted = true;
+                            onDeleting(deletable, now, userId);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public static void OnSaveChanges<TContext>(
+        TContext context,
+        Action<IEntityCreationRecordable, DateTimeOffset, string?> onCreating,
+        Action<IEntityUpdationRecordable, DateTimeOffset, string?> onUpdating,
+        Action<IEntitySoftDeletionRecordable, DateTimeOffset, string?> onDeleting,
+        Action<IEntitySoftDeletionRecordable> onRestoring,
+        DateTimeOffset now,
+        string? userId
+    )
+        where TContext : DbContext
     {
         foreach (var entry in context.ChangeTracker.Entries())
         {

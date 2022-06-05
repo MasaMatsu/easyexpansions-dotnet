@@ -11,6 +11,8 @@ public interface IEntityUpdationRecordable
     public DateTimeOffset UpdatedAt { get; set; }
 }
 
+#region for struct
+
 /// <summary>
 /// Defines properties to record the date and time the record was updated and the updater.
 /// </summary>
@@ -38,3 +40,33 @@ public interface IEntityUpdationRecordable<TKey, TUser> : IEntityUpdationRecorda
     /// </summary>
     public TUser? Updater { get; set; }
 }
+
+#endregion
+
+#region for string
+
+/// <summary>
+/// Defines properties to record the date and time the record was updated and the updater.
+/// </summary>
+public interface IEntityUpdationRecordableWithStringKey : IEntityUpdationRecordable
+{
+    /// <summary>
+    /// The user ID of the updater.
+    /// </summary>
+    public string? UpdatedBy { get; set; }
+}
+
+/// <summary>
+/// Defines properties to record the date and time the record was updated and the updater.
+/// </summary>
+/// <typeparam name="TUser">The type of the user entity.</typeparam>
+public interface IEntityUpdationRecordableWithStringKey<TUser> : IEntityUpdationRecordableWithStringKey
+    where TUser : class
+{
+    /// <summary>
+    /// The user of the updater.
+    /// </summary>
+    public TUser? Updater { get; set; }
+}
+
+#endregion

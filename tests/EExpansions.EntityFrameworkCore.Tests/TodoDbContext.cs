@@ -4,29 +4,31 @@ namespace EExpansions.EntityFrameworkCore;
 
 public sealed class TodoDbContext : EEDbContext<Guid, User>
 {
+    public static Guid? UserId = null;
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
 
-        optionsBuilder.UseSqlServer("Server=localhost,11443;Database=Todo;User id=sa;Password=Passw0rd!Passw0rd!");
+        optionsBuilder.UseSqlServer("Server=localhost,11433;Database=EExpansions_EntityFrameworkCore_Tests;User id=sa;Password=Passw0rd!Passw0rd!");
     }
 
     public DbSet<TodoItem> TodoItems { get; set; } = null!;
 
     protected override Guid? GetUserId()
     {
-        return Guid.NewGuid();
+        return UserId;
     }
 }
 
 public class User
 {
     [Key]
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
 }
 
-public class TodoItem : IEntityCreationRecordable<Guid, User>, IEntityUpdationRecordable<Guid, User>, IEntitySoftDeletionRecordable<Guid, User>
+public class TodoItem : IEntityUpsertionRecordable<Guid, User>, IEntitySoftDeletionRecordable<Guid, User>
 {
     [Key]
     public Guid Id { get; set; }
@@ -48,11 +50,18 @@ public class TodoDbContextFixture : TestHelper.DbContextFixture<TodoDbContext>
 {
     protected override void Initialize(TodoDbContext context)
     {
-        throw new NotImplementedException();
+        var user = new User
+        {
+            Id = Guid.NewGuid(),
+            Name = "TestUser",
+        };
+        TodoDbContext.UserId = user.Id;
+        context.Users.Add(user);
+        context.SaveChanges();
     }
 }
 
-[Collection(nameof(TodoDbContextCollectionFixture))]
+[CollectionDefinition(nameof(TodoDbContextCollectionFixture))]
 public class TodoDbContextCollectionFixture : ICollectionFixture<TodoDbContextFixture>
 {
     // There is nothing to do.
