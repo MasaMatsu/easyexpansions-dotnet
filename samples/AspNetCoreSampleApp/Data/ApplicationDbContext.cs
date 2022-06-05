@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreSampleApp.Data;
 
-public class ApplicationDbContext : EEIdentityDbContext<User, IdentityRole<Guid>, Guid>
+public class ApplicationDbContext : EEIdentityDbContext<User>
 {
     private IHttpContextAccessor HttpContextAccessor { get; }
 
@@ -18,12 +18,9 @@ public class ApplicationDbContext : EEIdentityDbContext<User, IdentityRole<Guid>
 
     public virtual DbSet<TodoItem> TodoItems { get; set; } = null!;
 
-    protected override Guid? GetUserId()
+    protected override string? GetUserId()
     {
         var claim = HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
-        return
-            Guid.TryParse(claim?.Value, out var id)
-            ? id
-            : null;
+        return claim?.Value;
     }
 }
