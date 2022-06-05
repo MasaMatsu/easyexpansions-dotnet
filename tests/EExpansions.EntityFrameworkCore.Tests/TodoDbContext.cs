@@ -15,7 +15,7 @@ public sealed class TodoDbContext : EEDbContext<Guid, User>
 
     public DbSet<TodoItem> TodoItems { get; set; } = null!;
 
-    protected override Guid? GetUserId()
+    public override Guid? GetUserId()
     {
         return UserId;
     }

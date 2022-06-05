@@ -18,7 +18,7 @@ public class ApplicationDbContext : EEIdentityDbContext<User>
 
     public virtual DbSet<TodoItem> TodoItems { get; set; } = null!;
 
-    protected override string? GetUserId()
+    public override string? GetUserId()
     {
         var claim = HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
         return claim?.Value;

@@ -6,6 +6,7 @@
 /// <see cref="IEntityUpdationRecordable"/> and
 /// <see cref="IEntitySoftDeletionRecordable"/>.
 /// </summary>
+[HasEEDbContextLogics]
 public abstract class EEDbContext : DbContext
 {
     /// <summary>
@@ -137,7 +138,7 @@ public abstract class EEDbContext : DbContext
 /// This class inherits <see cref="EEDbContext"/>.
 /// </summary>
 /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
-public abstract class EEDbContext<TKey> : EEDbContext
+public abstract class EEDbContext<TKey> : EEDbContext, IUserIdGettable<TKey>
     where TKey : struct, IEquatable<TKey>
 {
     /// <summary>
@@ -225,7 +226,7 @@ public abstract class EEDbContext<TKey> : EEDbContext
     /// Returns the id of the editing user.
     /// </summary>
     /// <returns>The id of the editing user.</returns>
-    protected abstract TKey? GetUserId();
+    public abstract TKey? GetUserId();
 
     /// <inheritdoc cref="DbContext.SaveChanges"/>
     public override int SaveChanges()

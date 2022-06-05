@@ -16,7 +16,6 @@
   </PropertyGroup>
 
   <PropertyGroup Label="ForPack">
-    <RootNamespace>EExpansions</RootNamespace>
     <Authors>MasaMatsu</Authors>
     <Copyright>Copyright (c) MasaMatsu 2022</Copyright>
     <PackageProjectUrl>https://github.com/MasaMatsu/easyexpansions-dotnet</PackageProjectUrl>

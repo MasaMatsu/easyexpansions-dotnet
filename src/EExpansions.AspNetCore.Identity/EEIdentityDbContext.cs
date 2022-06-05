@@ -30,7 +30,8 @@ public abstract class EEIdentityDbContext : EEIdentityDbContext<IdentityUser>
 /// and their derived interfaces.
 /// </summary>
 /// <typeparam name="TUser">The type of the user objects.</typeparam>
-public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>
+[HasEEDbContextLogics]
+public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUserIdGettableWithStringKey
     where TUser : IdentityUser
 {
     /// <summary>
@@ -119,7 +120,7 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>
     /// Returns the id of the editing user.
     /// </summary>
     /// <returns>The id of the editing user.</returns>
-    protected abstract string? GetUserId();
+    public abstract string? GetUserId();
 
     #region PrimitiveSaveChanges
 
@@ -231,7 +232,8 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey> : EEIdentityDbCont
 /// <typeparam name="TUserLogin">The type of the user login object.</typeparam>
 /// <typeparam name="TRoleClaim">The type of the role claim object.</typeparam>
 /// <typeparam name="TUserToken">The type of the user token object.</typeparam>
-public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
+[HasEEDbContextLogics]
+public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken> : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>, IUserIdGettable<TKey>
     where TUser : IdentityUser<TKey>
     where TRole : IdentityRole<TKey>
     where TKey : struct, IEquatable<TKey>
@@ -327,7 +329,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     /// Returns the id of the editing user.
     /// </summary>
     /// <returns>The id of the editing user.</returns>
-    protected abstract TKey? GetUserId();
+    public abstract TKey? GetUserId();
 
     #region PrimitiveSaveChanges
 
