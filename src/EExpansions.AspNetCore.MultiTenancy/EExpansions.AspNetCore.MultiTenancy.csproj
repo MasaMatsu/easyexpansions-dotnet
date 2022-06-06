@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
+    <AssemblyName>EExpansions.AspNetCore.MultiTenancy</AssemblyName>
+    <PackageTags>aspnetcore;multitenency;entityframeworkcore</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EExpansions.Core\EExpansions.Core.csproj" />
+    <ProjectReference Include="..\EExpansions.EntityFrameworkCore\EExpansions.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+  </ItemGroup>
+</Project>
