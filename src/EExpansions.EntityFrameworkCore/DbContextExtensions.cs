@@ -11,7 +11,7 @@ public static class DbContextExtensions
     /// Enables the <see cref="IEntitySoftDeletionRecordable.IsDeleted"/> of the given entity to begin tracking
     /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges"/> is called.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context for the method chain.</param>
     /// <param name="entity">The entity to soft remove.</param>
     /// <exception cref="ArgumentNullException">
@@ -42,7 +42,7 @@ public static class DbContextExtensions
     /// Enables the <see cref="IEntitySoftDeletionRecordable.IsDeleted"/> of the given entity to begin tracking
     /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges"/> is called.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TEntity">The type of entity.</typeparam>
     /// <param name="context">The context for the method chain.</param>
     /// <param name="entity">The entity to soft remove.</param>
@@ -75,7 +75,7 @@ public static class DbContextExtensions
     /// Enables the <see cref="IEntitySoftDeletionRecordable.IsDeleted"/> of the given entity to begin tracking
     /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges"/> is called.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context for the method chain.</param>
     /// <param name="entities">The sequence of the entities to soft remove.</param>
     /// <exception cref="ArgumentNullException">
@@ -97,7 +97,7 @@ public static class DbContextExtensions
     /// Enables the <see cref="IEntitySoftDeletionRecordable.IsDeleted"/> of the given entity to begin tracking
     /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges"/> is called.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context for the method chain.</param>
     /// <param name="entities">The entities to remove.</param>
     /// <exception cref="ArgumentNullException">
@@ -178,7 +178,7 @@ public static class DbContextExtensions
     /// <summary>
     /// Executes the asynchronously function in the transaction.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context to execute the function.</param>
     /// <param name="funcAsync">The function executed in the tracsaction.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
@@ -212,7 +212,7 @@ public static class DbContextExtensions
     /// <summary>
     /// Executes the asynchronously function in the transaction.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context to execute the function.</param>
     /// <param name="funcAsync">The function executed in the tracsaction.</param>
     /// <param name="isolationLevel">The isolation level to use for the transaction.</param>
@@ -248,7 +248,7 @@ public static class DbContextExtensions
     /// <summary>
     /// Executes the asynchronously function in the transaction.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="context">The context to execute the function.</param>
     /// <param name="funcAsync">The function executed in the tracsaction.</param>
@@ -280,7 +280,7 @@ public static class DbContextExtensions
     /// <summary>
     /// Executes the asynchronously function in the transaction.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="context">The context to execute the function.</param>
     /// <param name="funcAsync">The function executed in the tracsaction.</param>
@@ -314,7 +314,7 @@ public static class DbContextExtensions
     /// <summary>
     /// Executes the action in the transaction.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context to execute the function.</param>
     /// <param name="action">The action executed in the tracsaction.</param>
     /// <exception cref="ArgumentNullException">
@@ -342,7 +342,7 @@ public static class DbContextExtensions
     /// <summary>
     /// Executes the action in the transaction.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context to execute the function.</param>
     /// <param name="action">The action executed in the tracsaction.</param>
     /// <param name="isolationLevel">The isolation level to use for the transaction.</param>
@@ -372,7 +372,7 @@ public static class DbContextExtensions
     /// <summary>
     /// Executes the action in the transaction.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="context">The context to execute the function.</param>
     /// <param name="func">The function executed in the tracsaction.</param>
@@ -400,7 +400,7 @@ public static class DbContextExtensions
     /// <summary>
     /// Executes the action in the transaction.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="context">The context to execute the function.</param>
     /// <param name="func">The function executed in the tracsaction.</param>

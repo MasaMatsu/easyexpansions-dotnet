@@ -8,7 +8,7 @@ public static class ModelBuilderExtensions
     /// Performs configuration of entity types that inherits a given entity type in the model.
     /// </summary>
     /// <typeparam name="TEntity">The entity type to be configured.</typeparam>
-    /// <param name="modelBuilder"></param>
+    /// <param name="modelBuilder"><see cref="ModelBuilder"/>.</param>
     /// <param name="buildAction">
     /// An action that performs configuration of the entity type that inherits the entity type.
     /// </param>

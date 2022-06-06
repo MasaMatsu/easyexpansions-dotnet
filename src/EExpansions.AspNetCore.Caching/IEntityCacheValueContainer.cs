@@ -102,8 +102,8 @@ public interface IEntityCacheValueContainer
     /// <summary>
     /// Removes the entity with the given key.
     /// </summary>
-    /// <param name="key"></param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="key">A string key the requested value.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// </returns>

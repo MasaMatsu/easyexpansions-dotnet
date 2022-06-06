@@ -4,7 +4,7 @@ public static class TaskExtensions
 {
     /// <summary>
     /// Creates a task that will complete when all of the <see cref="Task" /> objects in an enumerable collection have completed.
-    /// <para>This method is a wrapper of <see cref="Task.WhenAll(IEnumerable{Task})"/></para>
+    /// <para>This method is a wrapper of <see cref="Task.WhenAll(IEnumerable{Task})"/>.</para>
     /// </summary>
     /// <param name="tasks">The tasks to wait on for completion.</param>
     /// <exception cref="ArgumentNullException">
@@ -22,7 +22,7 @@ public static class TaskExtensions
 
     /// <summary>
     /// Creates a task that will complete when all of the <see cref="Task{TResult}" /> objects in an enumerable collection have completed.
-    /// <para>This method is a wrapper of <see cref="Task.WhenAll{TResult}(IEnumerable{Task{TResult}})"/></para>
+    /// <para>This method is a wrapper of <see cref="Task.WhenAll{TResult}(IEnumerable{Task{TResult}})"/>.</para>
     /// </summary>
     /// <param name="tasks">The tasks to wait on for completion.</param>
     /// <typeparam name="TResult">The type of the completed task.</typeparam>
@@ -88,7 +88,7 @@ public static class TaskExtensions
 
     /// <summary>
     /// Creates a task that will complete when any of the supplied tasks have completed.
-    /// <para>This method is a wrapper of <see cref="Task.WhenAny(IEnumerable{Task})"/></para>
+    /// <para>This method is a wrapper of <see cref="Task.WhenAny(IEnumerable{Task})"/>.</para>
     /// </summary>
     /// <param name="tasks">The tasks to wait on for completion.</param>
     /// <exception cref="ArgumentNullException">
@@ -107,7 +107,7 @@ public static class TaskExtensions
 
     /// <summary>
     /// Creates a task that will complete when any of the supplied tasks have completed.
-    /// <para>This method is a wrapper of <see cref="Task.WhenAny{TResult}(IEnumerable{Task{TResult}})"/></para>
+    /// <para>This method is a wrapper of <see cref="Task.WhenAny{TResult}(IEnumerable{Task{TResult}})"/>.</para>
     /// </summary>
     /// <param name="tasks">The tasks to wait on for completion.</param>
     /// <typeparam name="TResult">The type of the completed task.</typeparam>
