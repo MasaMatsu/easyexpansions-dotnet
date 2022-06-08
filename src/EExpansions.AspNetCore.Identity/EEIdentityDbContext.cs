@@ -53,10 +53,17 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        EEDbContextImplementations.OnModelCreating(modelBuilder);
+        EEDbContextImplementations.OnModelCreating(modelBuilder, EnableGlobalQueryFilterToFilterSoftDeletedEntities);
         EEDbContextImplementations.OnModelCreatingWithStringKey(modelBuilder);
         EEDbContextImplementations.OnModelCreatingWithStringKey<TUser>(modelBuilder);
     }
+
+    /// <summary>
+    /// Enable global query filter to filter soft-deleted entities.
+    /// The default value is <see langword="false"/>.
+    /// </summary>
+    /// <seealso cref="https://docs.microsoft.com/ef/core/querying/filters"/>
+    protected virtual bool EnableGlobalQueryFilterToFilterSoftDeletedEntities { get; } = false;
 
     /// <summary>
     /// Configures the entity on creation.
@@ -262,10 +269,17 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        EEDbContextImplementations.OnModelCreating(modelBuilder);
+        EEDbContextImplementations.OnModelCreating(modelBuilder, EnableGlobalQueryFilterToFilterSoftDeletedEntities);
         EEDbContextImplementations.OnModelCreating<TKey>(modelBuilder);
         EEDbContextImplementations.OnModelCreating<TKey, TUser>(modelBuilder);
     }
+
+    /// <summary>
+    /// Enable global query filter to filter soft-deleted entities.
+    /// The default value is <see langword="false"/>.
+    /// </summary>
+    /// <seealso cref="https://docs.microsoft.com/ef/core/querying/filters"/>
+    protected virtual bool EnableGlobalQueryFilterToFilterSoftDeletedEntities { get; } = false;
 
     /// <summary>
     /// Configures the entity on creation.

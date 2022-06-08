@@ -7,7 +7,7 @@ public static class EEDbContextImplementations
 {
     #region OnModelCreating
 
-    public static void OnModelCreating(ModelBuilder modelBuilder)
+    public static void OnModelCreating(ModelBuilder modelBuilder, bool enableGlobalQueryFilterToFilterSoftDeletedEntities)
     {
         modelBuilder.Entities<IEntityCreationRecordable>(b =>
             b.Property<DateTimeOffset>(
@@ -35,6 +35,11 @@ public static class EEDbContextImplementations
                 nameof(IEntitySoftDeletionRecordable.DeletedAt)
             )
             .IsRequired(false);
+
+            if (enableGlobalQueryFilterToFilterSoftDeletedEntities)
+            {
+                b.AddQueryFilter<IEntitySoftDeletionRecordable>(e => !e.IsDeleted);
+            }
         });
     }
 

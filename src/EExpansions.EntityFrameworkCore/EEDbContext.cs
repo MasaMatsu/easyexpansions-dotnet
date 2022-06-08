@@ -26,8 +26,15 @@ public abstract class EEDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        EEDbContextImplementations.OnModelCreating(modelBuilder);
+        EEDbContextImplementations.OnModelCreating(modelBuilder, EnableGlobalQueryFilterToFilterSoftDeletedEntities);
     }
+
+    /// <summary>
+    /// Enable global query filter to filter soft-deleted entities.
+    /// The default value is <see langword="false"/>.
+    /// </summary>
+    /// <seealso cref="https://docs.microsoft.com/ef/core/querying/filters"/>
+    protected virtual bool EnableGlobalQueryFilterToFilterSoftDeletedEntities { get; } = false;
 
     /// <summary>
     /// Configures the entity on creation.
