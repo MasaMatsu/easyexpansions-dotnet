@@ -4,6 +4,7 @@
     <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
     <AssemblyName>EExpansions.AspNetCore.Session</AssemblyName>
     <PackageTags>aspnetcore;session</PackageTags>
+    <RootNamespace>EExpansions.AspNetCore.Session</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

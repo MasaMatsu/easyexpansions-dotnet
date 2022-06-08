@@ -4,6 +4,7 @@
     <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
     <AssemblyName>EExpansions.AspNetCore.MultiTenancy</AssemblyName>
     <PackageTags>aspnetcore;multitenency;entityframeworkcore</PackageTags>
+    <RootNamespace>EExpansions.AspNetCore.MultiTenancy</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

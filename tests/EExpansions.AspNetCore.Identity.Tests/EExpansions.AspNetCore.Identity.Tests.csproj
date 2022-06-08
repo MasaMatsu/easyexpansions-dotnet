@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
+    <RootNamespace>EExpansions.AspNetCore.Identity</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>

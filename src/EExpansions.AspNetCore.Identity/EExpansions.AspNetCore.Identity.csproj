@@ -4,6 +4,7 @@
     <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
     <AssemblyName>EExpansions.AspNetCore.Identity</AssemblyName>
     <PackageTags>aspnetcore;identity;entityframeworkcore</PackageTags>
+    <RootNamespace>EExpansions.AspNetCore.Identity</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

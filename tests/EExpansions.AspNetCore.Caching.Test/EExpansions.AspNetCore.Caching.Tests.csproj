@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
+    <RootNamespace>EExpansions.AspNetCore.Caching</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>

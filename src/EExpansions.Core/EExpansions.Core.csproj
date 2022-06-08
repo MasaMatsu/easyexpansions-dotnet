@@ -4,6 +4,7 @@
     <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
     <AssemblyName>EExpansions.Core</AssemblyName>
     <PackageTags>extensions</PackageTags>
+    <RootNamespace>EExpansions</RootNamespace>
   </PropertyGroup>
 
 </Project>

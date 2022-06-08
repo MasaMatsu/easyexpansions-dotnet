@@ -5,6 +5,7 @@
     <AssemblyName>EExpansions.AspNetCore.All</AssemblyName>
     <PackageTags>aspnetcore</PackageTags>
     <Description>The bundle package for EExpansions.AspNetCore.*.</Description>
+    <RootNamespace>EExpansions.AspNetCore</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

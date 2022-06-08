@@ -4,6 +4,7 @@
     <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
     <AssemblyName>EExpansions.AspNetCore.Caching</AssemblyName>
     <PackageTags>aspnetcore;cache;distributedcache;entityframeworkcore</PackageTags>
+    <RootNamespace>EExpansions.AspNetCore.Caching</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
