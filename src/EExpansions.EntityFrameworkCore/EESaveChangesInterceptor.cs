@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace EExpansions.EntityFrameworkCore;
 
+using Internal;
+
 /// <summary>
 /// The interceptor that activates
 /// <see cref="IEntityCreationRecordable"/>,
@@ -27,7 +29,7 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now)
     {
-        InternalDbContext.OnCreating(entity, now);
+        EEDbContextImplementations.OnCreating(entity, now);
     }
 
     /// <summary>
@@ -37,7 +39,7 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now)
     {
-        InternalDbContext.OnUpdating(entity, now);
+        EEDbContextImplementations.OnUpdating(entity, now);
     }
 
     /// <summary>
@@ -47,7 +49,7 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now)
     {
-        InternalDbContext.OnDeleting(entity, now);
+        EEDbContextImplementations.OnDeleting(entity, now);
     }
 
     /// <summary>
@@ -56,7 +58,7 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
     /// <param name="entity">The entity to configure.</param>
     protected virtual void OnRestoring(IEntitySoftDeletionRecordable entity)
     {
-        InternalDbContext.OnRestoring(entity);
+        EEDbContextImplementations.OnRestoring(entity);
     }
 
     #region PrimitiveSavingChanges
@@ -90,7 +92,7 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
         {
             var now = DateTimeOffset.UtcNow;
 
-            InternalDbContext.OnSaveChanges(
+            EEDbContextImplementations.OnSaveChanges(
                 context,
                 OnCreating,
                 OnUpdating,
@@ -114,7 +116,7 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
         {
             var now = DateTimeOffset.UtcNow;
 
-            InternalDbContext.OnSaveChanges(
+            EEDbContextImplementations.OnSaveChanges(
                 context,
                 OnCreating,
                 OnUpdating,
@@ -156,7 +158,7 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
 
         if (entity is IEntityCreationRecordable<TKey> creatable)
         {
-            InternalDbContext.OnCreating(creatable, id);
+            EEDbContextImplementations.OnCreating(creatable, id);
         }
     }
 
@@ -172,7 +174,7 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
 
         if (entity is IEntityUpdationRecordable<TKey> updatable)
         {
-            InternalDbContext.OnUpdating(updatable, id);
+            EEDbContextImplementations.OnUpdating(updatable, id);
         }
     }
 
@@ -188,7 +190,7 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
 
         if (entity is IEntitySoftDeletionRecordable<TKey> deletable)
         {
-            InternalDbContext.OnDeleting(deletable, id);
+            EEDbContextImplementations.OnDeleting(deletable, id);
         }
     }
 
@@ -199,7 +201,7 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
 
         if (entity is IEntitySoftDeletionRecordable<TKey> deletable)
         {
-            InternalDbContext.OnRestoring(deletable);
+            EEDbContextImplementations.OnRestoring(deletable);
         }
     }
 
@@ -214,7 +216,7 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
             var now = DateTimeOffset.UtcNow;
             var id = context.GetUserId();
 
-            InternalDbContext.OnSaveChanges(
+            EEDbContextImplementations.OnSaveChanges(
                 context,
                 OnCreating,
                 OnUpdating,
@@ -240,7 +242,7 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
             var now = DateTimeOffset.UtcNow;
             var id = context.GetUserId();
 
-            InternalDbContext.OnSaveChanges(
+            EEDbContextImplementations.OnSaveChanges(
                 context,
                 OnCreating,
                 OnUpdating,

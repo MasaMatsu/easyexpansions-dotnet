@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace EExpansions.EntityFrameworkCore;
 
+using Internal;
+
 /// <summary>
 /// The interceptor that activates
 /// <see cref="IEntityCreationRecordableWithStringKey"/>,
@@ -29,7 +31,7 @@ public class EESaveChangesInterceptorWithStringKey<TContext> : EESaveChangesInte
 
         if (entity is IEntityCreationRecordableWithStringKey creatable)
         {
-            InternalDbContext.OnCreating(creatable, id);
+            EEDbContextImplementations.OnCreating(creatable, id);
         }
     }
 
@@ -45,7 +47,7 @@ public class EESaveChangesInterceptorWithStringKey<TContext> : EESaveChangesInte
 
         if (entity is IEntityUpdationRecordableWithStringKey updatable)
         {
-            InternalDbContext.OnUpdating(updatable, id);
+            EEDbContextImplementations.OnUpdating(updatable, id);
         }
     }
 
@@ -61,7 +63,7 @@ public class EESaveChangesInterceptorWithStringKey<TContext> : EESaveChangesInte
 
         if (entity is IEntitySoftDeletionRecordableWithStringKey deletable)
         {
-            InternalDbContext.OnDeleting(deletable, id);
+            EEDbContextImplementations.OnDeleting(deletable, id);
         }
     }
 
@@ -72,7 +74,7 @@ public class EESaveChangesInterceptorWithStringKey<TContext> : EESaveChangesInte
 
         if (entity is IEntitySoftDeletionRecordableWithStringKey deletable)
         {
-            InternalDbContext.OnRestoring(deletable);
+            EEDbContextImplementations.OnRestoring(deletable);
         }
     }
 
@@ -87,7 +89,7 @@ public class EESaveChangesInterceptorWithStringKey<TContext> : EESaveChangesInte
             var now = DateTimeOffset.UtcNow;
             var id = context.GetUserId();
 
-            InternalDbContext.OnSaveChanges(
+            EEDbContextImplementations.OnSaveChanges(
                 context,
                 OnCreating,
                 OnUpdating,
@@ -113,7 +115,7 @@ public class EESaveChangesInterceptorWithStringKey<TContext> : EESaveChangesInte
             var now = DateTimeOffset.UtcNow;
             var id = context.GetUserId();
 
-            InternalDbContext.OnSaveChanges(
+            EEDbContextImplementations.OnSaveChanges(
                 context,
                 OnCreating,
                 OnUpdating,

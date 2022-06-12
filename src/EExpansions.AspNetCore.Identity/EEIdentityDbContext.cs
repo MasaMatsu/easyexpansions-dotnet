@@ -1,5 +1,9 @@
 ﻿namespace EExpansions.AspNetCore.Identity;
 
+#pragma warning disable EF1001
+
+using EntityFrameworkCore.Internal;
+
 /// <summary>
 /// The wrapper class of <see cref="IdentityDbContext"/> to activate
 /// <see cref="IEntityCreationRecordableWithStringKey{TUser}"/>,
@@ -49,9 +53,9 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        InternalDbContext.OnModelCreating(modelBuilder);
-        InternalDbContext.OnModelCreatingWithStringKey(modelBuilder);
-        InternalDbContext.OnModelCreatingWithStringKey<TUser>(modelBuilder);
+        EEDbContextImplementations.OnModelCreating(modelBuilder);
+        EEDbContextImplementations.OnModelCreatingWithStringKey(modelBuilder);
+        EEDbContextImplementations.OnModelCreatingWithStringKey<TUser>(modelBuilder);
     }
 
     /// <summary>
@@ -62,11 +66,11 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     /// <param name="id">The user id.</param>
     protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now, string? id)
     {
-        InternalDbContext.OnCreating(entity, now);
+        EEDbContextImplementations.OnCreating(entity, now);
 
         if (entity is IEntityCreationRecordableWithStringKey creatable)
         {
-            InternalDbContext.OnCreating(creatable, id);
+            EEDbContextImplementations.OnCreating(creatable, id);
         }
     }
 
@@ -78,11 +82,11 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     /// <param name="id">The user id.</param>
     protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now, string? id)
     {
-        InternalDbContext.OnUpdating(entity, now);
+        EEDbContextImplementations.OnUpdating(entity, now);
 
         if (entity is IEntityUpdationRecordableWithStringKey updatable)
         {
-            InternalDbContext.OnUpdating(updatable, id);
+            EEDbContextImplementations.OnUpdating(updatable, id);
         }
     }
 
@@ -94,11 +98,11 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     /// <param name="id">The user id.</param>
     protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now, string? id)
     {
-        InternalDbContext.OnDeleting(entity, now);
+        EEDbContextImplementations.OnDeleting(entity, now);
 
         if (entity is IEntitySoftDeletionRecordableWithStringKey deletable)
         {
-            InternalDbContext.OnDeleting(deletable, id);
+            EEDbContextImplementations.OnDeleting(deletable, id);
         }
     }
 
@@ -108,11 +112,11 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     /// <param name="entity">The entity to configure.</param>
     protected virtual void OnRestoring(IEntitySoftDeletionRecordable entity)
     {
-        InternalDbContext.OnRestoring(entity);
+        EEDbContextImplementations.OnRestoring(entity);
 
         if (entity is IEntitySoftDeletionRecordableWithStringKey deletable)
         {
-            InternalDbContext.OnRestoring(deletable);
+            EEDbContextImplementations.OnRestoring(deletable);
         }
     }
 
@@ -154,7 +158,7 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChanges();
     }
 
@@ -163,7 +167,7 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChanges(acceptAllChangesOnSuccess);
     }
 
@@ -172,7 +176,7 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChangesAsync(cancellationToken);
     }
 
@@ -184,7 +188,7 @@ public abstract class EEIdentityDbContext<TUser> : IdentityDbContext<TUser>, IUs
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 }
@@ -258,9 +262,9 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        InternalDbContext.OnModelCreating(modelBuilder);
-        InternalDbContext.OnModelCreating<TKey>(modelBuilder);
-        InternalDbContext.OnModelCreating<TKey, TUser>(modelBuilder);
+        EEDbContextImplementations.OnModelCreating(modelBuilder);
+        EEDbContextImplementations.OnModelCreating<TKey>(modelBuilder);
+        EEDbContextImplementations.OnModelCreating<TKey, TUser>(modelBuilder);
     }
 
     /// <summary>
@@ -271,11 +275,11 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     /// <param name="id">The user id.</param>
     protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now, TKey? id)
     {
-        InternalDbContext.OnCreating(entity, now);
+        EEDbContextImplementations.OnCreating(entity, now);
 
         if (entity is IEntityCreationRecordable<TKey> creatable)
         {
-            InternalDbContext.OnCreating(creatable, id);
+            EEDbContextImplementations.OnCreating(creatable, id);
         }
     }
 
@@ -287,11 +291,11 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     /// <param name="id">The user id.</param>
     protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now, TKey? id)
     {
-        InternalDbContext.OnUpdating(entity, now);
+        EEDbContextImplementations.OnUpdating(entity, now);
 
         if (entity is IEntityUpdationRecordable<TKey> updatable)
         {
-            InternalDbContext.OnUpdating(updatable, id);
+            EEDbContextImplementations.OnUpdating(updatable, id);
         }
     }
 
@@ -303,11 +307,11 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     /// <param name="id">The user id.</param>
     protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now, TKey? id)
     {
-        InternalDbContext.OnDeleting(entity, now);
+        EEDbContextImplementations.OnDeleting(entity, now);
 
         if (entity is IEntitySoftDeletionRecordable<TKey> deletable)
         {
-            InternalDbContext.OnDeleting(deletable, id);
+            EEDbContextImplementations.OnDeleting(deletable, id);
         }
     }
 
@@ -317,11 +321,11 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     /// <param name="entity">The entity to configure.</param>
     protected virtual void OnRestoring(IEntitySoftDeletionRecordable entity)
     {
-        InternalDbContext.OnRestoring(entity);
+        EEDbContextImplementations.OnRestoring(entity);
 
         if (entity is IEntitySoftDeletionRecordable<TKey> deletable)
         {
-            InternalDbContext.OnRestoring(deletable);
+            EEDbContextImplementations.OnRestoring(deletable);
         }
     }
 
@@ -363,7 +367,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChanges();
     }
 
@@ -372,7 +376,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChanges(acceptAllChangesOnSuccess);
     }
 
@@ -381,7 +385,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChangesAsync(cancellationToken);
     }
 
@@ -393,7 +397,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserR
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 }
