@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Using Include="EExpansions.EntityFrameworkCore" />
+    <Using Include="Microsoft.EntityFrameworkCore" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\EExpansions.Core\EExpansions.Core.csproj" />
     <ProjectReference Include="..\EExpansions.EntityFrameworkCore\EExpansions.EntityFrameworkCore.csproj" />
   </ItemGroup>
