@@ -84,7 +84,7 @@ public class EESaveChangesInterceptorWithStringKey<TContext> : EESaveChangesInte
         InterceptionResult<int> result
     )
     {
-        if (IsNotEEDbContext && eventData.Context is TContext context)
+        if (!IsEEDbContext && eventData.Context is TContext context)
         {
             var now = DateTimeOffset.UtcNow;
             var id = context.GetUserId();
@@ -110,7 +110,7 @@ public class EESaveChangesInterceptorWithStringKey<TContext> : EESaveChangesInte
         CancellationToken cancellationToken = default
     )
     {
-        if (IsNotEEDbContext && eventData.Context is TContext context)
+        if (!IsEEDbContext && eventData.Context is TContext context)
         {
             var now = DateTimeOffset.UtcNow;
             var id = context.GetUserId();

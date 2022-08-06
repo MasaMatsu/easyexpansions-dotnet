@@ -39,7 +39,7 @@ public static class ModelBuilderExtensions
         return modelBuilder;
     }
 
-    private static bool IsNotEEDbContext<TContext>() where TContext : DbContext =>
+    internal static bool IsEEDbContext<TContext>() where TContext : DbContext =>
         typeof(TContext).GetCustomAttribute<HasEEDbContextLogicsAttribute>(true) is not null;
 
     /// <summary>
@@ -58,7 +58,7 @@ public static class ModelBuilderExtensions
     {
         _ = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
 
-        if (IsNotEEDbContext<TContext>())
+        if (!IsEEDbContext<TContext>())
         {
             EEDbContextImplementations.OnModelCreating(modelBuilder);
         }
@@ -86,7 +86,7 @@ public static class ModelBuilderExtensions
     {
         _ = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
 
-        if (IsNotEEDbContext<TContext>())
+        if (!IsEEDbContext<TContext>())
         {
             EEDbContextImplementations.OnModelCreating(modelBuilder);
             EEDbContextImplementations.OnModelCreating<TKey>(modelBuilder);
@@ -117,7 +117,7 @@ public static class ModelBuilderExtensions
     {
         _ = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
 
-        if (IsNotEEDbContext<TContext>())
+        if (!IsEEDbContext<TContext>())
         {
             EEDbContextImplementations.OnModelCreating(modelBuilder);
             EEDbContextImplementations.OnModelCreating<TKey>(modelBuilder);
@@ -146,7 +146,7 @@ public static class ModelBuilderExtensions
     {
         _ = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
 
-        if (IsNotEEDbContext<TContext>())
+        if (!IsEEDbContext<TContext>())
         {
             EEDbContextImplementations.OnModelCreating(modelBuilder);
             EEDbContextImplementations.OnModelCreatingWithStringKey(modelBuilder);
@@ -172,7 +172,7 @@ public static class ModelBuilderExtensions
     {
         _ = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
 
-        if (IsNotEEDbContext<TContext>())
+        if (!IsEEDbContext<TContext>())
         {
             EEDbContextImplementations.OnModelCreating(modelBuilder);
             EEDbContextImplementations.OnModelCreatingWithStringKey(modelBuilder);

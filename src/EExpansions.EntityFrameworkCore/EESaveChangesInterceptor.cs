@@ -19,8 +19,7 @@ using Internal;
 public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
     where TContext : DbContext
 {
-    protected bool IsNotEEDbContext =>
-        typeof(TContext).GetCustomAttribute<HasEEDbContextLogicsAttribute>(true) is not null;
+    protected static bool IsEEDbContext => ModelBuilderExtensions.IsEEDbContext<TContext>();
 
     /// <summary>
     /// Configures the entity on creation.
@@ -88,7 +87,7 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
         InterceptionResult<int> result
     )
     {
-        if (IsNotEEDbContext && eventData.Context is TContext context)
+        if (!IsEEDbContext && eventData.Context is TContext context)
         {
             var now = DateTimeOffset.UtcNow;
 
@@ -112,7 +111,7 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
         CancellationToken cancellationToken = default
     )
     {
-        if (IsNotEEDbContext && eventData.Context is TContext context)
+        if (!IsEEDbContext && eventData.Context is TContext context)
         {
             var now = DateTimeOffset.UtcNow;
 
@@ -211,7 +210,7 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
         InterceptionResult<int> result
     )
     {
-        if (IsNotEEDbContext && eventData.Context is TContext context)
+        if (!IsEEDbContext && eventData.Context is TContext context)
         {
             var now = DateTimeOffset.UtcNow;
             var id = context.GetUserId();
@@ -237,7 +236,7 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
         CancellationToken cancellationToken = default
     )
     {
-        if (IsNotEEDbContext && eventData.Context is TContext context)
+        if (!IsEEDbContext && eventData.Context is TContext context)
         {
             var now = DateTimeOffset.UtcNow;
             var id = context.GetUserId();
