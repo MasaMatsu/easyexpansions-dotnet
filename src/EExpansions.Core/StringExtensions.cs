@@ -6,7 +6,7 @@ public static class StringExtensions
 {
     /// <summary>
     /// Indicates whether the specified string is <see langword="null" /> or an empty string ("").
-    /// <para>This method is a wrapper of <see cref="string.IsNullOrEmpty(string)"/></para>
+    /// <para>This method is a wrapper of <see cref="string.IsNullOrEmpty(string)"/>.</para>
     /// </summary>
     /// <param name="value">The string to test.</param>
     /// <returns>

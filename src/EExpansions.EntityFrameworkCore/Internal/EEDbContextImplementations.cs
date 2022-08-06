@@ -1,11 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using EExpansions.EntityFrameworkCore.ValueGeneration;
 
-[assembly: InternalsVisibleTo("EExpansions.AspNetCore.Identity")]
+namespace EExpansions.EntityFrameworkCore.Internal;
 
-namespace EExpansions.EntityFrameworkCore;
-
-internal static class InternalDbContext
+public static class EEDbContextImplementations
 {
     #region OnModelCreating
 

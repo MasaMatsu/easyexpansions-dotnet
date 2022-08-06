@@ -1,5 +1,7 @@
 ﻿namespace EExpansions.EntityFrameworkCore;
 
+using Internal;
+
 /// <summary>
 /// The wrapper class of <see cref="DbContext"/> to activate
 /// <see cref="IEntityCreationRecordableWithStringKey"/>,
@@ -29,7 +31,7 @@ public abstract class EEDbContextWithStringKey : EEDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        InternalDbContext.OnModelCreatingWithStringKey(modelBuilder);
+        EEDbContextImplementations.OnModelCreatingWithStringKey(modelBuilder);
     }
 
     /// <summary>
@@ -44,7 +46,7 @@ public abstract class EEDbContextWithStringKey : EEDbContext
 
         if (entity is IEntityCreationRecordableWithStringKey creatable)
         {
-            InternalDbContext.OnCreating(creatable, id);
+            EEDbContextImplementations.OnCreating(creatable, id);
         }
     }
 
@@ -60,7 +62,7 @@ public abstract class EEDbContextWithStringKey : EEDbContext
 
         if (entity is IEntityUpdationRecordableWithStringKey updatable)
         {
-            InternalDbContext.OnUpdating(updatable, id);
+            EEDbContextImplementations.OnUpdating(updatable, id);
         }
     }
 
@@ -76,7 +78,7 @@ public abstract class EEDbContextWithStringKey : EEDbContext
 
         if (entity is IEntitySoftDeletionRecordableWithStringKey deletable)
         {
-            InternalDbContext.OnDeleting(deletable, id);
+            EEDbContextImplementations.OnDeleting(deletable, id);
         }
     }
 
@@ -87,7 +89,7 @@ public abstract class EEDbContextWithStringKey : EEDbContext
 
         if (entity is IEntitySoftDeletionRecordableWithStringKey deletable)
         {
-            InternalDbContext.OnRestoring(deletable);
+            EEDbContextImplementations.OnRestoring(deletable);
         }
     }
 
@@ -102,7 +104,7 @@ public abstract class EEDbContextWithStringKey : EEDbContext
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChanges();
     }
 
@@ -111,7 +113,7 @@ public abstract class EEDbContextWithStringKey : EEDbContext
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChanges(acceptAllChangesOnSuccess);
     }
 
@@ -120,7 +122,7 @@ public abstract class EEDbContextWithStringKey : EEDbContext
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChangesAsync(cancellationToken);
     }
 
@@ -132,7 +134,7 @@ public abstract class EEDbContextWithStringKey : EEDbContext
     {
         var now = DateTimeOffset.UtcNow;
         var id = GetUserId();
-        InternalDbContext.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
+        EEDbContextImplementations.OnSaveChanges(this, OnCreating, OnUpdating, OnDeleting, OnRestoring, now, id);
         return PrimitiveSaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 }
@@ -173,6 +175,6 @@ public abstract class EEDbContextWithStringKey<TUser> : EEDbContextWithStringKey
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        InternalDbContext.OnModelCreatingWithStringKey<TUser>(modelBuilder);
+        EEDbContextImplementations.OnModelCreatingWithStringKey<TUser>(modelBuilder);
     }
 }

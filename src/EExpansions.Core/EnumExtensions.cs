@@ -7,7 +7,7 @@ public static class EnumExtensions
     /// <summary>
     /// Get a value that is used for display in the UI.
     /// </summary>
-    /// <param name="enumValue">enum value</param>
+    /// <param name="enumValue">The enum value.</param>
     /// <returns>A value that is used for display in the UI.</returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="enumValue" /> is <see langword="null" />.

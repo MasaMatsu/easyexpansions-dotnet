@@ -3,7 +3,7 @@
 /// <summary>
 /// The service that provides caching logic of efcore.
 /// </summary>
-/// <typeparam name="TContext">The type of context.</typeparam>
+/// <typeparam name="TContext">The type of the context.</typeparam>
 public class EntityCache<TContext, TKeyContainer> : IEntityCache
     where TContext : DbContext
     where TKeyContainer : IDistributedCache

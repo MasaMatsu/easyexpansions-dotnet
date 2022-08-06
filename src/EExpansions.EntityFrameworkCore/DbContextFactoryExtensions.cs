@@ -10,7 +10,7 @@ public static class DbContextFactoryExtensions
     /// <summary>
     /// Executes the asynchronously function in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="funcAsync">The function executed in the context.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
@@ -37,7 +37,7 @@ public static class DbContextFactoryExtensions
     /// <summary>
     /// Executes the asynchronously function in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="funcAsync">The function executed in the context.</param>
@@ -66,7 +66,7 @@ public static class DbContextFactoryExtensions
     /// <summary>
     /// Executes the action in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="action">The action executed in the context.</param>
     /// <exception cref="ArgumentNullException">
@@ -88,7 +88,7 @@ public static class DbContextFactoryExtensions
     /// <summary>
     /// Executes the action in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="func">The function executed in the context.</param>
@@ -142,7 +142,7 @@ public static class DbContextFactoryExtensions
     /// Executes the asynchronously function in the transaction.
     /// The transaction is executed in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="funcAsync">The function executed in the context.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
@@ -177,7 +177,7 @@ public static class DbContextFactoryExtensions
     /// Executes the asynchronously function in the transaction.
     /// The transaction is executed in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="funcAsync">The function executed in the context.</param>
     /// <param name="isolationLevel">The isolation level to use for the transaction.</param>
@@ -214,7 +214,7 @@ public static class DbContextFactoryExtensions
     /// Executes the asynchronously function in the transaction.
     /// The transaction is executed in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="funcAsync">The function executed in the context.</param>
@@ -247,7 +247,7 @@ public static class DbContextFactoryExtensions
     /// Executes the asynchronously function in the transaction.
     /// The transaction is executed in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="funcAsync">The function executed in the context.</param>
@@ -282,7 +282,7 @@ public static class DbContextFactoryExtensions
     /// Executes the action in the transaction.
     /// The transaction is executed in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="action">The action executed in the tracsaction.</param>
     /// <exception cref="ArgumentNullException">
@@ -311,7 +311,7 @@ public static class DbContextFactoryExtensions
     /// Executes the action in the transaction.
     /// The transaction is executed in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="action">The action executed in the tracsaction.</param>
     /// <param name="isolationLevel">The isolation level to use for the transaction.</param>
@@ -342,7 +342,7 @@ public static class DbContextFactoryExtensions
     /// Executes the action in the transaction.
     /// The transaction is executed in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="func">The function executed in the context.</param>
@@ -371,7 +371,7 @@ public static class DbContextFactoryExtensions
     /// Executes the action in the transaction.
     /// The transaction is executed in the context that is created by the factory.
     /// </summary>
-    /// <typeparam name="TContext">The type of context.</typeparam>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TResult">The type of the function result.</typeparam>
     /// <param name="factory">The factory to create context.</param>
     /// <param name="func">The function executed in the context.</param>
