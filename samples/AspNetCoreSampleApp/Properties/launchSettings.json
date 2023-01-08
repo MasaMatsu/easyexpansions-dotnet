@@ -11,7 +11,7 @@
     "AspNetCoreSampleApp": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:38090",
+      "applicationUrl": "http://localhost:24403",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
