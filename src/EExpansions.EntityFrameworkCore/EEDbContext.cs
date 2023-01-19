@@ -133,25 +133,24 @@ public abstract class EEDbContext : DbContext
 
 /// <summary>
 /// The wrapper class of <see cref="DbContext"/> to activate
-/// <see cref="IEntitySoftDeletionRecordable{TKey}"/>,
-/// <see cref="IEntityUpdationRecordable{TKey}"/>,
-/// <see cref="IEntitySoftDeletionRecordable{TKey}"/>
+/// <see cref="IEntitySoftDeletionRecordable{TUserForeignKey}"/>,
+/// <see cref="IEntityUpdationRecordable{TUserForeignKey}"/>,
+/// <see cref="IEntitySoftDeletionRecordable{TUserForeignKey}"/>
 /// and their derived interfaces.
 /// This class inherits <see cref="EEDbContext"/>.
 /// </summary>
-/// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
-public abstract class EEDbContext<TKey> : EEDbContext, IUserIdGettable<TKey>
-    where TKey : struct, IEquatable<TKey>
+/// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
+public abstract class EEDbContext<TUserForeignKey> : EEDbContext, IUserIdGettable<TUserForeignKey>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="EEDbContext{TKey}" /> class.
+    /// Initializes a new instance of the <see cref="EEDbContext{TUserForeignKey}" /> class.
     /// The <see cref="DbContext.OnConfiguring(DbContextOptionsBuilder)" />
     /// method will be called to configure the database (and other options) to be used for this context.
     /// </summary>
     public EEDbContext() : base() { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="EEDbContext{TKey}" /> class using the specified options.
+    /// Initializes a new instance of the <see cref="EEDbContext{TUserForeignKey}" /> class using the specified options.
     /// The <see cref="DbContext.OnConfiguring(DbContextOptionsBuilder)" />
     /// method will still be called to allow further configuration of the options.
     /// </summary>
@@ -162,7 +161,7 @@ public abstract class EEDbContext<TKey> : EEDbContext, IUserIdGettable<TKey>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        EEDbContextImplementations.OnModelCreating<TKey>(modelBuilder);
+        EEDbContextImplementations.OnModelCreating<TUserForeignKey>(modelBuilder);
     }
 
     /// <summary>
@@ -171,11 +170,11 @@ public abstract class EEDbContext<TKey> : EEDbContext, IUserIdGettable<TKey>
     /// <param name="entity">The entity to configure.</param>
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     /// <param name="id">The user id.</param>
-    protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now, TKey? id)
+    protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now, TUserForeignKey id)
     {
         base.OnCreating(entity, now);
 
-        if (entity is IEntityCreationRecordable<TKey> creatable)
+        if (entity is IEntityCreationRecordable<TUserForeignKey> creatable)
         {
             EEDbContextImplementations.OnCreating(creatable, id);
         }
@@ -187,11 +186,11 @@ public abstract class EEDbContext<TKey> : EEDbContext, IUserIdGettable<TKey>
     /// <param name="entity">The entity to configure.</param>
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     /// <param name="id">The user id.</param>
-    protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now, TKey? id)
+    protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now, TUserForeignKey id)
     {
         base.OnUpdating(entity, now);
 
-        if (entity is IEntityUpdationRecordable<TKey> updatable)
+        if (entity is IEntityUpdationRecordable<TUserForeignKey> updatable)
         {
             EEDbContextImplementations.OnUpdating(updatable, id);
         }
@@ -203,11 +202,11 @@ public abstract class EEDbContext<TKey> : EEDbContext, IUserIdGettable<TKey>
     /// <param name="entity">The entity to configure.</param>
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     /// <param name="id">The user id.</param>
-    protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now, TKey? id)
+    protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now, TUserForeignKey id)
     {
         base.OnDeleting(entity, now);
 
-        if (entity is IEntitySoftDeletionRecordable<TKey> deletable)
+        if (entity is IEntitySoftDeletionRecordable<TUserForeignKey> deletable)
         {
             EEDbContextImplementations.OnDeleting(deletable, id);
         }
@@ -218,7 +217,7 @@ public abstract class EEDbContext<TKey> : EEDbContext, IUserIdGettable<TKey>
     {
         base.OnRestoring(entity);
 
-        if (entity is IEntitySoftDeletionRecordable<TKey> deletable)
+        if (entity is IEntitySoftDeletionRecordable<TUserForeignKey> deletable)
         {
             EEDbContextImplementations.OnRestoring(deletable);
         }
@@ -228,7 +227,7 @@ public abstract class EEDbContext<TKey> : EEDbContext, IUserIdGettable<TKey>
     /// Returns the id of the editing user.
     /// </summary>
     /// <returns>The id of the editing user.</returns>
-    public abstract TKey? GetUserId();
+    public abstract TUserForeignKey GetUserId();
 
     /// <inheritdoc cref="DbContext.SaveChanges"/>
     public override int SaveChanges()
@@ -272,27 +271,26 @@ public abstract class EEDbContext<TKey> : EEDbContext, IUserIdGettable<TKey>
 
 /// <summary>
 /// The wrapper class of <see cref="DbContext"/> to activate
-/// <see cref="IEntitySoftDeletionRecordable{TKey, TUser}"/>,
-/// <see cref="IEntityUpdationRecordable{TKey, TUser}"/>,
-/// <see cref="IEntitySoftDeletionRecordable{TKey, TUser}"/>
+/// <see cref="IEntitySoftDeletionRecordable{TUserForeignKey, TUser}"/>,
+/// <see cref="IEntityUpdationRecordable{TUserForeignKey, TUser}"/>,
+/// <see cref="IEntitySoftDeletionRecordable{TUserForeignKey, TUser}"/>
 /// and their derived interfaces.
-/// This class inherits <see cref="EEDbContext{TKey}"/>.
+/// This class inherits <see cref="EEDbContext{TUserForeignKey}"/>.
 /// </summary>
-/// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
+/// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
 /// <typeparam name="TUser">The type of the user entity.</typeparam>
-public abstract class EEDbContext<TKey, TUser> : EEDbContext<TKey>
-    where TKey : struct, IEquatable<TKey>
+public abstract class EEDbContext<TUserForeignKey, TUser> : EEDbContext<TUserForeignKey>
     where TUser : class
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="EEDbContext{TKey, TUser}" /> class.
+    /// Initializes a new instance of the <see cref="EEDbContext{TUserForeignKey, TUser}" /> class.
     /// The <see cref="DbContext.OnConfiguring(DbContextOptionsBuilder)" />
     /// method will be called to configure the database (and other options) to be used for this context.
     /// </summary>
     public EEDbContext() : base() { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="EEDbContext{TKey, TUser}" /> class using the specified options.
+    /// Initializes a new instance of the <see cref="EEDbContext{TUserForeignKey, TUser}" /> class using the specified options.
     /// The <see cref="DbContext.OnConfiguring(DbContextOptionsBuilder)" />
     /// method will still be called to allow further configuration of the options.
     /// </summary>
@@ -308,6 +306,6 @@ public abstract class EEDbContext<TKey, TUser> : EEDbContext<TKey>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        EEDbContextImplementations.OnModelCreating<TKey, TUser>(modelBuilder);
+        EEDbContextImplementations.OnModelCreating<TUserForeignKey, TUser>(modelBuilder);
     }
 }

@@ -38,122 +38,60 @@ public static class EEDbContextImplementations
         });
     }
 
-    public static void OnModelCreating<TKey>(ModelBuilder modelBuilder)
-        where TKey : struct, IEquatable<TKey>
+    public static void OnModelCreating<TUserForeignKey>(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entities<IEntityCreationRecordable<TKey>>(b =>
-            b.Property<TKey?>(
-                nameof(IEntityCreationRecordable<TKey>.CreatedBy)
+        modelBuilder.Entities<IEntityCreationRecordable<TUserForeignKey>>(b =>
+            b.Property<TUserForeignKey?>(
+                nameof(IEntityCreationRecordable<TUserForeignKey>.CreatedBy)
             )
             .IsRequired(false)
         );
-        modelBuilder.Entities<IEntityUpdationRecordable<TKey>>(b =>
-            b.Property<TKey?>(
-                nameof(IEntityUpdationRecordable<TKey>.UpdatedBy)
+        modelBuilder.Entities<IEntityUpdationRecordable<TUserForeignKey>>(b =>
+            b.Property<TUserForeignKey?>(
+                nameof(IEntityUpdationRecordable<TUserForeignKey>.UpdatedBy)
             )
             .IsRequired(false)
         );
-        modelBuilder.Entities<IEntitySoftDeletionRecordable<TKey>>(b =>
-            b.Property<TKey?>(
-                nameof(IEntitySoftDeletionRecordable<TKey>.DeletedBy)
+        modelBuilder.Entities<IEntitySoftDeletionRecordable<TUserForeignKey>>(b =>
+            b.Property<TUserForeignKey?>(
+                nameof(IEntitySoftDeletionRecordable<TUserForeignKey>.DeletedBy)
             )
             .IsRequired(false)
         );
     }
 
-    public static void OnModelCreating<TKey, TUser>(ModelBuilder modelBuilder)
-        where TKey : struct, IEquatable<TKey>
+    public static void OnModelCreating<TUserForeignKey, TUser>(ModelBuilder modelBuilder)
         where TUser : class
     {
-        modelBuilder.Entities<IEntityCreationRecordable<TKey, TUser>>(b =>
+        modelBuilder.Entities<IEntityCreationRecordable<TUserForeignKey, TUser>>(b =>
             b.HasOne(typeof(TUser),
-                nameof(IEntityCreationRecordable<TKey, TUser>.Creator)
+                nameof(IEntityCreationRecordable<TUserForeignKey, TUser>.Creator)
             )
             .WithMany()
             .HasForeignKey(
-                nameof(IEntityCreationRecordable<TKey, TUser>.CreatedBy)
+                nameof(IEntityCreationRecordable<TUserForeignKey, TUser>.CreatedBy)
             )
             .IsRequired(false)
             .OnDelete(DeleteBehavior.ClientSetNull)
         );
-        modelBuilder.Entities<IEntityUpdationRecordable<TKey, TUser>>(b =>
+        modelBuilder.Entities<IEntityUpdationRecordable<TUserForeignKey, TUser>>(b =>
             b.HasOne(typeof(TUser),
-                nameof(IEntityUpdationRecordable<TKey, TUser>.Updater)
+                nameof(IEntityUpdationRecordable<TUserForeignKey, TUser>.Updater)
             )
             .WithMany()
             .HasForeignKey(
-                nameof(IEntityUpdationRecordable<TKey, TUser>.UpdatedBy)
+                nameof(IEntityUpdationRecordable<TUserForeignKey, TUser>.UpdatedBy)
             )
             .IsRequired(false)
             .OnDelete(DeleteBehavior.ClientSetNull)
         );
-        modelBuilder.Entities<IEntitySoftDeletionRecordable<TKey, TUser>>(b =>
+        modelBuilder.Entities<IEntitySoftDeletionRecordable<TUserForeignKey, TUser>>(b =>
             b.HasOne(typeof(TUser),
-                nameof(IEntitySoftDeletionRecordable<TKey, TUser>.Deleter)
+                nameof(IEntitySoftDeletionRecordable<TUserForeignKey, TUser>.Deleter)
             )
             .WithMany()
             .HasForeignKey(
-                nameof(IEntitySoftDeletionRecordable<TKey, TUser>.DeletedBy)
-            )
-            .IsRequired(false)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-        );
-    }
-
-    public static void OnModelCreatingWithStringKey(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entities<IEntityCreationRecordableWithStringKey>(b =>
-            b.Property<string?>(
-                nameof(IEntityCreationRecordableWithStringKey.CreatedBy)
-            )
-            .IsRequired(false)
-        );
-        modelBuilder.Entities<IEntityUpdationRecordableWithStringKey>(b =>
-            b.Property<string?>(
-                nameof(IEntityUpdationRecordableWithStringKey.UpdatedBy)
-            )
-            .IsRequired(false)
-        );
-        modelBuilder.Entities<IEntitySoftDeletionRecordableWithStringKey>(b =>
-            b.Property<string?>(
-                nameof(IEntitySoftDeletionRecordableWithStringKey.DeletedBy)
-            )
-            .IsRequired(false)
-        );
-    }
-
-    public static void OnModelCreatingWithStringKey<TUser>(ModelBuilder modelBuilder)
-        where TUser : class
-    {
-        modelBuilder.Entities<IEntityCreationRecordableWithStringKey<TUser>>(b =>
-            b.HasOne(typeof(TUser),
-                nameof(IEntityCreationRecordableWithStringKey<TUser>.Creator)
-            )
-            .WithMany()
-            .HasForeignKey(
-                nameof(IEntityCreationRecordableWithStringKey<TUser>.CreatedBy)
-            )
-            .IsRequired(false)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-        );
-        modelBuilder.Entities<IEntityUpdationRecordableWithStringKey<TUser>>(b =>
-            b.HasOne(typeof(TUser),
-                nameof(IEntityUpdationRecordableWithStringKey<TUser>.Updater)
-            )
-            .WithMany()
-            .HasForeignKey(
-                nameof(IEntityUpdationRecordableWithStringKey<TUser>.UpdatedBy)
-            )
-            .IsRequired(false)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-        );
-        modelBuilder.Entities<IEntitySoftDeletionRecordableWithStringKey<TUser>>(b =>
-            b.HasOne(typeof(TUser),
-                nameof(IEntitySoftDeletionRecordableWithStringKey<TUser>.Deleter)
-            )
-            .WithMany()
-            .HasForeignKey(
-                nameof(IEntitySoftDeletionRecordableWithStringKey<TUser>.DeletedBy)
+                nameof(IEntitySoftDeletionRecordable<TUserForeignKey, TUser>.DeletedBy)
             )
             .IsRequired(false)
             .OnDelete(DeleteBehavior.ClientSetNull)
@@ -167,13 +105,7 @@ public static class EEDbContextImplementations
         entity.CreatedAt = now;
     }
 
-    public static void OnCreating<TKey>(IEntityCreationRecordable<TKey> entity, TKey? id)
-        where TKey : struct, IEquatable<TKey>
-    {
-        entity.CreatedBy = id;
-    }
-
-    public static void OnCreating(IEntityCreationRecordableWithStringKey entity, string? id)
+    public static void OnCreating<TUserForeignKey>(IEntityCreationRecordable<TUserForeignKey> entity, TUserForeignKey id)
     {
         entity.CreatedBy = id;
     }
@@ -183,13 +115,7 @@ public static class EEDbContextImplementations
         entity.UpdatedAt = now;
     }
 
-    public static void OnUpdating<TKey>(IEntityUpdationRecordable<TKey> entity, TKey? id)
-        where TKey : struct, IEquatable<TKey>
-    {
-        entity.UpdatedBy = id;
-    }
-
-    public static void OnUpdating(IEntityUpdationRecordableWithStringKey entity, string? id)
+    public static void OnUpdating<TUserForeignKey>(IEntityUpdationRecordable<TUserForeignKey> entity, TUserForeignKey id)
     {
         entity.UpdatedBy = id;
     }
@@ -199,13 +125,7 @@ public static class EEDbContextImplementations
         entity.DeletedAt = now;
     }
 
-    public static void OnDeleting<TKey>(IEntitySoftDeletionRecordable<TKey> entity, TKey? id)
-        where TKey : struct, IEquatable<TKey>
-    {
-        entity.DeletedBy = id;
-    }
-
-    public static void OnDeleting(IEntitySoftDeletionRecordableWithStringKey entity, string? id)
+    public static void OnDeleting<TUserForeignKey>(IEntitySoftDeletionRecordable<TUserForeignKey> entity, TUserForeignKey id)
     {
         entity.DeletedBy = id;
     }
@@ -215,15 +135,9 @@ public static class EEDbContextImplementations
         entity.DeletedAt = null;
     }
 
-    public static void OnRestoring<TKey>(IEntitySoftDeletionRecordable<TKey> entity)
-        where TKey : struct, IEquatable<TKey>
+    public static void OnRestoring<TUserForeignKey>(IEntitySoftDeletionRecordable<TUserForeignKey> entity)
     {
-        entity.DeletedBy = default;
-    }
-
-    public static void OnRestoring(IEntitySoftDeletionRecordableWithStringKey entity)
-    {
-        entity.DeletedBy = null;
+        entity.DeletedBy = default!;
     }
 
     public static void OnSaveChanges<TContext>(
@@ -292,82 +206,14 @@ public static class EEDbContextImplementations
         }
     }
 
-    public static void OnSaveChanges<TContext, TKey>(
+    public static void OnSaveChanges<TContext, TUserForeignKey>(
         TContext context,
-        Action<IEntityCreationRecordable, DateTimeOffset, TKey?> onCreating,
-        Action<IEntityUpdationRecordable, DateTimeOffset, TKey?> onUpdating,
-        Action<IEntitySoftDeletionRecordable, DateTimeOffset, TKey?> onDeleting,
+        Action<IEntityCreationRecordable, DateTimeOffset, TUserForeignKey> onCreating,
+        Action<IEntityUpdationRecordable, DateTimeOffset, TUserForeignKey> onUpdating,
+        Action<IEntitySoftDeletionRecordable, DateTimeOffset, TUserForeignKey> onDeleting,
         Action<IEntitySoftDeletionRecordable> onRestoring,
         DateTimeOffset now,
-        TKey? userId
-    )
-        where TContext : DbContext
-        where TKey : struct, IEquatable<TKey>
-    {
-        foreach (var entry in context.ChangeTracker.Entries())
-        {
-            switch (entry.State)
-            {
-                case EntityState.Added:
-                    {
-                        if (entry.Entity is IEntityCreationRecordable creatable)
-                        {
-                            onCreating(creatable, now, userId);
-                        }
-                        if (entry.Entity is IEntityUpdationRecordable updatable)
-                        {
-                            onUpdating(updatable, now, userId);
-                        }
-                    }
-                    break;
-                case EntityState.Modified:
-                    {
-                        if (entry.Entity is IEntityUpdationRecordable updatable)
-                        {
-                            onUpdating(updatable, now, userId);
-                        }
-                        if (entry.Entity is IEntitySoftDeletionRecordable deletable)
-                        {
-                            var isModified =
-                                entry.Property(
-                                    nameof(IEntitySoftDeletionRecordable.IsDeleted)
-                                )
-                                .IsModified;
-                            if (deletable.IsDeleted && isModified)
-                            {
-                                onDeleting(deletable, now, userId);
-                            }
-                            else if (!deletable.IsDeleted && isModified)
-                            {
-                                onRestoring(deletable);
-                            }
-                        }
-                    }
-                    break;
-                case EntityState.Deleted:
-                    {
-                        if (entry.Entity is IEntitySoftDeletionRecordableIgnoringHardDeletion deletable)
-                        {
-                            entry.State = EntityState.Modified;
-                            deletable.IsDeleted = true;
-                            onDeleting(deletable, now, userId);
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    public static void OnSaveChanges<TContext>(
-        TContext context,
-        Action<IEntityCreationRecordable, DateTimeOffset, string?> onCreating,
-        Action<IEntityUpdationRecordable, DateTimeOffset, string?> onUpdating,
-        Action<IEntitySoftDeletionRecordable, DateTimeOffset, string?> onDeleting,
-        Action<IEntitySoftDeletionRecordable> onRestoring,
-        DateTimeOffset now,
-        string? userId
+        TUserForeignKey userId
     )
         where TContext : DbContext
     {

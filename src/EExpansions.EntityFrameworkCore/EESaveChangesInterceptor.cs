@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace EExpansions.EntityFrameworkCore;
 
@@ -131,19 +130,18 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
 
 /// <summary>
 /// The interceptor that activates
-/// <see cref="IEntitySoftDeletionRecordable{TKey}"/>,
-/// <see cref="IEntityUpdationRecordable{TKey}"/>,
-/// <see cref="IEntitySoftDeletionRecordable{TKey}"/>
-/// and their derived interfaces instead of <see cref="EEDbContext{TKey}"/>.
+/// <see cref="IEntitySoftDeletionRecordable{TUserForeignKey}"/>,
+/// <see cref="IEntityUpdationRecordable{TUserForeignKey}"/>,
+/// <see cref="IEntitySoftDeletionRecordable{TUserForeignKey}"/>
+/// and their derived interfaces instead of <see cref="EEDbContext{TUserForeignKey}"/>.
 /// <para>
 /// It is ignored if <typeparamref name="TContext"/> has <see cref="HasEEDbContextLogicsAttribute"/>.
 /// </para>
 /// </summary>
 /// <typeparam name="TContext">The type of the context.</typeparam>
-/// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
-public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor<TContext>
-    where TContext : DbContext, IUserIdGettable<TKey>
-    where TKey : struct, IEquatable<TKey>
+/// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
+public class EESaveChangesInterceptor<TContext, TUserForeignKey> : EESaveChangesInterceptor<TContext>
+    where TContext : DbContext, IUserIdGettable<TUserForeignKey>
 {
     /// <summary>
     /// Configures the entity on creation.
@@ -151,11 +149,11 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
     /// <param name="entity">The entity to configure.</param>
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     /// <param name="id">The user id.</param>
-    protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now, TKey? id)
+    protected virtual void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now, TUserForeignKey id)
     {
         base.OnCreating(entity, now);
 
-        if (entity is IEntityCreationRecordable<TKey> creatable)
+        if (entity is IEntityCreationRecordable<TUserForeignKey> creatable)
         {
             EEDbContextImplementations.OnCreating(creatable, id);
         }
@@ -167,11 +165,11 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
     /// <param name="entity">The entity to configure.</param>
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     /// <param name="id">The user id.</param>
-    protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now, TKey? id)
+    protected virtual void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now, TUserForeignKey id)
     {
         base.OnUpdating(entity, now);
 
-        if (entity is IEntityUpdationRecordable<TKey> updatable)
+        if (entity is IEntityUpdationRecordable<TUserForeignKey> updatable)
         {
             EEDbContextImplementations.OnUpdating(updatable, id);
         }
@@ -183,11 +181,11 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
     /// <param name="entity">The entity to configure.</param>
     /// <param name="now"><see cref="DateTimeOffset.UtcNow"/>.</param>
     /// <param name="id">The user id.</param>
-    protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now, TKey? id)
+    protected virtual void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now, TUserForeignKey id)
     {
         base.OnDeleting(entity, now);
 
-        if (entity is IEntitySoftDeletionRecordable<TKey> deletable)
+        if (entity is IEntitySoftDeletionRecordable<TUserForeignKey> deletable)
         {
             EEDbContextImplementations.OnDeleting(deletable, id);
         }
@@ -198,7 +196,7 @@ public class EESaveChangesInterceptor<TContext, TKey> : EESaveChangesInterceptor
     {
         base.OnRestoring(entity);
 
-        if (entity is IEntitySoftDeletionRecordable<TKey> deletable)
+        if (entity is IEntitySoftDeletionRecordable<TUserForeignKey> deletable)
         {
             EEDbContextImplementations.OnRestoring(deletable);
         }

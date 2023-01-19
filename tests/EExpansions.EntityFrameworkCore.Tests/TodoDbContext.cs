@@ -2,7 +2,7 @@
 
 namespace EExpansions.EntityFrameworkCore;
 
-public sealed class TodoDbContext : EEDbContext<Guid, User>
+public sealed class TodoDbContext : EEDbContext<Guid?, User>
 {
     public static Guid? UserId = null;
 
@@ -28,7 +28,7 @@ public class User
     public string Name { get; set; } = string.Empty;
 }
 
-public class TodoItem : IEntityUpsertionRecordable<Guid, User>, IEntitySoftDeletionRecordable<Guid, User>
+public class TodoItem : IEntityUpsertionRecordable<Guid?, User>, IEntitySoftDeletionRecordable<Guid?, User>
 {
     [Key]
     public Guid Id { get; set; }
