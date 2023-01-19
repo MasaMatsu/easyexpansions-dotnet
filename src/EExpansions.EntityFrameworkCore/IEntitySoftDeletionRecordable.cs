@@ -16,28 +16,24 @@ public interface IEntitySoftDeletionRecordable
     public DateTimeOffset? DeletedAt { get; set; }
 }
 
-#region for struct
-
 /// <summary>
 /// Defines properties to record the date and time the record was deleted and the deleter.
 /// </summary>
-/// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
-public interface IEntitySoftDeletionRecordable<TKey> : IEntitySoftDeletionRecordable
-    where TKey : struct, IEquatable<TKey>
+/// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
+public interface IEntitySoftDeletionRecordable<TUserForeignKey> : IEntitySoftDeletionRecordable
 {
     /// <summary>
     /// The user ID of the deleter.
     /// </summary>
-    public TKey? DeletedBy { get; set; }
+    public TUserForeignKey DeletedBy { get; set; }
 }
 
 /// <summary>
 /// Defines properties to record the date and time the record was deleted and the deleter.
 /// </summary>
-/// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
+/// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
 /// <typeparam name="TUser">The type of the user entity.</typeparam>
-public interface IEntitySoftDeletionRecordable<TKey, TUser> : IEntitySoftDeletionRecordable<TKey>
-    where TKey : struct, IEquatable<TKey>
+public interface IEntitySoftDeletionRecordable<TUserForeignKey, TUser> : IEntitySoftDeletionRecordable<TUserForeignKey>
     where TUser : class
 {
     /// <summary>
@@ -45,36 +41,6 @@ public interface IEntitySoftDeletionRecordable<TKey, TUser> : IEntitySoftDeletio
     /// </summary>
     public TUser? Deleter { get; set; }
 }
-
-#endregion
-
-#region for string
-
-/// <summary>
-/// Defines properties to record the date and time the record was deleted and the deleter.
-/// </summary>
-public interface IEntitySoftDeletionRecordableWithStringKey : IEntitySoftDeletionRecordable
-{
-    /// <summary>
-    /// The user ID of the deleter.
-    /// </summary>
-    public string? DeletedBy { get; set; }
-}
-
-/// <summary>
-/// Defines properties to record the date and time the record was deleted and the deleter.
-/// </summary>
-/// <typeparam name="TUser">The type of the user entity.</typeparam>
-public interface IEntitySoftDeletionRecordableWithStringKey<TUser> : IEntitySoftDeletionRecordableWithStringKey
-    where TUser : class
-{
-    /// <summary>
-    /// The user ID of the deleter.
-    /// </summary>
-    public TUser? Deleter { get; set; }
-}
-
-#endregion
 
 /// <summary>
 /// The wrapper of <see cref="IEntitySoftDeletionRecordable"/>.
@@ -84,50 +50,22 @@ public interface IEntitySoftDeletionRecordableWithStringKey<TUser> : IEntitySoft
 public interface IEntitySoftDeletionRecordableIgnoringHardDeletion : IEntitySoftDeletionRecordable
 { }
 
-#region for struct
-
 /// <summary>
-/// The wrapper of <see cref="IEntitySoftDeletionRecordable{TKey}"/>.
+/// The wrapper of <see cref="IEntitySoftDeletionRecordable{TUserForeignKey}"/>.
 /// There are no additional definitions.
 /// A entity that inherits this interface is never deleted.
 /// </summary>
-/// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
-public interface IEntitySoftDeletionRecordableIgnoringHardDeletion<TKey> : IEntitySoftDeletionRecordable<TKey>, IEntitySoftDeletionRecordableIgnoringHardDeletion
-    where TKey : struct, IEquatable<TKey>
+/// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
+public interface IEntitySoftDeletionRecordableIgnoringHardDeletion<TUserForeignKey> : IEntitySoftDeletionRecordable<TUserForeignKey>, IEntitySoftDeletionRecordableIgnoringHardDeletion
 { }
 
 /// <summary>
-/// The wrapper of <see cref="IEntitySoftDeletionRecordable{TKey, TUser}"/>.
+/// The wrapper of <see cref="IEntitySoftDeletionRecordable{TUserForeignKey, TUser}"/>.
 /// There are no additional definitions.
 /// A entity that inherits this interface is never deleted.
 /// </summary>
-/// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
+/// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
 /// <typeparam name="TUser">The type of the user entity.</typeparam>
-public interface IEntitySoftDeletionRecordableIgnoringHardDeletion<TKey, TUser> : IEntitySoftDeletionRecordable<TKey, TUser>, IEntitySoftDeletionRecordableIgnoringHardDeletion
-    where TKey : struct, IEquatable<TKey>
+public interface IEntitySoftDeletionRecordableIgnoringHardDeletion<TUserForeignKey, TUser> : IEntitySoftDeletionRecordable<TUserForeignKey, TUser>, IEntitySoftDeletionRecordableIgnoringHardDeletion
     where TUser : class
 { }
-
-#endregion
-
-#region for string
-
-/// <summary>
-/// The wrapper of <see cref="IEntitySoftDeletionRecordableWithStringKey"/>.
-/// There are no additional definitions.
-/// A entity that inherits this interface is never deleted.
-/// </summary>
-public interface IEntitySoftDeletionRecordableIgnoringHardDeletionWithStringKey : IEntitySoftDeletionRecordableWithStringKey, IEntitySoftDeletionRecordableIgnoringHardDeletion
-{ }
-
-/// <summary>
-/// The wrapper of <see cref="IEntitySoftDeletionRecordableWithStringKey{TUser}"/>.
-/// There are no additional definitions.
-/// A entity that inherits this interface is never deleted.
-/// </summary>
-/// <typeparam name="TUser">The type of the user entity.</typeparam>
-public interface IEntitySoftDeletionRecordableIgnoringHardDeletionWithStringKey<TUser> : IEntitySoftDeletionRecordableWithStringKey<TUser>, IEntitySoftDeletionRecordableIgnoringHardDeletion
-    where TUser : class
-{ }
-
-#endregion

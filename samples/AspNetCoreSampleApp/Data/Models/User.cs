@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreSampleApp.Data.Models;
 
-public class User : IdentityUser, IEntityUpsertionRecordableWithStringKey<User>, IEntitySoftDeletionRecordableWithStringKey<User>
+public class User : IdentityUser, IEntityUpsertionRecordable<string?, User>, IEntitySoftDeletionRecordable<string?, User>
 {
     public string? CreatedBy { get; set; }
     public DateTimeOffset CreatedAt { get; set; }

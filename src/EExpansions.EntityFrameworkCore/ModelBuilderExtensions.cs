@@ -66,13 +66,11 @@ public static class ModelBuilderExtensions
         return modelBuilder;
     }
 
-    #region for struct
-
     /// <summary>
-    /// Call this method in <see cref="DbContext.OnModelCreating(ModelBuilder)"/> to use <see cref="EESaveChangesInterceptor{TContext, TKey}"/>.
+    /// Call this method in <see cref="DbContext.OnModelCreating(ModelBuilder)"/> to use <see cref="EESaveChangesInterceptor{TContext, TUserForeignKey}"/>.
     /// </summary>
     /// <typeparam name="TContext">The type of the context.</typeparam>
-    /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
+    /// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
     /// <param name="modelBuilder"><see cref="ModelBuilder"/>.</param>
     /// <returns>
     /// The same <see cref="ModelBuilder" /> instance so that additional configuration calls can be chained.
@@ -80,28 +78,27 @@ public static class ModelBuilderExtensions
     /// <exception cref="ArgumentNullException">
     /// The <paramref name="modelBuilder"/> is <see langword="null" />.
     /// </exception>
-    public static ModelBuilder UseEESaveChangesInterceptor<TContext, TKey>(this ModelBuilder modelBuilder)
+    public static ModelBuilder UseEESaveChangesInterceptor<TContext, TUserForeignKey>(this ModelBuilder modelBuilder)
         where TContext : DbContext
-        where TKey : struct, IEquatable<TKey>
     {
         _ = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
 
         if (!IsEEDbContext<TContext>())
         {
             EEDbContextImplementations.OnModelCreating(modelBuilder);
-            EEDbContextImplementations.OnModelCreating<TKey>(modelBuilder);
+            EEDbContextImplementations.OnModelCreating<TUserForeignKey>(modelBuilder);
         }
 
         return modelBuilder;
     }
 
     /// <summary>
-    /// Call this method in <see cref="DbContext.OnModelCreating(ModelBuilder)"/> to use <see cref="EESaveChangesInterceptor{TContext, TKey}"/>.
+    /// Call this method in <see cref="DbContext.OnModelCreating(ModelBuilder)"/> to use <see cref="EESaveChangesInterceptor{TContext, TUserForeignKey}"/>.
     /// <para>
-    /// This method performs configuration to activates <see cref="IEntityCreationRecordable{TKey, TUser}"/>
+    /// This method performs configuration to activates <see cref="IEntityCreationRecordable{TUserForeignKey, TUser}"/>
     /// </para>
     /// </summary>
-    /// <typeparam name="TKey">The type of the key that is used for user ID.</typeparam>
+    /// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
     /// <typeparam name="TUser">The type of the user entity.</typeparam>
     /// <param name="modelBuilder"><see cref="ModelBuilder"/>.</param>
     /// <returns>
@@ -110,63 +107,7 @@ public static class ModelBuilderExtensions
     /// <exception cref="ArgumentNullException">
     /// The <paramref name="modelBuilder"/> is <see langword="null" />.
     /// </exception>
-    public static ModelBuilder UseEESaveChangesInterceptor<TContext, TKey, TUser>(this ModelBuilder modelBuilder)
-        where TContext : DbContext
-        where TKey : struct, IEquatable<TKey>
-        where TUser : class
-    {
-        _ = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
-
-        if (!IsEEDbContext<TContext>())
-        {
-            EEDbContextImplementations.OnModelCreating(modelBuilder);
-            EEDbContextImplementations.OnModelCreating<TKey>(modelBuilder);
-            EEDbContextImplementations.OnModelCreating<TKey, TUser>(modelBuilder);
-        }
-
-        return modelBuilder;
-    }
-
-    #endregion
-
-    #region for string
-
-    /// <summary>
-    /// Call this method in <see cref="DbContext.OnModelCreating(ModelBuilder)"/> to use <see cref="EESaveChangesInterceptorWithStringKey{TContext}"/>.
-    /// </summary>
-    /// <param name="modelBuilder"><see cref="ModelBuilder"/>.</param>
-    /// <returns>
-    /// The same <see cref="ModelBuilder" /> instance so that additional configuration calls can be chained.
-    /// </returns>
-    /// <exception cref="ArgumentNullException">
-    /// The <paramref name="modelBuilder"/> is <see langword="null" />.
-    /// </exception>
-    public static ModelBuilder UseEESaveChangesInterceptorWithStringKey<TContext>(this ModelBuilder modelBuilder)
-        where TContext : DbContext
-    {
-        _ = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
-
-        if (!IsEEDbContext<TContext>())
-        {
-            EEDbContextImplementations.OnModelCreating(modelBuilder);
-            EEDbContextImplementations.OnModelCreatingWithStringKey(modelBuilder);
-        }
-
-        return modelBuilder;
-    }
-
-    /// <summary>
-    /// Call this method in <see cref="DbContext.OnModelCreating(ModelBuilder)"/> to use <see cref="EESaveChangesInterceptorWithStringKey{TContext}"/>.
-    /// </summary>
-    /// <typeparam name="TUser">The type of the user entity.</typeparam>
-    /// <param name="modelBuilder"><see cref="ModelBuilder"/>.</param>
-    /// <returns>
-    /// The same <see cref="ModelBuilder" /> instance so that additional configuration calls can be chained.
-    /// </returns>
-    /// <exception cref="ArgumentNullException">
-    /// The <paramref name="modelBuilder"/> is <see langword="null" />.
-    /// </exception>
-    public static ModelBuilder UseEESaveChangesInterceptorWithStringKey<TContext, TUser>(this ModelBuilder modelBuilder)
+    public static ModelBuilder UseEESaveChangesInterceptor<TContext, TUserForeignKey, TUser>(this ModelBuilder modelBuilder)
         where TContext : DbContext
         where TUser : class
     {
@@ -175,12 +116,10 @@ public static class ModelBuilderExtensions
         if (!IsEEDbContext<TContext>())
         {
             EEDbContextImplementations.OnModelCreating(modelBuilder);
-            EEDbContextImplementations.OnModelCreatingWithStringKey(modelBuilder);
-            EEDbContextImplementations.OnModelCreatingWithStringKey<TUser>(modelBuilder);
+            EEDbContextImplementations.OnModelCreating<TUserForeignKey>(modelBuilder);
+            EEDbContextImplementations.OnModelCreating<TUserForeignKey, TUser>(modelBuilder);
         }
 
         return modelBuilder;
     }
-
-    #endregion
 }

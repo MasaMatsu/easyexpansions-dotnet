@@ -3,7 +3,7 @@ using EExpansions.EntityFrameworkCore;
 
 namespace AspNetCoreSampleApp.Data.Models;
 
-public class TodoItem : IEntityUpsertionRecordableWithStringKey<User>, IEntitySoftDeletionRecordableWithStringKey<User>
+public class TodoItem : IEntityUpsertionRecordable<string?, User>, IEntitySoftDeletionRecordable<string?, User>
 {
     [Key]
     public int Id { get; set; }
