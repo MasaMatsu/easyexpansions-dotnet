@@ -30,7 +30,7 @@ jobs:
           dotnet pack --configuration Release ./src/EExpansions.AspNetCore.Identity/EExpansions.AspNetCore.Identity.csproj
           dotnet pack --configuration Release ./src/EExpansions.AspNetCore.Caching/EExpansions.AspNetCore.Caching.csproj
           dotnet pack --configuration Release ./src/EExpansions.AspNetCore.Session/EExpansions.AspNetCore.Session.csproj
-          dotnet pack --configuration Release ./src/EExpansions.AspNetCore/EExpansions.AspNetCore.csproj
+          dotnet pack --configuration Release ./src/EExpansions.AspNetCore.All/EExpansions.AspNetCore.All.csproj
       - name: Publish the package to GPR
         run: |
           dotnet nuget push ./src/EExpansions.Core/bin/Release/*.nupkg
@@ -38,4 +38,4 @@ jobs:
           dotnet nuget push ./src/EExpansions.AspNetCore.Identity/bin/Release/*.nupkg
           dotnet nuget push ./src/EExpansions.AspNetCore.Caching/bin/Release/*.nupkg
           dotnet nuget push ./src/EExpansions.AspNetCore.Session/bin/Release/*.nupkg
-          dotnet nuget push ./src/EExpansions.AspNetCore/bin/Release/*.nupkg
+          dotnet nuget push ./src/EExpansions.AspNetCore.All/bin/Release/*.nupkg
