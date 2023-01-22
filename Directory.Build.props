@@ -1,19 +1,19 @@
 ﻿<Project>
  
   <PropertyGroup>
-    <DefaultNetCoreTargetFramework>net6.0</DefaultNetCoreTargetFramework>
+    <DefaultNetCoreTargetFramework>net7.0</DefaultNetCoreTargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <LangVersion>10</LangVersion>
+    <LangVersion>11</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Label="Version">
-    <MajorVersion>6</MajorVersion>
+    <MajorVersion>7</MajorVersion>
     <MinorVersion>0</MinorVersion>
     <PatchVersion>0</PatchVersion>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
-    <VersionSuffix>alpha</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup Label="ForPack">
