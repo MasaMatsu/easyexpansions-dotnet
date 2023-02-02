@@ -8,7 +8,7 @@ public interface IEntityUpdationRecordable
     /// <summary>
     /// The date and time of record updation.
     /// </summary>
-    public DateTimeOffset UpdatedAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
 }
 
 /// <summary>

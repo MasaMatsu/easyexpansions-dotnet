@@ -41,18 +41,3 @@ jobs:
           dotnet nuget push ./src/EExpansions.AspNetCore.Caching/bin/Release/*.nupkg
           dotnet nuget push ./src/EExpansions.AspNetCore.Session/bin/Release/*.nupkg
           dotnet nuget push ./src/EExpansions.AspNetCore.All/bin/Release/*.nupkg
-      - name: Set current datetime as env variable
-        env:
-          TZ: 'Asia/Tokyo'
-        run: echo "TIMESTAMP=$(date +'%Y%m%d')" >> $GITHUB_ENV
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: release-${{ env.TIMESTAMP }}
-          release_name: release-${{ env.TIMESTAMP }}
-          body: release-${{ env.TIMESTAMP }}
-          draft: false
-          prerelease: false
