@@ -10,17 +10,17 @@ public static class EEDbContextImplementations
     public static void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entities<IEntityCreationRecordable>(b =>
-            b.Property<DateTimeOffset>(
+            b.Property<DateTimeOffset?>(
                 nameof(IEntityCreationRecordable.CreatedAt)
             )
-            .IsRequired(true)
+            .IsRequired(false)
             .HasValueGenerator<UtcNowValueGenerator>()
         );
         modelBuilder.Entities<IEntityUpdationRecordable>(b =>
-            b.Property<DateTimeOffset>(
+            b.Property<DateTimeOffset?>(
                 nameof(IEntityUpdationRecordable.UpdatedAt)
             )
-            .IsRequired(true)
+            .IsRequired(false)
             .HasValueGenerator<UtcNowValueGenerator>()
         );
         modelBuilder.Entities<IEntitySoftDeletionRecordable>(b =>
