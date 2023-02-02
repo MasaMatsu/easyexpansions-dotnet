@@ -35,10 +35,10 @@ public class TodoItem : IEntityUpsertionRecordable<Guid?, User>, IEntitySoftDele
     [Required(AllowEmptyStrings = false)]
     public string Title { get; set; } = string.Empty;
     public Guid? CreatedBy { get; set; }
-    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset? CreatedAt { get; set; }
     public User? Creator { get; set; }
     public Guid? UpdatedBy { get; set; }
-    public DateTimeOffset UpdatedAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
     public User? Updater { get; set; }
     public Guid? DeletedBy { get; set; }
     public bool IsDeleted { get; set; }

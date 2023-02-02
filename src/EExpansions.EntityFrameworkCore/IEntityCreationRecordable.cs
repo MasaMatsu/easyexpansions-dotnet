@@ -8,7 +8,7 @@ public interface IEntityCreationRecordable
     /// <summary>
     /// The date and time of record creation.
     /// </summary>
-    DateTimeOffset CreatedAt { get; set; }
+    DateTimeOffset? CreatedAt { get; set; }
 }
 
 /// <summary>
