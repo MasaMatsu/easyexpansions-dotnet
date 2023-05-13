@@ -52,6 +52,7 @@ public class DistributedEntityCacheValueContainer<TDistributedCache> : IEntityCa
     public void Set<TEntity>(string key, TEntity value) where TEntity : class =>
         Cache.Set(key, value);
 
+    /// <inheritdoc/>
     public void Set(Type entityType, string key, object value) =>
         Cache.Set(entityType, key, value);
 

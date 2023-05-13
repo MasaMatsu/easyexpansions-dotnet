@@ -3,10 +3,17 @@ using EExpansions.EntityFrameworkCore.ValueGeneration;
 
 namespace EExpansions.EntityFrameworkCore.Internal;
 
+/// <summary>
+/// EEDbContext internal implemantations.
+/// </summary>
 public static class EEDbContextImplementations
 {
     #region OnModelCreating
 
+    /// <summary>
+    /// OnModelCreating implementation.
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     public static void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entities<IEntityCreationRecordable>(b =>
@@ -38,6 +45,11 @@ public static class EEDbContextImplementations
         });
     }
 
+    /// <summary>
+    /// OnModelCreating implementation.
+    /// </summary>
+    /// <typeparam name="TUserForeignKey"></typeparam>
+    /// <param name="modelBuilder"></param>
     public static void OnModelCreating<TUserForeignKey>(ModelBuilder modelBuilder)
     {
         modelBuilder.Entities<IEntityCreationRecordable<TUserForeignKey>>(b =>
@@ -60,6 +72,12 @@ public static class EEDbContextImplementations
         );
     }
 
+    /// <summary>
+    /// OnModelCreating implementation.
+    /// </summary>
+    /// <typeparam name="TUserForeignKey"></typeparam>
+    /// <typeparam name="TUser"></typeparam>
+    /// <param name="modelBuilder"></param>
     public static void OnModelCreating<TUserForeignKey, TUser>(ModelBuilder modelBuilder)
         where TUser : class
     {
@@ -100,46 +118,98 @@ public static class EEDbContextImplementations
 
     #endregion
 
+    /// <summary>
+    /// OnCreating implementation.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="now"></param>
     public static void OnCreating(IEntityCreationRecordable entity, DateTimeOffset now)
     {
         entity.CreatedAt = now;
     }
 
+    /// <summary>
+    /// OnCreating implementation.
+    /// </summary>
+    /// <typeparam name="TUserForeignKey"></typeparam>
+    /// <param name="entity"></param>
+    /// <param name="id"></param>
     public static void OnCreating<TUserForeignKey>(IEntityCreationRecordable<TUserForeignKey> entity, TUserForeignKey id)
     {
         entity.CreatedBy = id;
     }
 
+    /// <summary>
+    /// OnUpdating implementation.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="now"></param>
     public static void OnUpdating(IEntityUpdationRecordable entity, DateTimeOffset now)
     {
         entity.UpdatedAt = now;
     }
 
+    /// <summary>
+    /// OnUpdating implementation.
+    /// </summary>
+    /// <typeparam name="TUserForeignKey"></typeparam>
+    /// <param name="entity"></param>
+    /// <param name="id"></param>
     public static void OnUpdating<TUserForeignKey>(IEntityUpdationRecordable<TUserForeignKey> entity, TUserForeignKey id)
     {
         entity.UpdatedBy = id;
     }
 
+    /// <summary>
+    /// OnDeleting implementation.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="now"></param>
     public static void OnDeleting(IEntitySoftDeletionRecordable entity, DateTimeOffset now)
     {
         entity.DeletedAt = now;
     }
 
+    /// <summary>
+    /// OnDeleting implementation.
+    /// </summary>
+    /// <typeparam name="TUserForeignKey"></typeparam>
+    /// <param name="entity"></param>
+    /// <param name="id"></param>
     public static void OnDeleting<TUserForeignKey>(IEntitySoftDeletionRecordable<TUserForeignKey> entity, TUserForeignKey id)
     {
         entity.DeletedBy = id;
     }
 
+    /// <summary>
+    /// OnRestoring implementation.
+    /// </summary>
+    /// <param name="entity"></param>
     public static void OnRestoring(IEntitySoftDeletionRecordable entity)
     {
         entity.DeletedAt = null;
     }
 
+    /// <summary>
+    /// OnRestoring implementation.
+    /// </summary>
+    /// <typeparam name="TUserForeignKey"></typeparam>
+    /// <param name="entity"></param>
     public static void OnRestoring<TUserForeignKey>(IEntitySoftDeletionRecordable<TUserForeignKey> entity)
     {
         entity.DeletedBy = default!;
     }
 
+    /// <summary>
+    /// SaveChanges implementation.
+    /// </summary>
+    /// <typeparam name="TContext"></typeparam>
+    /// <param name="context"></param>
+    /// <param name="onCreating"></param>
+    /// <param name="onUpdating"></param>
+    /// <param name="onDeleting"></param>
+    /// <param name="onRestoring"></param>
+    /// <param name="now"></param>
     public static void OnSaveChanges<TContext>(
         TContext context,
         Action<IEntityCreationRecordable, DateTimeOffset> onCreating,
@@ -206,6 +276,18 @@ public static class EEDbContextImplementations
         }
     }
 
+    /// <summary>
+    /// SaveChanges implementation.
+    /// </summary>
+    /// <typeparam name="TContext"></typeparam>
+    /// <typeparam name="TUserForeignKey"></typeparam>
+    /// <param name="context"></param>
+    /// <param name="onCreating"></param>
+    /// <param name="onUpdating"></param>
+    /// <param name="onDeleting"></param>
+    /// <param name="onRestoring"></param>
+    /// <param name="now"></param>
+    /// <param name="userId"></param>
     public static void OnSaveChanges<TContext, TUserForeignKey>(
         TContext context,
         Action<IEntityCreationRecordable, DateTimeOffset, TUserForeignKey> onCreating,

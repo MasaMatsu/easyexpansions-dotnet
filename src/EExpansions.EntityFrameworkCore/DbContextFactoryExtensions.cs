@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EExpansions.EntityFrameworkCore;
 
+/// <summary>
+/// Extensions
+/// </summary>
 public static class DbContextFactoryExtensions
 {
     #region Execute

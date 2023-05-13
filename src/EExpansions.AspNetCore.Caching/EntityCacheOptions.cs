@@ -1,7 +1,7 @@
 ﻿namespace EExpansions.AspNetCore.Caching;
 
 /// <summary>
-/// The options to be used by a <see cref="EntityCache{TContext}" />.
+/// The options to be used by a <see cref="EntityCache{TContext, TKeyContainer}" />.
 /// </summary>
 public class EntityCacheOptions : IOptions<EntityCacheOptions>
 {
@@ -13,7 +13,7 @@ public class EntityCacheOptions : IOptions<EntityCacheOptions>
     /// <summary>
     /// The cache options for an entry in <see cref="IDistributedCache"/>.
     /// </summary>
-    public DistributedCacheEntryOptions? DistributedCacheEntryOptions { get; set; } =
+    public DistributedCacheEntryOptions DistributedCacheEntryOptions { get; set; } =
         new DistributedCacheEntryOptions()
         .SetAbsoluteExpiration(TimeSpan.FromHours(24))
         .SetSlidingExpiration(TimeSpan.FromHours(6));

@@ -1,5 +1,8 @@
 ﻿namespace EExpansions.AspNetCore.Caching;
 
+/// <summary>
+/// Extensions
+/// </summary>
 public static class EntityCacheServiceCollectionExtensions
 {
     /// <summary>

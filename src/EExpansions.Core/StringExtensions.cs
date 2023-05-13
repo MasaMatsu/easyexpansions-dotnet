@@ -2,6 +2,9 @@
 
 namespace EExpansions;
 
+/// <summary>
+/// Extensions
+/// </summary>
 public static class StringExtensions
 {
     /// <summary>
@@ -12,7 +15,7 @@ public static class StringExtensions
     /// <returns>
     /// <see langword="true" /> if the <paramref name="value" /> parameter is <see langword="null" /> or an empty string (""); otherwise, <see langword="false" />.
     /// </returns>
-    public static bool IsNullOrEmpty([AllowNull] this string value) => string.IsNullOrEmpty(value);
+    public static bool IsNullOrEmpty([NotNullWhen(false)] this string? value) => string.IsNullOrEmpty(value);
 
     /// <summary>
     /// Indicates whether a specified string is <see langword="null" />, empty, or consists only of white-space characters.
@@ -21,5 +24,5 @@ public static class StringExtensions
     /// <returns>
     /// <see langword="true" /> if the <paramref name="value" /> parameter is <see langword="null" /> or <see cref="string.Empty" />, or if <paramref name="value" /> consists exclusively of white-space characters.
     /// </returns>
-    public static bool IsNullOrWhitespace([AllowNull] this string value) => string.IsNullOrWhiteSpace(value);
+    public static bool IsNullOrWhitespace([NotNullWhen(false)] this string? value) => string.IsNullOrWhiteSpace(value);
 }

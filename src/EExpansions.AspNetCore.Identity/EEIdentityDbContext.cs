@@ -61,6 +61,7 @@ public abstract class EEIdentityDbContext<TUser> : EEIdentityDbContext<TUser, Id
 /// <typeparam name="TUser">The type of user objects.</typeparam>
 /// <typeparam name="TRole">The type of role objects.</typeparam>
 /// <typeparam name="TKey">The type of the primary key for users and roles.</typeparam>
+/// <typeparam name="TUserForeignKey">The type of the foreign key for users.</typeparam>
 public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserForeignKey> : EEIdentityDbContext<TUser, TRole, TKey, TUserForeignKey, IdentityUserClaim<TKey>, IdentityUserRole<TKey>, IdentityUserLogin<TKey>, IdentityRoleClaim<TKey>, IdentityUserToken<TKey>>
     where TUser : IdentityUser<TKey>
     where TRole : IdentityRole<TKey>
@@ -88,6 +89,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserForeignKey> :
 /// <typeparam name="TUser">The type of user objects.</typeparam>
 /// <typeparam name="TRole">The type of role objects.</typeparam>
 /// <typeparam name="TKey">The type of the primary key for users and roles.</typeparam>
+/// <typeparam name="TUserForeignKey">The type of the foreign key for users.</typeparam>
 /// <typeparam name="TUserClaim">The type of the user claim object.</typeparam>
 /// <typeparam name="TUserRole">The type of the user role object.</typeparam>
 /// <typeparam name="TUserLogin">The type of the user login object.</typeparam>
@@ -219,7 +221,7 @@ public abstract class EEIdentityDbContext<TUser, TRole, TKey, TUserForeignKey, T
 
     #endregion
 
-    /// <inheritdoc cref="DbContext.SaveChanges"/>
+    /// <inheritdoc cref="DbContext.SaveChanges()"/>
     public override int SaveChanges()
     {
         var now = DateTimeOffset.UtcNow;
