@@ -1,15 +1,17 @@
 ﻿<Project>
   <ItemGroup>
-    <PackageReference Update="coverlet.collector" Version="3.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Http.Extensions" Version="2.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Session" Version="2.*" />
+    <PackageReference Update="coverlet.collector" Version="*" />
+    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.*" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.*" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="6.*" />
     <PackageReference Update="Microsoft.EntityFrameworkCore" Version="7.*" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="7.*" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="7.*" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="7.*" />
     <PackageReference Update="Microsoft.Extensions.Caching.Abstractions" Version="7.*" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.*" />
-    <PackageReference Update="xunit" Version="2.*" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.*" />
+    <PackageReference Update="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.*" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="*" />
+    <PackageReference Update="xunit" Version="*" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="*" />
   </ItemGroup>
 </Project>

@@ -18,6 +18,9 @@ using Internal;
 public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
     where TContext : DbContext
 {
+    /// <summary>
+    /// The specified DbContext inherits EEDbContext.
+    /// </summary>
     protected static bool IsEEDbContext => ModelBuilderExtensions.IsEEDbContext<TContext>();
 
     /// <summary>
@@ -61,6 +64,12 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
 
     #region PrimitiveSavingChanges
 
+    /// <summary>
+    /// Primitive SavingChanges()
+    /// </summary>
+    /// <param name="eventData"></param>
+    /// <param name="result"></param>
+    /// <returns></returns>
     protected InterceptionResult<int> PrimitiveSavingChanges(
         DbContextEventData eventData,
         InterceptionResult<int> result
@@ -69,6 +78,13 @@ public class EESaveChangesInterceptor<TContext> : SaveChangesInterceptor
         return base.SavingChanges(eventData, result);
     }
 
+    /// <summary>
+    /// Primitive SavingChangesAsync
+    /// </summary>
+    /// <param name="eventData"></param>
+    /// <param name="result"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     protected ValueTask<InterceptionResult<int>> PrimitiveSavingChangesAsync(
         DbContextEventData eventData,
         InterceptionResult<int> result,

@@ -4,6 +4,9 @@ namespace EExpansions.EntityFrameworkCore;
 
 using Internal;
 
+/// <summary>
+/// Extensions
+/// </summary>
 public static class ModelBuilderExtensions
 {
     /// <summary>
@@ -98,6 +101,7 @@ public static class ModelBuilderExtensions
     /// This method performs configuration to activates <see cref="IEntityCreationRecordable{TUserForeignKey, TUser}"/>
     /// </para>
     /// </summary>
+    /// <typeparam name="TContext">DbContext</typeparam>
     /// <typeparam name="TUserForeignKey">The type of the key that is used for user ID.</typeparam>
     /// <typeparam name="TUser">The type of the user entity.</typeparam>
     /// <param name="modelBuilder"><see cref="ModelBuilder"/>.</param>

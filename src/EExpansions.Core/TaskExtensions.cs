@@ -1,5 +1,8 @@
 ﻿namespace EExpansions;
 
+/// <summary>
+/// Extensions
+/// </summary>
 public static class TaskExtensions
 {
     /// <summary>

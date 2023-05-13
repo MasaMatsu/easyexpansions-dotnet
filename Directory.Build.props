@@ -1,7 +1,7 @@
 ﻿<Project>
  
   <PropertyGroup>
-    <DefaultNetCoreTargetFramework>net7.0</DefaultNetCoreTargetFramework>
+    <DefaultNetCoreTargetFramework>net6.0</DefaultNetCoreTargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>11</LangVersion>

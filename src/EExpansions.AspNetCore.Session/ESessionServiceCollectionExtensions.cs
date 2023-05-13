@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Builder;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
+/// <summary>
+/// Extensions
+/// </summary>
 public static class ESessionServiceCollectionExtensions
 {
     /// <summary>

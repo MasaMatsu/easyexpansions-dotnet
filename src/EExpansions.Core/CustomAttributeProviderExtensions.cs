@@ -2,6 +2,9 @@
 
 namespace EExpansions;
 
+/// <summary>
+/// Extensions
+/// </summary>
 public static class CustomAttributeProviderExtensions
 {
     /// <summary>

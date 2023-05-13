@@ -3,13 +3,16 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EExpansions.EntityFrameworkCore;
 
+/// <summary>
+/// Extensions
+/// </summary>
 public static class DbContextExtensions
 {
     #region Soft remove
 
     /// <summary>
     /// Enables the <see cref="IEntitySoftDeletionRecordable.IsDeleted"/> of the given entity to begin tracking
-    /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges"/> is called.
+    /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges()"/> is called.
     /// </summary>
     /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context for the method chain.</param>
@@ -40,7 +43,7 @@ public static class DbContextExtensions
 
     /// <summary>
     /// Enables the <see cref="IEntitySoftDeletionRecordable.IsDeleted"/> of the given entity to begin tracking
-    /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges"/> is called.
+    /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges()"/> is called.
     /// </summary>
     /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <typeparam name="TEntity">The type of entity.</typeparam>
@@ -73,7 +76,7 @@ public static class DbContextExtensions
 
     /// <summary>
     /// Enables the <see cref="IEntitySoftDeletionRecordable.IsDeleted"/> of the given entity to begin tracking
-    /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges"/> is called.
+    /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges()"/> is called.
     /// </summary>
     /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context for the method chain.</param>
@@ -95,7 +98,7 @@ public static class DbContextExtensions
 
     /// <summary>
     /// Enables the <see cref="IEntitySoftDeletionRecordable.IsDeleted"/> of the given entity to begin tracking
-    /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges"/> is called.
+    /// such that it will be soft deleted from the database when <see cref="DbContext.SaveChanges()"/> is called.
     /// </summary>
     /// <typeparam name="TContext">The type of the context.</typeparam>
     /// <param name="context">The context for the method chain.</param>
