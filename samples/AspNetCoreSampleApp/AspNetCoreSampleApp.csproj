@@ -6,13 +6,17 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'AspNetCoreSampleApp' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1701;1702;IL2121;1591</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.*" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.*" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.*" />
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
   </ItemGroup>
 
   <ItemGroup>

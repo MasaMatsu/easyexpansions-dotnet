@@ -95,7 +95,7 @@ public abstract class EEDbContext : DbContext
 
     #endregion
 
-    /// <inheritdoc cref="DbContext.SaveChanges"/>
+    /// <inheritdoc cref="DbContext.SaveChanges()"/>
     public override int SaveChanges()
     {
         var now = DateTimeOffset.UtcNow;
@@ -229,7 +229,7 @@ public abstract class EEDbContext<TUserForeignKey> : EEDbContext, IUserIdGettabl
     /// <returns>The id of the editing user.</returns>
     public abstract TUserForeignKey GetUserId();
 
-    /// <inheritdoc cref="DbContext.SaveChanges"/>
+    /// <inheritdoc cref="DbContext.SaveChanges()"/>
     public override int SaveChanges()
     {
         var now = DateTimeOffset.UtcNow;

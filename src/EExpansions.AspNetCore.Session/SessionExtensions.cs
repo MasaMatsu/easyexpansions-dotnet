@@ -1,5 +1,8 @@
 ﻿namespace EExpansions.AspNetCore.Session;
 
+/// <summary>
+/// Extensions
+/// </summary>
 public static class SessionExtensions
 {
     /// <summary>
