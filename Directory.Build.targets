@@ -4,8 +4,6 @@
     <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.*" />
     <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.*" />
     <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="6.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Http.Extensions" Version="2.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Session" Version="2.*" />
     <PackageReference Update="Microsoft.EntityFrameworkCore" Version="7.*" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="7.*" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="7.*" />

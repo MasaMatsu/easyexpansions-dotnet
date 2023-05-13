@@ -20,7 +20,7 @@ public static class SessionExtensions
         _ = session ?? throw new ArgumentNullException(nameof(session));
 
         var json = session.GetString(key);
-        return JsonSerializer.Deserialize<TValue>(json);
+        return json.IsNullOrEmpty() ? default : JsonSerializer.Deserialize<TValue>(json);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public static class SessionExtensions
         _ = valueType ?? throw new ArgumentNullException(nameof(valueType));
 
         var json = session.GetString(key);
-        return JsonSerializer.Deserialize(json, valueType);
+        return json.IsNullOrEmpty() ? default : JsonSerializer.Deserialize(json, valueType);
     }
 
     /// <summary>
