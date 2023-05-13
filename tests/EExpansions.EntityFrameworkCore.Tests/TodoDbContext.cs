@@ -10,7 +10,7 @@ public sealed class TodoDbContext : EEDbContext<Guid?, User>
     {
         base.OnConfiguring(optionsBuilder);
 
-        optionsBuilder.UseSqlServer("Server=localhost,11433;Database=EExpansions_EntityFrameworkCore_Tests;User id=sa;Password=Passw0rd!Passw0rd!");
+        optionsBuilder.UseSqlServer("Server=localhost,11433;Database=EExpansions_EntityFrameworkCore_Tests;User id=sa;Password=Passw0rd!Passw0rd!;TrustServerCertificate=True");
     }
 
     public DbSet<TodoItem> TodoItems { get; set; } = null!;
