@@ -8,25 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreSampleApp.Pages;
 
-public class IndexModel : PageModel
+public class IndexModel(
+    IDbContextFactory<ApplicationDbContext> factory,
+    IHttpContextAccessor httpContextAccessor,
+    ILogger<IndexModel> logger
+) : PageModel
 {
     public const string SessionKeyName = "_Name";
     public const string SessionKeyAge = "_Age";
-
-    private readonly IDbContextFactory<ApplicationDbContext> _factory;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly ILogger<IndexModel> _logger;
-
-    public IndexModel(
-        IDbContextFactory<ApplicationDbContext> factory,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<IndexModel> logger
-    )
-    {
-        _factory = factory;
-        _httpContextAccessor = httpContextAccessor;
-        _logger = logger;
-    }
 
     public async Task OnGetAsync()
     {
@@ -38,12 +27,12 @@ public class IndexModel : PageModel
         var name = HttpContext.Session.GetString(SessionKeyName);
         var age = HttpContext.Session.GetInt32(SessionKeyAge).ToString();
 
-        _logger.LogInformation("Session Name: {Name}", name);
-        _logger.LogInformation("Session Age: {Age}", age);
+        logger.LogInformation("Session Name: {Name}", name);
+        logger.LogInformation("Session Age: {Age}", age);
 
-        var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userId = httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        await _factory.ExecuteAsync(async context =>
+        await factory.ExecuteAsync(async context =>
         {
             var exists = await context.TodoItems.AnyAsync();
             if (!exists && !userId.IsNullOrEmpty())

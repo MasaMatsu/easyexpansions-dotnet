@@ -18,7 +18,7 @@ public class EnumExtensionsTests
     [InlineData(null, null)]
     [InlineData(VerificationEnum.HaveDisplayName, DisplayName)]
     [InlineData(VerificationEnum.HaveNoDisplayName, null)]
-    public void GetDisplayName(Enum enumValue, string expected)
+    public void GetDisplayName(Enum? enumValue, string? expected)
     {
         if (enumValue is null)
         {

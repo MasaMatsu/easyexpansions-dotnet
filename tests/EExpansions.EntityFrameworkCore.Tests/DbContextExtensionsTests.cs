@@ -1,38 +1,32 @@
 ﻿namespace EExpansions.EntityFrameworkCore;
 
 [Collection(nameof(TodoDbContextCollectionFixture))]
-public class DbContextExtensionsTests : IDisposable
+public class DbContextExtensionsTests(TodoDbContextFixture fixture) : IDisposable
 {
-    private readonly TodoDbContextFixture _fixture;
-
-    public DbContextExtensionsTests(TodoDbContextFixture fixture)
-    {
-        _fixture = fixture;
-    }
-
     public void Dispose()
     {
+        GC.SuppressFinalize(this);
     }
 
     [Fact]
     public async Task ExecuteInTransactionAsync()
     {
         var guid = Guid.NewGuid();
-        using (var context = _fixture.CreateDbContext())
+        using (var context = fixture.CreateDbContext())
         {
             var item = new TodoItem
             {
                 Id = guid,
                 Title = guid.ToString(),
             };
-            await context.ExecuteInTransactionAsync(async (ctx, _) =>
+            await context.ExecuteInTransactionAsync(async (ctx, token) =>
             {
-                await ctx.TodoItems.AddAsync(item);
-                await ctx.SaveChangesAsync(false);
+                await ctx.TodoItems.AddAsync(item, token);
+                await ctx.SaveChangesAsync(false, token);
             });
         }
 
-        using (var context = _fixture.CreateDbContext())
+        using (var context = fixture.CreateDbContext())
         {
             var savedItem =
                 context.TodoItems

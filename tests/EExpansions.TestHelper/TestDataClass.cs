@@ -4,7 +4,7 @@ namespace EExpansions.TestHelper;
 
 public abstract class TestDataClass : IEnumerable<object?[]>
 {
-    protected IList<object?[]> TestData = new List<object?[]>();
+    protected IList<object?[]> TestData = [];
 
     public TestDataClass()
     {

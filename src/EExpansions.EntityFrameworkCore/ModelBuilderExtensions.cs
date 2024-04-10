@@ -29,8 +29,8 @@ public static class ModelBuilderExtensions
     )
         where TEntity : class
     {
-        _ = modelBuilder ?? throw new ArgumentNullException();
-        _ = buildAction ?? throw new ArgumentNullException();
+        _ = modelBuilder ?? throw new ArgumentNullException(nameof(modelBuilder));
+        _ = buildAction ?? throw new ArgumentNullException(nameof(buildAction));
 
         var targetTypes =
             modelBuilder.Model.GetEntityTypes()

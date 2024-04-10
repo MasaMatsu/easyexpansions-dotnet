@@ -124,7 +124,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
         SemaphoreSlim.ExecuteInLock(() =>
         {
             var keyCacheKey = GenKeyCacheKey(typeof(TEntity), keyValues);
-            var valueCacheKey = GenValueCacheKey(keyCacheKey);
+            var valueCacheKey = EntityCache<TContext, TKeyContainer>.GenValueCacheKey(keyCacheKey);
             KeyContainer.Remove(keyCacheKey);
             ValueContainer.Remove(valueCacheKey);
         }, Options.SemaphoreTimeout);
@@ -144,7 +144,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
         SemaphoreSlim.ExecuteInLock(() =>
         {
             var keyCacheKey = GenKeyCacheKey(entityType, keyValues);
-            var valueCacheKey = GenValueCacheKey(keyCacheKey);
+            var valueCacheKey = EntityCache<TContext, TKeyContainer>.GenValueCacheKey(keyCacheKey);
             KeyContainer.Remove(keyCacheKey);
             ValueContainer.Remove(valueCacheKey);
         }, Options.SemaphoreTimeout);
@@ -174,7 +174,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
         await SemaphoreSlim.ExecuteInLockAsync(async () =>
         {
             var keyCacheKey = GenKeyCacheKey(typeof(TEntity), keyValues);
-            var valueCacheKey = GenValueCacheKey(keyCacheKey);
+            var valueCacheKey = EntityCache<TContext, TKeyContainer>.GenValueCacheKey(keyCacheKey);
             await KeyContainer.RemoveAsync(keyCacheKey, cancellationToken);
             await ValueContainer.RemoveAsync(valueCacheKey, cancellationToken);
         }, Options.SemaphoreTimeout, cancellationToken: cancellationToken);
@@ -198,7 +198,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
         await SemaphoreSlim.ExecuteInLockAsync(async () =>
         {
             var keyCacheKey = GenKeyCacheKey(entityType, keyValues);
-            var valueCacheKey = GenValueCacheKey(keyCacheKey);
+            var valueCacheKey = EntityCache<TContext, TKeyContainer>.GenValueCacheKey(keyCacheKey);
             await KeyContainer.RemoveAsync(keyCacheKey, cancellationToken);
             await ValueContainer.RemoveAsync(valueCacheKey, cancellationToken);
         }, Options.SemaphoreTimeout, cancellationToken: cancellationToken);
@@ -206,13 +206,13 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
 
     #region Key generation logics
 
-    private string GetPrimaryKeyValueString(object?[] keyValues) =>
+    private static string GetPrimaryKeyValueString(object?[] keyValues) =>
         $"{{{string.Join(",", keyValues)}}}";
 
     private string GenKeyCacheKey(Type entityType, object?[] keyValues) =>
-        $"{Options.KeyPrefix}:{entityType.Name}:pk:{GetPrimaryKeyValueString(keyValues)}";
+        $"{Options.KeyPrefix}:{entityType.Name}:pk:{EntityCache<TContext, TKeyContainer>.GetPrimaryKeyValueString(keyValues)}";
 
-    private string GenValueCacheKey(string keyCacheKey) =>
+    private static string GenValueCacheKey(string keyCacheKey) =>
         $"{keyCacheKey}:value";
 
     #endregion
@@ -290,7 +290,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
                     });
                     if (entity is not null)
                     {
-                        var valueCacheKey = GenValueCacheKey(keyCacheKey);
+                        var valueCacheKey = EntityCache<TContext, TKeyContainer>.GenValueCacheKey(keyCacheKey);
                         KeyContainer.SetString(
                             keyCacheKey,
                             valueCacheKey,
@@ -326,7 +326,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
                     });
                     if (entity is not null)
                     {
-                        var valueCacheKey = GenValueCacheKey(keyCacheKey);
+                        var valueCacheKey = EntityCache<TContext, TKeyContainer>.GenValueCacheKey(keyCacheKey);
                         KeyContainer.SetString(
                             keyCacheKey,
                             valueCacheKey,
@@ -368,7 +368,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
                     );
                     if (entity is not null)
                     {
-                        var valueCacheKey = GenValueCacheKey(keyCacheKey);
+                        var valueCacheKey = EntityCache<TContext, TKeyContainer>.GenValueCacheKey(keyCacheKey);
                         await KeyContainer.SetStringAsync(
                             keyCacheKey,
                             valueCacheKey,
@@ -412,7 +412,7 @@ public class EntityCache<TContext, TKeyContainer> : IEntityCache
                     );
                     if (entity is not null)
                     {
-                        var valueCacheKey = GenValueCacheKey(keyCacheKey);
+                        var valueCacheKey = EntityCache<TContext, TKeyContainer>.GenValueCacheKey(keyCacheKey);
                         await KeyContainer.SetStringAsync(
                             keyCacheKey,
                             valueCacheKey,

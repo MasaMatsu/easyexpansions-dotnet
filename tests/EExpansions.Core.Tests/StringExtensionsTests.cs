@@ -6,7 +6,7 @@ public class StringExtensionsTests
     [InlineData("")]
     [InlineData(null)]
     [InlineData("A")]
-    public void IsNullOrEmpty(string value)
+    public void IsNullOrEmpty(string? value)
     {
         Assert.Equal(string.IsNullOrEmpty(value), value.IsNullOrEmpty());
     }
@@ -19,7 +19,7 @@ public class StringExtensionsTests
     [InlineData("\n")]
     [InlineData(null)]
     [InlineData("A")]
-    public void IsNullOrWhitespace(string value)
+    public void IsNullOrWhitespace(string? value)
     {
         Assert.Equal(string.IsNullOrWhiteSpace(value), value.IsNullOrWhitespace());
     }

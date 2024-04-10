@@ -38,7 +38,7 @@ public class DistributedEntityCacheValueContainer<TDistributedCache> : IEntityCa
         string key,
         CancellationToken cancellationToken = default
     ) where TEntity : class =>
-        Cache.GetAsync<TEntity>(key);
+        Cache.GetAsync<TEntity>(key, cancellationToken: cancellationToken);
 
     /// <inheritdoc/>
     public Task<object?> GetAsync(
