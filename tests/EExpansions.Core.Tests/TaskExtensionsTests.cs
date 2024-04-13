@@ -5,11 +5,11 @@ public class TaskExtensionsTests
     [Fact]
     public async Task WhenAll()
     {
-        Func<IList<int>, int, Task> func = async (list, i) =>
+        static async Task func(IList<int> list, int i)
         {
             await Task.Delay(i * 100);
             list.Add(i);
-        };
+        }
         var actual = new List<int>();
         var expected = new List<int>();
         var actualTasks = new List<Task>
@@ -53,11 +53,11 @@ public class TaskExtensionsTests
     [Fact]
     public async Task WhenAllSync()
     {
-        Func<IList<int>, int, Task> func = async (list, i) =>
+        static async Task func(IList<int> list, int i)
         {
             await Task.Delay(i * 100);
             list.Add(i);
-        };
+        }
         var actual = new List<int>();
         var expected = new List<int>();
         var actualTasks = new List<Task>

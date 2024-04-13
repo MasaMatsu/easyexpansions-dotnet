@@ -37,7 +37,7 @@ public static class SemaphoreSlimExtensions
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        if (! await semaphore.WaitAsync(timeout ?? Timeout.InfiniteTimeSpan))
+        if (!await semaphore.WaitAsync(timeout ?? Timeout.InfiniteTimeSpan, cancellationToken))
         {
             throw new TimeoutException("The semaphore timeout period has expired.");
         }

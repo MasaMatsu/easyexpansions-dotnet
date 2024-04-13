@@ -4,7 +4,9 @@ namespace EExpansions.EntityFrameworkCore;
 
 public sealed class TodoDbContext : EEDbContext<Guid?, User>
 {
+#pragma warning disable CA2211 // 非定数フィールドは表示されません
     public static Guid? UserId = null;
+#pragma warning restore CA2211 // 非定数フィールドは表示されません
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

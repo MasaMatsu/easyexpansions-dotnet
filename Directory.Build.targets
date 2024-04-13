@@ -1,15 +1,15 @@
 ﻿<Project>
   <ItemGroup>
     <PackageReference Update="coverlet.collector" Version="*" />
-    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="6.*" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore" Version="7.*" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="7.*" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="7.*" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="7.*" />
-    <PackageReference Update="Microsoft.Extensions.Caching.Abstractions" Version="7.*" />
-    <PackageReference Update="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.*" />
+    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.*" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.*" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="8.*" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore" Version="8.*" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="8.*" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="8.*" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="8.*" />
+    <PackageReference Update="Microsoft.Extensions.Caching.Abstractions" Version="8.*" />
+    <PackageReference Update="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.*" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="*" />
     <PackageReference Update="xunit" Version="*" />
     <PackageReference Update="xunit.runner.visualstudio" Version="*" />

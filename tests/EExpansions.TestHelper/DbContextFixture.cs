@@ -20,11 +20,13 @@ public abstract class DbContextFixture<TContext> : IDisposable
         using var context = CreateDbContext();
 
         context.Database.EnsureDeleted();
+
+        GC.SuppressFinalize(this);
     }
 
     protected abstract void Initialize(TContext context);
 
-    public TContext CreateDbContext() => new TContext();
+    public TContext CreateDbContext() => new();
 
     public IDbContextFactory<TContext> CreateDbContextFactory() => new MockDbContextFactory<TContext>();
 }
@@ -32,5 +34,5 @@ public abstract class DbContextFixture<TContext> : IDisposable
 public class MockDbContextFactory<TContext> : IDbContextFactory<TContext>
     where TContext : DbContext, new()
 {
-    public TContext CreateDbContext() => new TContext();
+    public TContext CreateDbContext() => new();
 }

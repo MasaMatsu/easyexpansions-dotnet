@@ -1,15 +1,15 @@
 ﻿<Project>
  
   <PropertyGroup>
-    <DefaultNetCoreTargetFramework>net6.0</DefaultNetCoreTargetFramework>
+    <DefaultNetCoreTargetFramework>net8.0</DefaultNetCoreTargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <LangVersion>11</LangVersion>
+    <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Label="Version">
-    <MajorVersion>7</MajorVersion>
+    <MajorVersion>8</MajorVersion>
     <MinorVersion>0</MinorVersion>
     <PatchVersion>0</PatchVersion>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
@@ -18,7 +18,7 @@
 
   <PropertyGroup Label="ForPack">
     <Authors>MasaMatsu</Authors>
-    <Copyright>Copyright (c) MasaMatsu 2022</Copyright>
+    <Copyright>Copyright (c) MasaMatsu 2022-2024</Copyright>
     <PackageProjectUrl>https://github.com/MasaMatsu/easyexpansions-dotnet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MasaMatsu/easyexpansions-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

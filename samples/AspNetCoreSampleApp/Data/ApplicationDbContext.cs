@@ -6,21 +6,16 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreSampleApp.Data;
 
-public class ApplicationDbContext : EEIdentityDbContext<User>
+public class ApplicationDbContext(
+    DbContextOptions<ApplicationDbContext> options,
+    IHttpContextAccessor httpContextAccessor
+) : EEIdentityDbContext<User>(options)
 {
-    private IHttpContextAccessor HttpContextAccessor { get; }
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor)
-        : base(options)
-    {
-        HttpContextAccessor = httpContextAccessor;
-    }
-
     public virtual DbSet<TodoItem> TodoItems { get; set; } = null!;
 
     public override string? GetUserId()
     {
-        var claim = HttpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
+        var claim = httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
         return claim?.Value;
     }
 }
