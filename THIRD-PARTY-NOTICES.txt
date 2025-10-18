@@ -1,0 +1,26 @@
+THIRD PARTY SOFTWARE NOTICES AND INFORMATION
+
+This project incorporates components from the projects listed below.
+The original copyright notices and the licenses under which they were received are provided below.
+
+Microsoft.AspNetCore and related packages (https://github.com/dotnet/aspnetcore)
+    Copyright (c) .NET Foundation and Contributors
+    Licensed under the MIT License
+    https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt
+
+Microsoft.EntityFrameworkCore and related packages (https://github.com/dotnet/efcore)
+    Copyright (c) .NET Foundation and Contributors
+    Licensed under the MIT License
+    https://github.com/dotnet/efcore/blob/main/LICENSE.txt
+
+Microsoft.Extensions.Caching.Abstructions (https://github.com/dotnet/runtime)
+    Copyright (c) .NET Foundation and Contributors
+    Licensed under the MIT License
+    https://github.com/dotnet/runtime/blob/main/LICENSE.TXT
+
+Microsoft.Extensions.Caching.StackExchangeRedis (https://github.com/dotnet/aspnetcore)
+    Copyright (c) .NET Foundation and Contributors
+    Licensed under the MIT License
+    https://github.com/dotnet/aspnetcore/blob/main/LICENSE.txt
+
+For full license texts, please visit the links provided above.
