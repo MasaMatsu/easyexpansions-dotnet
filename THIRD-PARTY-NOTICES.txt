@@ -13,7 +13,7 @@ Microsoft.EntityFrameworkCore and related packages (https://github.com/dotnet/ef
     Licensed under the MIT License
     https://github.com/dotnet/efcore/blob/main/LICENSE.txt
 
-Microsoft.Extensions.Caching.Abstructions (https://github.com/dotnet/runtime)
+Microsoft.Extensions.Caching.Abstractions (https://github.com/dotnet/runtime)
     Copyright (c) .NET Foundation and Contributors
     Licensed under the MIT License
     https://github.com/dotnet/runtime/blob/main/LICENSE.TXT
