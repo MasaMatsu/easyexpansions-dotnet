@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: weekly
+    target-branch: main
+    # メジャーバージョンの更新を無視（現在の TargetFramework の互換性を維持するため）
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - version-update: "semver-major"
+    groups:
+      microsoft:
+        patterns:
+          - "Microsoft.*"
+        cooldown: 3
+      third-party:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "Microsoft.*"
+        cooldown: 7
