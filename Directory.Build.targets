@@ -1,17 +1,17 @@
 ﻿<Project>
   <ItemGroup>
-    <PackageReference Update="coverlet.collector" Version="*" />
-    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.*" />
-    <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="10.*" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore" Version="10.*" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="10.*" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="10.*" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="10.*" />
-    <PackageReference Update="Microsoft.Extensions.Caching.Abstractions" Version="10.*" />
-    <PackageReference Update="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.*" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="*" />
-    <PackageReference Update="xunit" Version="*" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="*" />
+    <PackageReference Update="coverlet.collector" Version="8.0.1" />
+    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="10.0.5" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="10.0.5" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.5" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5" />
+    <PackageReference Update="Microsoft.Extensions.Caching.Abstractions" Version="10.0.5" />
+    <PackageReference Update="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.5" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="18.3.0" />
+    <PackageReference Update="xunit" Version="2.9.3" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="3.1.5" />
   </ItemGroup>
 </Project>
