@@ -18,7 +18,7 @@
 
   <PropertyGroup Label="ForPack">
     <Authors>MasaMatsu</Authors>
-    <Copyright>Copyright (c) MasaMatsu 2022-2024</Copyright>
+    <Copyright>Copyright (c) MasaMatsu 2022</Copyright>
     <PackageProjectUrl>https://github.com/MasaMatsu/easyexpansions-dotnet</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MasaMatsu/easyexpansions-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
