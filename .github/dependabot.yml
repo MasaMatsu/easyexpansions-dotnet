@@ -10,14 +10,17 @@ updates:
       - dependency-name: "*"
         update-types:
           - version-update: "semver-major"
+    cooldown:
+      default-days: 5
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
     groups:
       microsoft:
         patterns:
           - "Microsoft.*"
-        cooldown: 3
       third-party:
         patterns:
           - "*"
         exclude-patterns:
           - "Microsoft.*"
-        cooldown: 7

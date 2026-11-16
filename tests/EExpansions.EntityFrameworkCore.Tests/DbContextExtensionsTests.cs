@@ -23,7 +23,7 @@ public class DbContextExtensionsTests(TodoDbContextFixture fixture) : IDisposabl
             {
                 await ctx.TodoItems.AddAsync(item, token);
                 await ctx.SaveChangesAsync(false, token);
-            });
+            }, TestContext.Current.CancellationToken);
         }
 
         using (var context = fixture.CreateDbContext())
